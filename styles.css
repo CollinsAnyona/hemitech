@@ -58,9 +58,7 @@ body {
 }
 
 .brand-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.125rem;
+    display: none;
 }
 
 .brand-name {
@@ -80,7 +78,7 @@ body {
 }
 
 .logo {
-    height: 90px;
+    height: 120px;
     width: auto;
 }
 
