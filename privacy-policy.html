@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - HemiTech</title>
-    <meta name="description" content="HemiTech's privacy policy — what data we collect through this site, how it's used, and your rights under Kenya's Data Protection Act.">
+    <meta name="description" content="HemiTech's privacy policy: what data we collect through this site, how it's used, and your rights under Kenya's Data Protection Act.">
     <link rel="canonical" href="https://hemitech.co.ke/privacy-policy.html">
 
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -16,36 +16,27 @@
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="Privacy Policy - HemiTech">
-    <meta property="og:description" content="HemiTech's privacy policy — what data we collect through this site, how it's used, and your rights under Kenya's Data Protection Act.">
+    <meta property="og:description" content="HemiTech's privacy policy: what data we collect through this site, how it's used, and your rights under Kenya's Data Protection Act.">
     <meta property="og:url" content="https://hemitech.co.ke/privacy-policy.html">
     <meta property="og:image" content="https://hemitech.co.ke/og-image.jpg">
     <meta property="og:site_name" content="HemiTech">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Privacy Policy - HemiTech">
-    <meta name="twitter:description" content="HemiTech's privacy policy — what data we collect through this site, how it's used, and your rights under Kenya's Data Protection Act.">
+    <meta name="twitter:description" content="HemiTech's privacy policy: what data we collect through this site, how it's used, and your rights under Kenya's Data Protection Act.">
     <meta name="twitter:image" content="https://hemitech.co.ke/og-image.jpg">
 
+    <script>document.documentElement.classList.add('js');</script>
     <link rel="stylesheet" href="styles.css">
 
-    <!-- Google Analytics 4 -- replace G-XXXXXXXXXX with your real GA4 Measurement ID -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX');
-    </script>
+    <!-- Analytics intentionally not loaded. To enable: create a GA4 property,
+         add a consent banner, and load gtag only after the visitor opts in. -->
 </head>
 <body>
     <a href="#main" class="skip-link">Skip to main content</a>
-    <nav class="navbar">
+    <nav class="navbar" aria-label="Primary">
         <div class="container">
             <a href="index.html" class="nav-brand">
-                <img src="hemitech.png" alt="HemiTech" class="logo" width="342" height="240">
-                <div class="brand-text">
-                    <span class="brand-name">HemiTech</span>
-                    <span class="brand-tagline">Systems & Design</span>
-                </div>
+                <img src="hemitech-logo.png" alt="HemiTech" class="logo" width="444" height="144">
             </a>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
                 <span></span>
@@ -57,12 +48,15 @@
                 <li><a href="about.html">About</a></li>
                 <li><a href="services.html">Services</a></li>
                 <li><a href="work.html">Work</a></li>
+                <li><a href="index.html#audit">Free audit</a></li>
                 <li><a href="contact.html" class="btn-primary">Contact</a></li>
             </ul>
         </div>
     </nav>
 
-    <section class="hero" id="main">
+    <main id="main">
+
+    <section class="hero">
         <div class="hero-background">
             <div class="grid-overlay"></div>
             <div class="gradient-orb orb-1"></div>
@@ -89,11 +83,11 @@
             <p>We collect personal data in two ways:</p>
             <ul>
                 <li><strong>Contact form submissions:</strong> when you fill out the form on our Contact page, we collect your name, email address, service interest, and message. This is submitted directly to Formspree, our form-processing provider, and forwarded to us by email.</li>
-                <li><strong>Site analytics:</strong> we use Google Analytics to understand how visitors use this site (pages viewed, general location, device type). Google Analytics uses cookies to do this — see our <a href="cookie-policy.html">Cookie Policy</a> for details.</li>
+                <li><strong>Site analytics:</strong> we use Google Analytics to understand how visitors use this site (pages viewed, general location, device type). Google Analytics uses cookies to do this; see our <a href="cookie-policy.html">Cookie Policy</a> for details.</li>
             </ul>
 
             <h2>How we use it</h2>
-            <p>Contact form data is used solely to respond to your enquiry. Analytics data is used in aggregate to understand and improve the site — we don't use it to identify individual visitors. We do not sell, rent, or trade your personal data to any third party.</p>
+            <p>Contact form data is used solely to respond to your enquiry. Analytics data is used in aggregate to understand and improve the site; we don't use it to identify individual visitors. We do not sell, rent, or trade your personal data to any third party.</p>
 
             <h2>Who else sees it</h2>
             <p>Two processors handle data on our behalf: Formspree (contact form submissions) and Google Analytics (site usage data). Both are bound by their own privacy and data-processing terms, which you can review on their respective websites.</p>
@@ -108,6 +102,8 @@
             <p>We may update this policy as the site or our tools change. The "last updated" date at the top will reflect the most recent revision.</p>
         </div>
     </section>
+    </main>
+
 
     <footer class="footer">
         <div class="footer-bg">
@@ -117,19 +113,18 @@
             <div class="footer-main">
                 <div class="footer-brand">
                     <div class="footer-logo">
-                        <img src="hemitech.png" alt="HemiTech" class="logo" width="342" height="240" loading="lazy">
-                        <span>HemiTech</span>
+                        <img src="hemitech-logo-light.png" alt="HemiTech" class="logo" width="444" height="144" loading="lazy">
                     </div>
                     <p class="footer-tagline">Building the future through integrated technology and design excellence.</p>
                     <div class="footer-social">
-                        <a href="https://www.linkedin.com/company/hemi-tech-co" target="_blank" class="social-link" aria-label="LinkedIn"><svg width="20" height="20" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
-                        <a href="https://www.instagram.com/hemi.tech.co" target="_blank" class="social-link" aria-label="Instagram"><svg width="20" height="20" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-                        <a href="https://www.facebook.com/hemitechco" target="_blank" class="social-link" aria-label="Facebook"><svg width="20" height="20" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                        <a href="https://www.linkedin.com/company/hemi-tech-co" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn"><svg width="20" height="20" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+                        <a href="https://www.instagram.com/hemi.tech.co" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram"><svg width="20" height="20" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                        <a href="https://www.facebook.com/hemitechco" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook"><svg width="20" height="20" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
                     </div>
                 </div>
                 <div class="footer-links-grid">
                     <div class="footer-column">
-                        <h4>Services</h4>
+                        <h3>Services</h3>
                         <ul>
                             <li><a href="services.html">Technology & Engineering</a></li>
                             <li><a href="services.html">Creative & Brand Systems</a></li>
@@ -138,7 +133,7 @@
                         </ul>
                     </div>
                     <div class="footer-column">
-                        <h4>Company</h4>
+                        <h3>Company</h3>
                         <ul>
                             <li><a href="about.html">About Us</a></li>
                             <li><a href="work.html">Our Work</a></li>
@@ -147,7 +142,7 @@
                         </ul>
                     </div>
                     <div class="footer-column">
-                        <h4>Resources</h4>
+                        <h3>Resources</h3>
                         <ul>
                             <li><a href="work.html">Case Studies</a></li>
                             <li><a href="contact.html">Support</a></li>
@@ -156,7 +151,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; <span id="year">2026</span> HemiTech. All rights reserved.</p>
+                <p>&copy; <span id="year">2026</span> HemiTech. All rights reserved. <span class="footer-updated">&middot; Last updated September 2026</span></p>
                 <div class="footer-legal">
                     <a href="privacy-policy.html">Privacy Policy</a>
                     <a href="terms.html">Terms of Service</a>

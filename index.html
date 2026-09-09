@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="9qGpaG5q96NfjxxceBfwKGGLzp7Bxdhg7fTMoW4dC-M">
-    <title>HemiTech - Technology & Design Studio | Nairobi, Kenya</title>
-    <meta name="description" content="HemiTech is a hybrid technology and creative agency delivering digital infrastructure, strategic design, and brand systems for organizations that demand clarity and impact.">
+    <title>Hemi Tech Co. | Website design &amp; development in Nairobi</title>
+    <meta name="description" content="We build fast, mobile-first websites for Kenyan businesses, plus data analytics and custom platforms. Free 7-point website audit.">
     <link rel="canonical" href="https://hemitech.co.ke/">
 
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -16,16 +16,17 @@
     <meta name="theme-color" content="#0f172a">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="HemiTech - Technology & Design Studio">
-    <meta property="og:description" content="HemiTech is a hybrid technology and creative agency delivering digital infrastructure, strategic design, and brand systems for organizations that demand clarity and impact.">
+    <meta property="og:title" content="Hemi Tech Co. | Website design &amp; development in Nairobi">
+    <meta property="og:description" content="We build fast, mobile-first websites for Kenyan businesses, plus data analytics and custom platforms. Free 7-point website audit.">
     <meta property="og:url" content="https://hemitech.co.ke/">
     <meta property="og:image" content="https://hemitech.co.ke/og-image.jpg">
     <meta property="og:site_name" content="HemiTech">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="HemiTech - Technology & Design Studio">
-    <meta name="twitter:description" content="HemiTech is a hybrid technology and creative agency delivering digital infrastructure, strategic design, and brand systems for organizations that demand clarity and impact.">
+    <meta name="twitter:title" content="Hemi Tech Co. | Website design &amp; development in Nairobi">
+    <meta name="twitter:description" content="We build fast, mobile-first websites for Kenyan businesses, plus data analytics and custom platforms. Free 7-point website audit.">
     <meta name="twitter:image" content="https://hemitech.co.ke/og-image.jpg">
 
+    <script>document.documentElement.classList.add('js');</script>
     <link rel="stylesheet" href="styles.css">
 
     <script type="application/ld+json">
@@ -48,25 +49,15 @@
     }
     </script>
 
-    <!-- Google Analytics 4 -- replace G-XXXXXXXXXX with your real GA4 Measurement ID -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX');
-    </script>
+    <!-- Analytics intentionally not loaded. To enable: create a GA4 property,
+         add a consent banner, and load gtag only after the visitor opts in. -->
 </head>
 <body>
     <a href="#main" class="skip-link">Skip to main content</a>
-    <nav class="navbar">
+    <nav class="navbar" aria-label="Primary">
         <div class="container">
             <a href="index.html" class="nav-brand">
-                <img src="hemitech.png" alt="HemiTech" class="logo" width="342" height="240">
-                <div class="brand-text">
-                    <span class="brand-name">HemiTech</span>
-                    <span class="brand-tagline">Systems & Design</span>
-                </div>
+                <img src="hemitech-logo.png" alt="HemiTech" class="logo" width="444" height="144">
             </a>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
                 <span></span>
@@ -74,16 +65,19 @@
                 <span></span>
             </button>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="index.html" class="active" aria-current="page">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="services.html">Services</a></li>
                 <li><a href="work.html">Work</a></li>
+                <li><a href="index.html#audit">Free audit</a></li>
                 <li><a href="contact.html" class="btn-primary">Contact</a></li>
             </ul>
         </div>
     </nav>
 
-    <section class="hero" id="main">
+    <main id="main">
+
+    <section class="hero hero-home">
         <div class="hero-background">
             <div class="grid-overlay"></div>
             <div class="gradient-orb orb-1"></div>
@@ -93,142 +87,141 @@
             <div class="spotlight"></div>
         </div>
         <div class="container">
-            <div class="hero-badge">Trusted by forward-thinking organizations</div>
-            <h1>We build systems.<br>We shape experiences.</h1>
-            <p>HemiTech is a hybrid technology and creative agency delivering digital infrastructure, strategic design, and brand systems for organizations that demand clarity and impact.</p>
+            <div class="hero-badge">Nairobi &middot; Websites, data &amp; platforms</div>
+            <h1>We build websites that load<br>before people give up.</h1>
+            <p>Most business websites in Kenya lose enquiries they never hear about: too slow, awkward on a phone, unclear in the first line. We build the kind that doesn&rsquo;t.</p>
             <div class="hero-buttons">
-                <a href="contact.html" class="btn btn-primary">Start a Project</a>
-                <a href="work.html" class="btn btn-secondary">View Our Work</a>
+                <a href="#audit" class="btn btn-primary">Get a free website audit</a>
+                <a href="work.html" class="btn btn-secondary">See our work</a>
             </div>
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <div class="stat-number">2024</div>
-                    <div class="stat-label">Founded</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">6</div>
-                    <div class="stat-label">Client Projects Delivered</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">2</div>
-                    <div class="stat-label">Specialized Divisions</div>
-                </div>
-            </div>
+            <p class="hero-phone">Or call <a href="tel:+254704820334">+254 704 820 334</a>. We answer.</p>
         </div>
         <div class="scroll-indicator">
             <div class="scroll-line"></div>
         </div>
     </section>
 
-    <section class="positioning">
-        <div class="positioning-bg">
-            <div class="floating-shape shape-1"></div>
-            <div class="floating-shape shape-2"></div>
-        </div>
+    <section class="proof-strip">
         <div class="container">
-            <div class="section-badge">Our Approach</div>
-            <h2>Technology without design is rigid.<br>Design without technology is fragile.</h2>
-            <p>We integrate engineering precision with strategic creativity — ensuring that what you build works, scales, and communicates powerfully.</p>
-            <div class="positioning-cards">
-                <div class="approach-card">
-                    <div class="card-icon">⚡</div>
-                    <h3>Engineering</h3>
-                    <p>Precision-built systems</p>
-                </div>
-                <div class="approach-card card-center">
-                    <div class="card-icon">✦</div>
-                    <h3>Integration</h3>
-                    <p>Unified excellence</p>
-                </div>
-                <div class="approach-card">
-                    <div class="card-icon">◆</div>
-                    <h3>Design</h3>
-                    <p>Strategic creativity</p>
-                </div>
+            <ul>
+                <li><b>6</b> sites built</li>
+                <li><b>2</b> in production</li>
+                <li>Clients working across <b>8</b> countries</li>
+                <li>Built from <b>Nairobi</b></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="services-home" id="services">
+        <div class="container">
+            <div class="section-badge">What we do</div>
+            <h2 class="section-title-dark">Four things, done properly.</h2>
+            <p class="section-subtitle-dark">Technology work is the core of HemiTech: built, measured, and maintained.</p>
+            <div class="svc-grid">
+                <article class="svc-card">
+                    <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="4" width="19" height="16" rx="2"/><path d="M2.5 9h19"/></svg></div>
+                    <h3>Websites</h3>
+                    <p class="svc-claim">Fast, secure, built to convert.</p>
+                    <p>Custom design, mobile-first, sub-2.5-second load targets, and a content system you can edit yourself. Not a template with your logo dropped in.</p>
+                </article>
+                <article class="svc-card">
+                    <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20V7"/></svg></div>
+                    <h3>Data Analytics</h3>
+                    <p class="svc-claim">Know what&rsquo;s actually working.</p>
+                    <p>Analytics installed properly, dashboards that answer real questions, and reporting that shows which pages bring enquiries and which waste your budget.</p>
+                </article>
+                <article class="svc-card">
+                    <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 8.5 4.5 12l4 3.5"/><path d="M15.5 8.5 19.5 12l-4 3.5"/></svg></div>
+                    <h3>Tech Solutions</h3>
+                    <p class="svc-claim">Platforms and automation.</p>
+                    <p>Internal tools, booking and enquiry systems, and integrations between the software you already pay for. When the problem is a system, not a brochure.</p>
+                </article>
+                <article class="svc-card">
+                    <div class="svc-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/><circle cx="12" cy="12" r="4"/></svg></div>
+                    <h3>Consultancy</h3>
+                    <p class="svc-claim">Decide before you spend.</p>
+                    <p>Independent advice on what to build, what to buy, and what to leave alone, so budget goes to the thing that actually moves the business.</p>
+                </article>
             </div>
-            <div class="positioning-visual">
-                <div class="visual-line"></div>
-                <div class="visual-dots">
-                    <div class="dot dot-1"></div>
-                    <div class="dot dot-2"></div>
-                    <div class="dot dot-3"></div>
+        </div>
+    </section>
+
+    <section class="creatives-band">
+        <div class="container creatives-inner">
+            <div class="creatives-copy">
+                <h2>Need brand and design too? That&rsquo;s <span class="creatives-brand">HemiCreatives</span>.</h2>
+                <p>Our creative division handles brand identity, visual communication, print and merchandise, working alongside the technology team on the same projects.</p>
+            </div>
+            <a href="services.html#creative" class="btn-creative">Explore HemiCreatives</a>
+        </div>
+    </section>
+
+    <section class="audit" id="audit">
+        <div class="container">
+            <div class="section-badge">Two minutes, your phone</div>
+            <h2 class="section-title-dark">Score your own website.</h2>
+            <p class="section-subtitle-dark">Seven checks, on mobile data: the way your clients actually open it. No developer needed.</p>
+            <div class="audit-grid">
+                <div>
+                    <ol class="audit-checks">
+                        <li>Loads in under 3 seconds on mobile data</li>
+                        <li>Your phone number dials when you tap it</li>
+                        <li>No pinching, no sideways scrolling</li>
+                        <li>Line one says what you do, before scrolling</li>
+                        <li>One obvious next step, not five</li>
+                        <li>The padlock is there, with no &ldquo;Not secure&rdquo; warning</li>
+                        <li>Something on it was updated this year</li>
+                    </ol>
+                </div>
+                <div>
+                    <div class="audit-bands">
+                        <div class="audit-band band-good"><b>6&ndash;7</b><span>Your site works. Let&rsquo;s talk about making it convert.</span></div>
+                        <div class="audit-band band-mid"><b>4&ndash;5</b><span>You&rsquo;re leaking enquiries quietly. Usually three fixes, not a rebuild.</span></div>
+                        <div class="audit-band band-poor"><b>0&ndash;3</b><span>It&rsquo;s costing you clients today.</span></div>
+                    </div>
+                    <p class="audit-pledge">Most sites scoring 4 or 5 don&rsquo;t need rebuilding. We&rsquo;ll tell you if yours doesn&rsquo;t.</p>
+                    <a href="contact.html" class="btn btn-primary">Send me my audit</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="capabilities">
-        <div class="capabilities-bg">
-            <div class="glow-orb glow-1"></div>
-            <div class="glow-orb glow-2"></div>
-        </div>
+    <section class="work-section">
         <div class="container">
-            <div class="section-badge">Our Capabilities</div>
-            <h2 class="section-title">Dual Expertise.<br>Singular Vision.</h2>
-            <p class="section-subtitle">We bridge the gap between technical excellence and creative mastery.</p>
-            
-            <div class="capabilities-grid">
-                <div class="capability-card tech-card">
-                    <div class="card-glow"></div>
-                    <div class="card-shine"></div>
-                    <div class="card-header">
-                        <div class="card-number">01</div>
-                        <div class="card-badge">Technology</div>
+            <div class="section-badge">Recent builds</div>
+            <h2 class="section-title">Work that had a job to do.</h2>
+            <div class="work-grid">
+                <div class="work-card">
+                    <div class="work-card-image">
+                        <img src="Images/Work/joline/cover.jpg" alt="Joline Geoconsultants website homepage" width="1000" height="625" loading="lazy">
                     </div>
-                    <h3>Technology & Engineering</h3>
-                    <p class="card-description">Building robust digital infrastructure that scales with your ambition.</p>
-                    <div class="capability-list">
-                        <div class="capability-item">
-                            <span class="item-icon">▸</span>
-                            <span>Custom Web Platforms</span>
-                        </div>
-                        <div class="capability-item">
-                            <span class="item-icon">▸</span>
-                            <span>Data Systems & Dashboards</span>
-                        </div>
-                        <div class="capability-item">
-                            <span class="item-icon">▸</span>
-                            <span>Automation & Workflow Design</span>
-                        </div>
-                        <div class="capability-item">
-                            <span class="item-icon">▸</span>
-                            <span>Secure Backend Infrastructure</span>
-                        </div>
-                    </div>
+                    <div class="work-tags"><span class="work-tag">Geotechnical consultancy</span></div>
+                    <h3>Joline Geoconsultants</h3>
+                    <p>A consultancy operating across eight countries needed a site that read as credible to procurement teams comparing three bidders.</p>
                     <div class="card-footer">
-                        <a href="services.html" class="card-link">Explore Technology →</a>
+                        <a href="https://jolinegeoconsultants.org" class="card-link" target="_blank" rel="noopener noreferrer">jolinegeoconsultants.org &rarr;</a>
                     </div>
                 </div>
-
-                <div class="capability-card creative-card">
-                    <div class="card-glow"></div>
-                    <div class="card-shine"></div>
-                    <div class="card-header">
-                        <div class="card-number">02</div>
-                        <div class="card-badge">Creative</div>
+                <div class="work-card">
+                    <div class="work-card-image">
+                        <img src="Images/Work/start-walking/cover.jpg" alt="Start Walking Foundation team distributing sanitary products during a community outreach" width="1000" height="625" loading="lazy">
                     </div>
-                    <h3>Creative & Brand Systems</h3>
-                    <p class="card-description">Crafting visual identities that resonate and inspire action.</p>
-                    <div class="capability-list">
-                        <div class="capability-item">
-                            <span class="item-icon">▸</span>
-                            <span>Brand Identity Systems</span>
-                        </div>
-                        <div class="capability-item">
-                            <span class="item-icon">▸</span>
-                            <span>Visual Communication Design</span>
-                        </div>
-                        <div class="capability-item">
-                            <span class="item-icon">▸</span>
-                            <span>Print & Institutional Materials</span>
-                        </div>
-                        <div class="capability-item">
-                            <span class="item-icon">▸</span>
-                            <span>Merchandise & Branded Assets</span>
-                        </div>
-                    </div>
+                    <div class="work-tags"><span class="work-tag">A HemiTech project</span></div>
+                    <h3>Start Walking Foundation</h3>
+                    <p>Donor-facing, built to make the work legible in under a minute, because that is all the attention a first-time visitor gives.</p>
                     <div class="card-footer">
-                        <a href="services.html" class="card-link">Explore Creative →</a>
+                        <a href="https://startwalkingfoundation.org" class="card-link" target="_blank" rel="noopener noreferrer">startwalkingfoundation.org &rarr;</a>
+                    </div>
+                </div>
+                <div class="work-card">
+                    <div class="work-card-image">
+                        <img src="Images/Work/nyombo/cover.jpg" alt="Couple portrait from the Nyombo traditional Luo wedding ceremony" width="1000" height="625" loading="lazy">
+                    </div>
+                    <div class="work-tags"><span class="work-tag">Event platform</span></div>
+                    <h3>Nyombo Ceremony</h3>
+                    <p>Mobile-only in practice, built for guests on patchy data, where a slow page meant a guest who never RSVP&rsquo;d.</p>
+                    <div class="card-footer">
+                        <span class="card-link">Private: link on request</span>
                     </div>
                 </div>
             </div>
@@ -253,7 +246,7 @@
                 <div class="testimonial-card">
                     <div class="testimonial-quote-mark">&ldquo;</div>
                     <p class="testimonial-quote">Our office needed a digital presence that could genuinely connect us to constituents. HemiTech delivered a system that's reliable, easy to update, and represents the office well.</p>
-                    <div class="testimonial-author">Rongo Constituency &mdash; MP's Office</div>
+                    <div class="testimonial-author">Rongo Constituency, MP's Office</div>
                     <div class="testimonial-project">Web Development & Visual Identity</div>
                 </div>
                 <div class="testimonial-card">
@@ -317,6 +310,18 @@
         </div>
     </section>
 
+    <section class="about-teaser">
+        <div class="container">
+            <div class="about-teaser-inner">
+                <div class="section-badge">About</div>
+                <h2>A small studio in Nairobi.</h2>
+                <p>Small is the point. You talk to the person building your site, not an account manager relaying messages. And every project we ship gets audited against the same seven checks we run on everyone else&rsquo;s.</p>
+                <p class="about-tagline">Build. Analyze. Transform.</p>
+                <a href="about.html" class="btn btn-primary">More about HemiTech</a>
+            </div>
+        </div>
+    </section>
+
     <section class="final-cta">
         <div class="cta-bg">
             <div class="cta-grid"></div>
@@ -326,7 +331,7 @@
         <div class="container">
             <div class="cta-content">
                 <div class="cta-badge">Ready to Start?</div>
-                <h2>If the system matters and the brand matters — we should talk.</h2>
+                <h2>If the system matters and the brand matters, we should talk.</h2>
                 <p>Let's build something exceptional together. From concept to launch, we're with you every step of the way.</p>
                 <div class="cta-buttons">
                     <a href="contact.html" class="btn btn-primary btn-cta">Start a Project</a>
@@ -349,6 +354,8 @@
             </div>
         </div>
     </section>
+    </main>
+
 
     <footer class="footer">
         <div class="footer-bg">
@@ -358,19 +365,18 @@
             <div class="footer-main">
                 <div class="footer-brand">
                     <div class="footer-logo">
-                        <img src="hemitech.png" alt="HemiTech" class="logo" width="342" height="240" loading="lazy">
-                        <span>HemiTech</span>
+                        <img src="hemitech-logo-light.png" alt="HemiTech" class="logo" width="444" height="144" loading="lazy">
                     </div>
                     <p class="footer-tagline">Building the future through integrated technology and design excellence.</p>
                     <div class="footer-social">
-                        <a href="https://www.linkedin.com/company/hemi-tech-co" target="_blank" class="social-link" aria-label="LinkedIn"><svg width="20" height="20" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
-                        <a href="https://www.instagram.com/hemi.tech.co" target="_blank" class="social-link" aria-label="Instagram"><svg width="20" height="20" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-                        <a href="https://www.facebook.com/hemitechco" target="_blank" class="social-link" aria-label="Facebook"><svg width="20" height="20" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                        <a href="https://www.linkedin.com/company/hemi-tech-co" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="LinkedIn"><svg width="20" height="20" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+                        <a href="https://www.instagram.com/hemi.tech.co" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram"><svg width="20" height="20" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                        <a href="https://www.facebook.com/hemitechco" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook"><svg width="20" height="20" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
                     </div>
                 </div>
                 <div class="footer-links-grid">
                     <div class="footer-column">
-                        <h4>Services</h4>
+                        <h3>Services</h3>
                         <ul>
                             <li><a href="services.html">Technology & Engineering</a></li>
                             <li><a href="services.html">Creative & Brand Systems</a></li>
@@ -379,7 +385,7 @@
                         </ul>
                     </div>
                     <div class="footer-column">
-                        <h4>Company</h4>
+                        <h3>Company</h3>
                         <ul>
                             <li><a href="about.html">About Us</a></li>
                             <li><a href="work.html">Our Work</a></li>
@@ -388,7 +394,7 @@
                         </ul>
                     </div>
                     <div class="footer-column">
-                        <h4>Resources</h4>
+                        <h3>Resources</h3>
                         <ul>
                             <li><a href="work.html">Case Studies</a></li>
                             <li><a href="contact.html">Support</a></li>
@@ -397,7 +403,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; <span id="year">2026</span> HemiTech. All rights reserved.</p>
+                <p>&copy; <span id="year">2026</span> HemiTech. All rights reserved. <span class="footer-updated">&middot; Last updated September 2026</span></p>
                 <div class="footer-legal">
                     <a href="privacy-policy.html">Privacy Policy</a>
                     <a href="terms.html">Terms of Service</a>

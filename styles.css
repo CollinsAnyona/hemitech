@@ -1,7 +1,17 @@
+/* Design tokens - start of the shared layer. */
+:root {
+    --nav-height-mobile: 69px;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+/* Prevents the page scrolling behind the open mobile nav panel */
+body.nav-open {
+    overflow: hidden;
 }
 
 body {
@@ -35,6 +45,28 @@ body {
     top: 1rem;
 }
 
+/* Accessibility: visible keyboard focus (WCAG 2.4.7).
+   Dual palette - the blue ring clears 3:1 on light sections, the pale ring
+   clears 3:1 on the dark navy sections. */
+:focus-visible {
+    outline: 3px solid #2563eb;
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+.hero :focus-visible,
+.capabilities :focus-visible,
+.final-cta :focus-visible,
+.footer :focus-visible,
+.page-hero :focus-visible {
+    outline-color: #93c5fd;
+}
+
+/* Only suppress the ring for genuine pointer interaction, never for keyboard */
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
 /* Navigation */
 .navbar {
     background: rgba(255, 255, 255, 0.8);
@@ -58,6 +90,10 @@ body {
     transition: opacity 0.3s ease;
 }
 
+.navbar.scrolled {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
 .navbar.scrolled::before {
     opacity: 1;
 }
@@ -69,16 +105,9 @@ body {
     padding: 1rem 20px;
 }
 
-@media (max-width: 768px) {
-    .navbar .container {
-        padding: 0.75rem 15px;
-    }
-}
-
 .nav-brand {
     display: flex;
     align-items: center;
-    gap: 1rem;
     text-decoration: none;
 }
 
@@ -104,7 +133,7 @@ body {
 }
 
 .logo {
-    height: 65px;
+    height: 52px;
     width: auto;
 }
 
@@ -144,12 +173,28 @@ body {
     color: #2563eb;
 }
 
+/* The Contact pill is a solid button, so it must keep white text even when it
+   is the current page. Without this, .nav-menu a.active out-specifies
+   .nav-menu .btn-primary and paints blue text on a blue pill. */
+.nav-menu a.btn-primary,
+.nav-menu a.btn-primary:hover,
+.nav-menu a.btn-primary.active {
+    color: #ffffff;
+}
+
 .nav-toggle {
     display: none;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 4px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    margin-right: -10px;
     background: none;
     border: none;
+    border-radius: 8px;
     cursor: pointer;
 }
 
@@ -157,11 +202,25 @@ body {
     width: 25px;
     height: 3px;
     background: #1f2937;
-    transition: 0.3s;
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.2s ease;
+}
+
+/* Hamburger -> X, driven by a class rather than inline styles from JS */
+.nav-toggle.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
 }
 
 .nav-menu .btn-primary {
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: white;
     padding: 0.625rem 1.5rem;
     border-radius: 50px;
@@ -211,13 +270,13 @@ body {
 }
 
 .btn-primary {
-    background: #3b82f6;
+    background: #2563eb;
     color: white;
-    box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
 }
 
 .btn-primary:hover {
-    background: #2563eb;
+    background: #1d4ed8;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(59, 130, 246, 0.5);
 }
@@ -361,7 +420,7 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: fadeInUp 0.8s ease-out 0.2s both;
+    animation: riseIn 0.6s ease-out both;
     position: relative;
 }
 
@@ -383,6 +442,13 @@ body {
     100% { transform: translateX(100%); }
 }
 
+/* Transform-only reveal: the element paints at full opacity immediately, so it
+   still counts for Largest Contentful Paint. Use this on above-the-fold text. */
+@keyframes riseIn {
+    from { transform: translateY(24px); }
+    to   { transform: translateY(0); }
+}
+
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -402,7 +468,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     line-height: 1.7;
-    animation: fadeInUp 0.8s ease-out 0.4s both;
+    animation: fadeInUp 0.6s ease-out 0.15s both;
 }
 
 .hero-buttons {
@@ -485,11 +551,14 @@ body {
 
 .spotlight {
     position: absolute;
+    top: 0;
+    left: 0;
     width: 600px;
     height: 600px;
     background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
     pointer-events: none;
-    transition: all 0.3s ease;
+    will-change: transform;
+    transition: opacity 0.3s ease;
     opacity: 0;
 }
 
@@ -1753,7 +1822,6 @@ body {
 .footer-logo {
     display: flex;
     align-items: center;
-    gap: 1rem;
     margin-bottom: 1.5rem;
 }
 
@@ -1809,7 +1877,7 @@ body {
     gap: 3rem;
 }
 
-.footer-column h4 {
+.footer-column h3 {
     font-size: 0.875rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -1862,6 +1930,8 @@ body {
     color: rgba(255, 255, 255, 0.72);
     text-decoration: none;
     font-size: 0.875rem;
+    padding: 0.3rem 0;
+    display: inline-block;
     transition: color 0.3s ease;
 }
 
@@ -1871,26 +1941,6 @@ body {
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
-    .nav-menu {
-        position: fixed;
-        left: -100%;
-        top: 70px;
-        flex-direction: column;
-        background: white;
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
-        padding: 2rem 0;
-    }
-
-    .nav-menu.active {
-        left: 0;
-    }
-
-    .nav-toggle {
-        display: flex;
-    }
 
     .hero h1 {
         font-size: 3rem;
@@ -3042,5 +3092,548 @@ body {
     
     .work-section h2 {
         font-size: 2rem;
+    }
+}
+
+/* Pre-paint reveal state.
+   script.js adds .animate-on-scroll at runtime, which sets opacity:0 - so the
+   content used to paint visible, then snap invisible, then fade in. Declaring
+   the same state up front against html.js removes that flash. The `js` class is
+   set by an inline snippet in each <head>, so no-JS visitors keep everything
+   visible.
+   KEEP THIS LIST IN SYNC with the querySelectorAll list at the top of script.js. */
+/* Gated on no-preference: a reduced-motion visitor should never see the
+   hidden state at all, so there is nothing to un-hide for them. */
+@media (prefers-reduced-motion: no-preference) {
+    html.js .approach-card:not(.in-view),
+    html.js .capability-card:not(.in-view),
+    html.js .process-step:not(.in-view),
+    html.js .philosophy-card:not(.in-view),
+    html.js .service-card:not(.in-view),
+    html.js .work-card:not(.in-view),
+    html.js .team-card:not(.in-view),
+    html.js .story-stat:not(.in-view),
+    html.js .positioning h2:not(.in-view),
+    html.js .positioning p:not(.in-view),
+    html.js .section-title:not(.in-view),
+    html.js .section-subtitle:not(.in-view),
+    html.js .section-title-dark:not(.in-view),
+    html.js .section-subtitle-dark:not(.in-view),
+    html.js .service-division-header:not(.in-view),
+    html.js .story-content:not(.in-view) {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+}
+
+/* 404 page uses approach-cards as links */
+a.approach-card {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* Contact details are links now; keep them legible and tappable */
+.info-item p a {
+    color: #1d4ed8;
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.2rem 0;
+}
+
+.info-item p a:hover {
+    text-decoration: underline;
+}
+
+
+/* ==========================================================================
+   Homepage revision (Sept 2026) - HemiTech-led service framing, proof strip,
+   self-audit section, About/Contact teasers. Built on the existing palette
+   (#0f172a navy, #2563eb blue) rather than the mockup's tokens, so the page
+   stays consistent with the other nine.
+   ========================================================================== */
+
+/* ---- hero phone line ---- */
+.hero-phone {
+    margin-top: 1.75rem;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.hero-phone a {
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    padding-bottom: 1px;
+}
+
+.hero-phone a:hover {
+    border-bottom-color: #ffffff;
+}
+
+/* ---- proof strip ---- */
+.proof-strip {
+    background: #0b1327;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 1.5rem 0;
+}
+
+.proof-strip ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem 2.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.proof-strip b {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+/* ---- services (four HemiTech areas) ---- */
+.services-home {
+    padding: 8rem 0;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.svc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.75rem;
+    margin-top: 3.5rem;
+}
+
+.svc-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 2rem 1.75rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 1.25rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.svc-card:hover {
+    transform: translateY(-4px);
+    border-color: #bfdbfe;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+.svc-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 0.75rem;
+    background: #0f172a;
+    display: grid;
+    place-items: center;
+    margin-bottom: 0.25rem;
+}
+
+.svc-card h3 {
+    font-size: 1.25rem;
+    color: #0f172a;
+    line-height: 1.25;
+}
+
+.svc-claim {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: #1d4ed8;
+}
+
+.svc-card p:not(.svc-claim) {
+    font-size: 0.9375rem;
+    color: #475569;
+    margin: 0;
+}
+
+/* ---- HemiCreatives band ---- */
+.creatives-band {
+    background: linear-gradient(135deg, #f5f3ff 0%, #fdf4ff 100%);
+    border-top: 1px solid #e9d5ff;
+    border-bottom: 1px solid #e9d5ff;
+    padding: 3rem 0;
+}
+
+.creatives-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.creatives-copy h2 {
+    font-size: 1.5rem;
+    color: #0f172a;
+    margin-bottom: 0.4rem;
+}
+
+.creatives-copy p {
+    margin: 0;
+    color: #475569;
+    font-size: 1rem;
+    max-width: 60ch;
+}
+
+.creatives-copy .creatives-brand {
+    color: #7c3aed;
+}
+
+.btn-creative {
+    background: #6d28d9;
+    color: #ffffff;
+    border-radius: 50px;
+    padding: 0.85rem 1.75rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.3s ease;
+}
+
+.btn-creative:hover {
+    background: #5b21b6;
+}
+
+/* ---- self-audit ---- */
+.audit {
+    padding: 8rem 0;
+    background: #f0f9ff;
+    border-bottom: 1px solid #e0f2fe;
+}
+
+.audit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+    align-items: start;
+    margin-top: 3rem;
+}
+
+ol.audit-checks {
+    list-style: none;
+    counter-reset: audit;
+    margin: 0;
+    padding: 0;
+}
+
+ol.audit-checks li {
+    counter-increment: audit;
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid #dbeafe;
+    font-size: 1rem;
+    color: #1e293b;
+}
+
+ol.audit-checks li::before {
+    content: counter(audit);
+    font-weight: 700;
+    font-size: 0.8125rem;
+    color: #1d4ed8;
+    min-width: 1.15rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.audit-bands {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.75rem;
+}
+
+.audit-band {
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    padding: 1rem 1.15rem;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.85rem;
+}
+
+.audit-band b {
+    font-weight: 700;
+    font-size: 1rem;
+    min-width: 2.6rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.audit-band span {
+    font-size: 0.9375rem;
+    color: #475569;
+}
+
+.band-good b  { color: #15803d; }
+.band-mid b   { color: #b45309; }
+.band-poor b  { color: #b91c1c; }
+
+.audit-pledge {
+    font-weight: 600;
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    color: #0f172a;
+    margin: 0 0 1.5rem;
+    max-width: 40ch;
+}
+
+/* ---- about teaser ---- */
+.about-teaser {
+    padding: 7rem 0;
+    background: #ffffff;
+}
+
+.about-teaser-inner {
+    max-width: 720px;
+}
+
+.about-teaser h2 {
+    font-size: 2.25rem;
+    color: #0f172a;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.about-teaser p {
+    color: #475569;
+    font-size: 1.0625rem;
+    margin-bottom: 1rem;
+}
+
+.about-tagline {
+    font-weight: 700;
+    font-size: 1.1875rem;
+    color: #1d4ed8;
+    letter-spacing: 0.02em;
+    margin: 1.5rem 0 2rem;
+}
+
+/* ---- footer freshness line ---- */
+.footer-updated {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.8125rem;
+}
+
+@media (max-width: 1024px) {
+    .svc-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 900px) {
+    .audit-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+
+@media (max-width: 768px) {
+    .svc-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+    .services-home,
+    .audit,
+    .about-teaser { padding: 5rem 0; }
+    .proof-strip ul { gap: 0.6rem 1.5rem; font-size: 0.875rem; }
+    .creatives-inner { flex-direction: column; align-items: flex-start; }
+    .about-teaser h2 { font-size: 1.75rem; }
+}
+
+
+/* Section heads on the revised homepage follow the site convention (centred),
+   while the grids inside them stay left-aligned for readability. */
+.services-home .container,
+.audit .container,
+.work-section .container,
+.about-teaser .container {
+    text-align: center;
+}
+
+.svc-grid,
+.audit-grid,
+.work-grid {
+    text-align: left;
+}
+
+.about-teaser-inner {
+    margin: 0 auto;
+}
+
+.services-home .section-subtitle-dark,
+.audit .section-subtitle-dark {
+    margin: 0 auto 0.5rem;
+}
+
+/* The audit's two columns read better with a little breathing room under the head */
+.audit .section-subtitle-dark {
+    margin-bottom: 0;
+}
+
+
+/* The homepage hero no longer carries the stat row, so it needs less bottom
+   padding than the inner-page heroes that still use the shared .hero rule. */
+.hero-home {
+    padding-bottom: 6rem;
+}
+
+@media (max-width: 768px) {
+    .hero-home {
+        padding-bottom: 4rem;
+    }
+}
+
+
+/* ==========================================================================
+   Navigation breakpoint - 768px.
+   Kept in one block, late in the file, because the base .logo rule appears
+   further up and would otherwise win on source order.
+   ========================================================================== */
+@media (max-width: 768px) {
+    .navbar .container {
+        padding: 0.75rem 15px;
+    }
+
+    /* The 44px hamburger sets the bar height, so match the logo to it:
+       44px + 12px padding top/bottom + 1px border = --nav-height-mobile */
+    .logo {
+        height: 44px;
+    }
+
+    .nav-toggle {
+        display: flex;
+    }
+
+    .nav-menu {
+        position: fixed;
+        left: 0;
+        top: var(--nav-height-mobile);
+        flex-direction: column;
+        background: white;
+        width: 100%;
+        max-height: calc(100vh - var(--nav-height-mobile));
+        overflow-y: auto;
+        text-align: center;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.08);
+        padding: 2rem 0;
+    }
+
+    .nav-menu.active {
+        transform: translateX(0);
+    }
+
+    .nav-menu li a {
+        display: block;
+        padding: 0.9rem 1rem;
+    }
+}
+
+/* HemiCreatives sub-brand lockup (Services, Division 02).
+   These three classes existed in the markup with no CSS, so the name rendered
+   as the run-on word "HemiCreatives" in flat body colour. */
+.hemi-brand {
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.creatives-brand {
+    color: #7c3aed;
+    font-weight: 700;
+}
+
+.division-label {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #475569;
+}
+
+/* Spam honeypot - visually and programmatically hidden, but not display:none
+   (some bots skip display:none fields) */
+.form-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   Accessibility overrides - MUST stay last in this file so they win the
+   cascade against the animation and gradient-text declarations above.
+   ========================================================================== */
+
+/* WCAG 2.3.3 - respect the OS "reduce motion" setting.
+   The site runs 47 animations (18 of them infinite), a cursor spotlight and
+   a scroll handler; without this there is no escape hatch for users with
+   vestibular sensitivity. animation-delay is zeroed too, otherwise elements
+   with `both` fill mode stay invisible through their delay. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0s !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0s !important;
+        scroll-behavior: auto !important;
+    }
+
+    /* Purely decorative motion layers add nothing without animation */
+    .particles,
+    .spotlight,
+    .gradient-orb,
+    .glow-orb,
+    .scroll-indicator {
+        display: none !important;
+    }
+
+    /* Scroll-reveal elements must never be left stuck at opacity 0 */
+    .animate-on-scroll {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* Windows High Contrast / forced-colors: `background-clip: text` with a
+   transparent fill renders as NO TEXT AT ALL. Restore a solid fill for every
+   gradient-text element so the copy survives. */
+@media (forced-colors: active) {
+    .hero h1,
+    .stat-number,
+    .card-icon,
+    .card-number,
+    .marker-inner,
+    .contact-form h2,
+    .contact-info h2,
+    .story-stat-number,
+    .philosophy-number,
+    .philosophy-icon,
+    .philosophy-warm .philosophy-number,
+    .philosophy-warm .philosophy-icon,
+    .philosophy-warm .philosophy-card:hover h3,
+    .services-creative .service-icon,
+    .service-icon,
+    .service-card:hover h3,
+    .services-creative .service-card:hover h3,
+    .work-card:hover h3 {
+        -webkit-text-fill-color: currentColor;
+        background: none;
+        color: CanvasText;
+    }
+
+    /* Keep the focus ring visible in forced-colors mode */
+    :focus-visible {
+        outline: 3px solid Highlight;
+        outline-offset: 3px;
     }
 }

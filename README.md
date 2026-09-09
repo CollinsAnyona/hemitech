@@ -1,10 +1,10 @@
-# HemiTech — Technology & Design Studio
+# HemiTech - Technology & Design Studio
 
 Live at **[hemitech.co.ke](https://hemitech.co.ke)**
 
 Multi-page website for HemiTech, a hybrid technology and creative agency based
 in Nairobi, Kenya. Nine pages (home, about, services, work, contact, careers,
-privacy policy, terms, cookie policy) built as a pure static site — no
+privacy policy, terms, cookie policy) built as a pure static site - no
 frameworks, no build step. Auto-deploys to Vercel on every push to `main`.
 
 ## Highlights

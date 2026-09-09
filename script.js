@@ -3,60 +3,73 @@ const animatedEls = document.querySelectorAll(
     '.approach-card, .capability-card, .process-step, .philosophy-card, .service-card, .work-card, .team-card, .story-stat, .positioning h2, .positioning p, .section-title, .section-subtitle, .section-title-dark, .section-subtitle-dark, .service-division-header, .story-content'
 );
 
-if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('in-view');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.15 });
+const revealAll = () => animatedEls.forEach(el => el.classList.add('in-view'));
 
-    animatedEls.forEach(el => {
-        el.classList.add('animate-on-scroll');
-        observer.observe(el);
-    });
+if ('IntersectionObserver' in window) {
+    try {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        animatedEls.forEach(el => {
+            el.classList.add('animate-on-scroll');
+            observer.observe(el);
+        });
+    } catch (err) {
+        // Never leave content stranded at opacity 0
+        revealAll();
+    }
+} else {
+    revealAll();
 }
 
 // Mobile Navigation Toggle
 const navToggle = document.getElementById('navToggle');
 const navMenu = document.getElementById('navMenu');
 
-if (navToggle) {
-    navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-        const isOpen = navMenu.classList.contains('active');
-        navToggle.setAttribute('aria-expanded', String(isOpen));
+if (navToggle && navMenu) {
+    const setMenu = (open) => {
+        navMenu.classList.toggle('active', open);
+        navToggle.classList.toggle('active', open);
+        navToggle.setAttribute('aria-expanded', String(open));
+        // Stop the page scrolling behind the open panel
+        document.body.classList.toggle('nav-open', open);
+    };
 
-        // Animate hamburger icon
-        const spans = navToggle.querySelectorAll('span');
-        if (isOpen) {
-            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-            spans[1].style.opacity = '0';
-            spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
-        } else {
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
+    navToggle.addEventListener('click', () => {
+        setMenu(!navMenu.classList.contains('active'));
+    });
+
+    // Escape closes the menu and returns focus to the trigger
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+            setMenu(false);
+            navToggle.focus();
         }
+    });
+
+    // Clicking outside the panel closes it
+    document.addEventListener('click', (e) => {
+        if (!navMenu.classList.contains('active')) return;
+        if (navMenu.contains(e.target) || navToggle.contains(e.target)) return;
+        setMenu(false);
+    });
+
+    // Close after choosing a destination
+    navMenu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => setMenu(false));
+    });
+
+    // Reset state if the viewport grows back past the mobile breakpoint
+    window.matchMedia('(min-width: 769px)').addEventListener('change', (e) => {
+        if (e.matches) setMenu(false);
     });
 }
-
-// Close mobile menu when clicking on a link
-const navLinks = document.querySelectorAll('.nav-menu a');
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        if (navMenu.classList.contains('active')) {
-            navMenu.classList.remove('active');
-            navToggle.setAttribute('aria-expanded', 'false');
-            const spans = navToggle.querySelectorAll('span');
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
-        }
-    });
-});
 
 // Keep footer copyright year current
 const yearEl = document.getElementById('year');
@@ -75,12 +88,17 @@ if (contactForm) {
         submitBtn.textContent = 'Sending...';
         submitBtn.disabled = true;
         
+        // The status node lives in the markup with role="status"/aria-live so
+        // screen readers announce the result. Only create it as a fallback.
         let msgEl = contactForm.querySelector('.form-status');
         if (!msgEl) {
             msgEl = document.createElement('div');
             msgEl.className = 'form-status';
+            msgEl.setAttribute('role', 'status');
+            msgEl.setAttribute('aria-live', 'polite');
             contactForm.appendChild(msgEl);
         }
+        msgEl.textContent = '';
 
         try {
             const formData = new FormData(contactForm);
@@ -95,10 +113,12 @@ if (contactForm) {
                 msgEl.className = 'form-status form-status--success';
                 contactForm.reset();
             } else {
+                msgEl.setAttribute('aria-live', 'assertive');
                 msgEl.textContent = 'Something went wrong. Please email us at hello@hemitech.co.ke';
                 msgEl.className = 'form-status form-status--error';
             }
         } catch (error) {
+            msgEl.setAttribute('aria-live', 'assertive');
             msgEl.textContent = 'Something went wrong. Please email us at hello@hemitech.co.ke';
             msgEl.className = 'form-status form-status--error';
         }
@@ -124,35 +144,54 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Add scroll effect to navbar
-let lastScroll = 0;
+// Add scroll effect to navbar (rAF-throttled - this fired on every scroll tick
+// and wrote inline styles each time)
 const navbar = document.querySelector('.navbar');
 
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    
-    if (currentScroll > 100) {
-        navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.style.boxShadow = 'none';
-        navbar.classList.remove('scrolled');
-    }
-    
-    lastScroll = currentScroll;
-});
+if (navbar) {
+    let ticking = false;
+    const applyScrollState = () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 100);
+        ticking = false;
+    };
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(applyScrollState);
+            ticking = true;
+        }
+    }, { passive: true });
+    applyScrollState();
+}
 
-// Spotlight effect that follows cursor
+// Spotlight effect that follows cursor.
+// Skipped entirely for reduced-motion users and on touch/coarse pointers,
+// where it costs battery and does nothing visible.
 const spotlight = document.querySelector('.spotlight');
-if (spotlight) {
-    document.addEventListener('mousemove', (e) => {
-        const hero = document.querySelector('.hero');
-        if (hero && hero.contains(e.target)) {
+const wantsMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePointer = window.matchMedia('(pointer: fine)').matches;
+
+if (spotlight && wantsMotion && finePointer) {
+    const hero = document.querySelector('.hero');
+    let pending = false;
+    let lastEvent = null;
+
+    const paint = () => {
+        pending = false;
+        if (!lastEvent) return;
+        if (hero && hero.contains(lastEvent.target)) {
             spotlight.style.opacity = '1';
-            spotlight.style.left = e.clientX - 300 + 'px';
-            spotlight.style.top = e.clientY - 300 + 'px';
+            spotlight.style.transform =
+                `translate(${lastEvent.clientX - 300}px, ${lastEvent.clientY - 300}px)`;
         } else {
             spotlight.style.opacity = '0';
         }
-    });
+    };
+
+    document.addEventListener('mousemove', (e) => {
+        lastEvent = e;
+        if (!pending) {
+            window.requestAnimationFrame(paint);
+            pending = true;
+        }
+    }, { passive: true });
 }
