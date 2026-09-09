@@ -21,6 +21,15 @@ function chooseBackend() {
 
 export const BACKEND = chooseBackend();
 
+/**
+ * Pathname prefix for stored objects. Configurable so an acceptance run can
+ * be pointed at a throwaway prefix instead of the live one: object storage is
+ * persistent, unlike the fs backend's temp directory, so without this a test
+ * run and the real marketing assets would share a namespace and collide.
+ */
+export const PREFIX = (process.env.MEDIA_PREFIX || 'media').replace(/^\/+|\/+$/g, '');
+const PENDING_PREFIX = `${PREFIX}-pending`;
+
 /** Public URL for a stored object. */
 function publicUrl(filename, blobUrl) {
   const base = (process.env.MEDIA_PUBLIC_BASE || '').replace(/\/+$/, '');
@@ -192,7 +201,7 @@ const blobAdapter = {
   async exists(filename) {
     const { head } = await blobApi();
     try {
-      await head(`media/${filename}`);
+      await head(`${PREFIX}/${filename}`);
       return true;
     } catch {
       return false;
@@ -200,7 +209,7 @@ const blobAdapter = {
   },
   async put(filename, buffer, contentType) {
     const { put } = await blobApi();
-    const result = await put(`media/${filename}`, buffer, {
+    const result = await put(`${PREFIX}/${filename}`, buffer, {
       access: 'public',
       contentType,
       addRandomSuffix: false,          // we control naming and collisions
@@ -217,7 +226,7 @@ const blobAdapter = {
   async head(filename) {
     const { head } = await blobApi();
     try {
-      const meta = await head(`media/${filename}`);
+      const meta = await head(`${PREFIX}/${filename}`);
       return {
         filename,
         bytes: meta.size,
@@ -259,7 +268,7 @@ const blobAdapter = {
     if (!meta) return false;
     try {
       const { copy } = await blobApi();
-      await copy(meta.blobUrl, `media/${filename}`, {
+      await copy(meta.blobUrl, `${PREFIX}/${filename}`, {
         access: 'public',
         contentType,
         addRandomSuffix: false,
@@ -273,7 +282,7 @@ const blobAdapter = {
 
   async putPending(filename, record) {
     const { put } = await blobApi();
-    await put(`pending/${filename}.json`, JSON.stringify(record), {
+    await put(`${PENDING_PREFIX}/${filename}.json`, JSON.stringify(record), {
       access: 'public',
       contentType: 'application/json',
       addRandomSuffix: false,
@@ -283,7 +292,7 @@ const blobAdapter = {
   async getPending(filename) {
     const { head } = await blobApi();
     try {
-      const meta = await head(`pending/${filename}.json`);
+      const meta = await head(`${PENDING_PREFIX}/${filename}.json`);
       const res = await fetch(meta.url, { cache: 'no-store' });
       if (!res.ok) return null;
       return await res.json();
@@ -294,7 +303,7 @@ const blobAdapter = {
   async delPending(filename) {
     const { del, head } = await blobApi();
     try {
-      const meta = await head(`pending/${filename}.json`);
+      const meta = await head(`${PENDING_PREFIX}/${filename}.json`);
       await del(meta.url);
     } catch {
       // idempotent: already gone
@@ -303,7 +312,7 @@ const blobAdapter = {
   async listPending() {
     const { list } = await blobApi();
     try {
-      const { blobs } = await list({ prefix: 'pending/' });
+      const { blobs } = await list({ prefix: `${PENDING_PREFIX}/` });
       const out = [];
       for (const b of blobs) {
         try {
@@ -319,9 +328,9 @@ const blobAdapter = {
 
   async list() {
     const { list } = await blobApi();
-    const { blobs } = await list({ prefix: 'media/' });
+    const { blobs } = await list({ prefix: `${PREFIX}/` });
     return blobs.map((b) => {
-      const filename = b.pathname.replace(/^media\//, '');
+      const filename = b.pathname.replace(new RegExp(`^${PREFIX}/`), '');
       return {
         url: publicUrl(filename, b.url),
         filename,
@@ -334,7 +343,7 @@ const blobAdapter = {
   async del(filename) {
     const { del, head } = await blobApi();
     try {
-      const meta = await head(`media/${filename}`);
+      const meta = await head(`${PREFIX}/${filename}`);
       await del(meta.url);
     } catch {
       // idempotent: already gone

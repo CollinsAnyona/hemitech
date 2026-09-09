@@ -119,13 +119,33 @@ npm run test:media
 
 Boots the dev server on port 3937 against a throwaway temp directory with the
 `fs` backend and drives the real routes over HTTP — nothing is mocked, so a
-pass is evidence the contract above actually holds. 128 checks covering auth,
+pass is evidence the contract above actually holds. 133 checks covering auth,
 magic-byte type detection, filename sanitising, path traversal, collision
 suffixing, public read headers, byte-exact round-trip, listing, idempotent
 delete, the rate limit, the full three-step client-upload flow (including a
 lying upload being deleted rather than merely refused), the abandoned-upload
 sweep, and the JSON-on-every-error-path guarantee. Exits
 non-zero on any failure and prints the server log.
+
+The same suite runs against a real Blob store, which is the only way to prove
+the production storage path rather than the logic alone:
+
+```bash
+BACKEND_UNDER_TEST=blob BLOB_READ_WRITE_TOKEN=... MEDIA_PUBLIC_BASE=https://<store>.public.blob.vercel-storage.com/media   bash scripts/acceptance.sh
+```
+
+`MEDIA_PUBLIC_BASE` must be the store's **own** public base with `/media`
+appended, not the brand domain: the suite fetches the URLs the API returns, so
+they have to resolve without the edge rewrite in front of them. Two checks are
+skipped in blob mode and say so in the output -- `nosniff` and `immutable` are
+applied by `vercel.json` to `/media/*` on the brand domain, so fetching the
+store directly bypasses the layer that adds them. They belong to the
+post-deploy live-domain check instead.
+
+**The store must be public.** `access: 'public'` is the only value the SDK
+accepts (`access must be "public"` otherwise), and more fundamentally Buffer
+fetches anonymously, so a private store returns `403 Forbidden` to the only
+client that matters.
 
 ### Client uploads (files over 4.5 MB)
 
@@ -194,6 +214,18 @@ Small files take the simple path, large files take the safe one, and the
 caller picks on size - putting a token round-trip in front of every 200 KB PNG
 would buy nothing.
 
+### The rewrite hardcodes the store hostname
+
+`vercel.json` rewrites `/media/:path*` to
+`https://ert8assyjv4xybhe.public.blob.vercel-storage.com/media/:path*`.
+
+That hostname is baked in, because a Vercel rewrite destination cannot read an
+environment variable. If the Blob store is ever deleted and recreated, the new
+store gets a different hostname and `/media/*` will silently 404 while
+`/api/media` keeps returning URLs that look right. `vercel.json` cannot carry
+a comment either -- it is parsed as strict JSON -- so the warning lives here.
+If you recreate the store, update the rewrite and `MEDIA_PUBLIC_BASE` together.
+
 ### Known limitations
 
 Read these before relying on this in production.
@@ -205,9 +237,19 @@ larger than 4.5 MB on Vercel when using this method." The server route is not
 broken, it is simply the wrong path for video. The three-step flow exists for
 that and carries the same 200 MB ceiling.
 
-**2. The Vercel Blob path has never run against a real store.** All 67
-acceptance checks exercise the `fs` backend. `blobAdapter` in `storage.js` is
-unverified against live Blob storage because no store exists yet.
+**2. Verified on both backends.** `fs`: **131 passed, 0 failed**. Real Vercel
+Blob store: **124 passed, 0 failed**, with three checks skipped and labelled in
+the output (see below). The gap between the counts is those skips plus a
+handful of `fs`-only assertions about path containment and metadata sidecars,
+which have no meaning on object storage.
+
+Two things only the real store could reveal, both now fixed: `clienttoken.js`
+had hardcoded the `media/` pathname while `storage.js` honoured the prefix, so
+a credential authorised a write to one path while `verify` looked at another;
+and the sweep depended on rewriting a stored reservation, which is not
+reliable against object storage. Reservations are now write-once and the sweep
+horizon is configurable via `MEDIA_SWEEP_AFTER_MS` (default 24h) so the real
+code path can be tested by waiting rather than by faking a record.
 
 **3. `/media/*` on the brand domain is not live by default.** With no rewrite
 configured, the API returns the Blob store's own public URL
@@ -216,7 +258,13 @@ configured, the API returns the Blob store's own public URL
 correctly typed, so either satisfies Buffer; only the brand-domain form needs
 the rewrite documented above.
 
-**4. "30 uploads per hour" is not a guarantee.** The counter lives in the
+**4. Deleting an object does not immediately stop it being served.** Vercel
+Blob serves through a CDN with `s-maxage=300`, so a deleted file can still be
+returned from the edge for up to five minutes. Deletion is authoritative at the
+store immediately -- `head`, `list` and the API all reflect it at once -- but
+the public URL is not. Worth knowing before assuming a takedown is instant.
+
+**5. "30 uploads per hour" is not a guarantee.** The counter lives in the
 module scope of one warm serverless instance. Vercel may run several
 concurrently and a cold start resets the window, so the real ceiling is *30
 per hour per warm instance*, not a global 30. This is a deliberate choice, not

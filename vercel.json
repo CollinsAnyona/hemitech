@@ -87,6 +87,12 @@
       ]
     }
   ],
+  "rewrites": [
+    {
+      "source": "/media/:path*",
+      "destination": "https://ert8assyjv4xybhe.public.blob.vercel-storage.com/media/:path*"
+    }
+  ],
   "crons": [
     {
       "path": "/api/media/sweep",

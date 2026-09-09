@@ -16,8 +16,33 @@ cd "$(dirname "$0")/.."
 
 PORT="${PORT:-3937}"
 BASE="http://127.0.0.1:${PORT}"
+
+# Which storage backend to exercise. "fs" is the default and needs nothing.
+# "blob" runs the same checks against a real Vercel Blob store and requires
+# BLOB_READ_WRITE_TOKEN plus MEDIA_PUBLIC_BASE (the store's own public base
+# with /media appended) in the environment -- see README.
+BACKEND_UNDER_TEST="${BACKEND_UNDER_TEST:-fs}"
+
+if [ "$BACKEND_UNDER_TEST" = "blob" ]; then
+  : "${BLOB_READ_WRITE_TOKEN:?blob mode needs BLOB_READ_WRITE_TOKEN}"
+  : "${BLOB_STORE_BASE:?blob mode needs BLOB_STORE_BASE, e.g. https://<id>.public.blob.vercel-storage.com}"
+  # Object storage is persistent, so every run gets its own throwaway prefix.
+  # Sharing one namespace across runs makes the collision suffixes bleed
+  # between them (a rerun sees the last run's files and appends -2), and it
+  # would put test junk alongside real marketing assets. Deleted on exit.
+  MEDIA_PREFIX="acceptance-$(date +%s)-$$"
+  export MEDIA_PREFIX
+  MEDIA_PUBLIC_BASE="${BLOB_STORE_BASE%/}/${MEDIA_PREFIX}"
+  MEDIA_ORIGIN="$MEDIA_PUBLIC_BASE"
+else
+  MEDIA_PUBLIC_BASE="${BASE}/media"
+  MEDIA_ORIGIN="${BASE}/media"
+fi
 TOKEN="acceptance-$(date +%s)-$$"
 CRON_SECRET_VALUE="acceptance-cron-$(date +%s)-$$"
+# Real sweep horizon is 24h. Shortened here so the code path can be
+# exercised by waiting a few seconds rather than faking a stored record.
+SWEEP_MS=4000
 WORK="$(mktemp -d 2>/dev/null || mktemp -d -t media)"
 MEDIA="${WORK}/media"
 FIX="${WORK}/fixtures"
@@ -55,6 +80,26 @@ cleanup() {
     wait "$SERVER_PID" 2>/dev/null
   fi
   rm -rf "$WORK"
+  # On blob, the store outlives the run, so remove everything this run wrote.
+  if [ "$BACKEND_UNDER_TEST" = "blob" ] && [ -n "${MEDIA_PREFIX:-}" ]; then
+    printf '
+cleaning up blob prefix %s ... ' "$MEDIA_PREFIX"
+    node -e '
+      const prefixes = [process.env.MEDIA_PREFIX + "/", process.env.MEDIA_PREFIX + "-pending/"];
+      import("@vercel/blob").then(async ({ list, del }) => {
+        let n = 0;
+        for (const prefix of prefixes) {
+          let cursor;
+          do {
+            const page = await list({ prefix, cursor });
+            if (page.blobs.length) { await del(page.blobs.map((b) => b.url)); n += page.blobs.length; }
+            cursor = page.cursor;
+          } while (cursor);
+        }
+        console.log("deleted " + n + " object(s)");
+      }).catch((e) => console.log("cleanup failed: " + e.message));
+    ' 2>&1 | tail -1
+  fi
 }
 trap cleanup EXIT
 
@@ -85,10 +130,12 @@ printf '\x00\x00\x00\x18ftypisom\x00\x00\x02\x00isomiso2mp41' > "${FIX}/clip.mp4
 
 # ------------------------------------------------------------------ server ---
 
-group "Starting dev server (fs backend, ${MEDIA})"
+group "Starting dev server (${BACKEND_UNDER_TEST} backend, reads from ${MEDIA_ORIGIN})"
 
-MEDIA_STORAGE=fs \
+MEDIA_STORAGE="$BACKEND_UNDER_TEST" \
+MEDIA_PUBLIC_BASE="$MEDIA_PUBLIC_BASE" \
 MEDIA_UPLOAD_TOKEN="$TOKEN" \
+MEDIA_SWEEP_AFTER_MS="$SWEEP_MS" \
 CRON_SECRET="$CRON_SECRET_VALUE" \
 MEDIA_DIR="$MEDIA" \
 MEDIA_DEV_ORIGIN="$BASE" \
@@ -99,8 +146,11 @@ SERVER_PID=$!
 ready=""
 for _ in $(seq 1 60); do
   # A 404 from /media means the server is up and routing; that is enough.
-  code="$(curl -s -o /dev/null -w '%{http_code}' "${BASE}/media/probe-not-there.png" 2>/dev/null)"
-  if [ "$code" = "404" ]; then ready=1; break; fi
+  # Readiness is about the dev server being up, so this one deliberately
+  # probes the server itself rather than MEDIA_ORIGIN, which on blob is remote
+  # and would answer 404 before the server had even started.
+  code="$(curl -s -o /dev/null -w '%{http_code}' "${BASE}/api/media" 2>/dev/null)"
+  if [ "$code" = "401" ]; then ready=1; break; fi
   if ! kill -0 "$SERVER_PID" 2>/dev/null; then break; fi
   sleep 0.25
 done
@@ -111,7 +161,7 @@ if [ -z "$ready" ]; then
   cat "$SERVER_LOG"
   exit 1
 fi
-ok "dev server listening on ${BASE}"
+ok "dev server listening on ${BASE} (storage: ${BACKEND_UNDER_TEST})"
 
 # ----------------------------------------------------------------- helpers ---
 
@@ -120,13 +170,17 @@ AUTH="Authorization: Bearer ${TOKEN}"
 # status <method> <path> [curl args...]  -> prints the HTTP status code
 status() {
   method="$1"; path="$2"; shift 2
-  curl -s -o /dev/null -w '%{http_code}' -X "$method" "$@" "${BASE}${path}"
+  if [ "$method" = "HEAD" ]; then
+    curl -s -o /dev/null -w '%{http_code}' -I --max-time 30 "$@" "${BASE}${path}"
+  else
+    curl -s -o /dev/null -w '%{http_code}' -X "$method" --max-time 120 "$@" "${BASE}${path}"
+  fi
 }
 
 # body <method> <path> [curl args...]  -> prints the response body
 body() {
   method="$1"; path="$2"; shift 2
-  curl -s -X "$method" "$@" "${BASE}${path}"
+  curl -s -X "$method" --max-time 120 "$@" "${BASE}${path}"
 }
 
 # expect_status <label> <expected> <method> <path> [curl args...]
@@ -142,6 +196,40 @@ expect_status() {
 
 expect_eq() {
   if [ "$2" = "$3" ]; then ok "$1"; else bad "$1" "$2" "$3"; fi
+}
+
+# Public reads must go wherever the objects actually live: the dev server on
+# fs, the store itself on blob. Relative paths would always hit the dev
+# server, which on blob serves nothing.
+# A refusal is a refusal. Blob answers 401 where the local stand-in answers
+# 403 and vice versa; what matters is that the write did not happen.
+expect_refused() {
+  case "$2" in
+    2*) bad "$1" "a 4xx refusal" "HTTP $2 - the write was ACCEPTED" ;;
+    4*) ok "$1 (HTTP $2)" ;;
+    *)  bad "$1" "a 4xx refusal" "HTTP $2" ;;
+  esac
+}
+
+expect_url_status() {
+  label="$1"; want="$2"; method="$3"; url="$4"; shift 4
+  if [ "$method" = "HEAD" ]; then
+    got="$(curl -s -o /dev/null -w '%{http_code}' -I --max-time 30 "$@" "$url")"
+  else
+    got="$(curl -s -o /dev/null -w '%{http_code}' -X "$method" --max-time 60 "$@" "$url")"
+  fi
+  if [ "$got" = "$want" ]; then ok "$label"; else bad "$label" "HTTP $want" "HTTP $got"; fi
+}
+
+# Does the store hold this object? Asked through the API rather than by
+# stat-ing a directory, so the same assertion is valid on fs and on Blob.
+object_exists() {
+  body GET /api/media -H "$AUTH" | node -e 'let raw="";process.stdin.on("data",c=>raw+=c);process.stdin.on("end",()=>{try{const f=JSON.parse(raw).files||[];process.stdout.write(f.some(x=>x.filename===process.argv[1])?"yes":"no");}catch{process.stdout.write("error");}});' "$1"
+}
+
+expect_absent() {
+  got="$(object_exists "$2")"
+  if [ "$got" = "no" ]; then ok "$1"; else bad "$1" "absent from the store" "$got"; fi
 }
 
 # Read one field out of a JSON body. Avoids depending on jq being installed.
@@ -179,12 +267,21 @@ res="$(body POST /api/media -H "$AUTH" -F "file=@${FIX}/pixel.png" -F "name=Bran
 expect_eq "caller name is sanitised to a safe filename" "brand-lockup-v2.png" "$(printf '%s' "$res" | field filename)"
 expect_eq "response reports the detected content type" "image/png" "$(printf '%s' "$res" | field contentType)"
 expect_eq "response reports the byte count" "67" "$(printf '%s' "$res" | field bytes)"
-expect_eq "response url points at the media path" "${BASE}/media/brand-lockup-v2.png" "$(printf '%s' "$res" | field url)"
+expect_eq "response url points at the media path" "${MEDIA_ORIGIN}/brand-lockup-v2.png" "$(printf '%s' "$res" | field url)"
 
-if [ -f "${MEDIA}/hero-shot.png" ]; then
-  ok "file landed inside the media directory"
+if [ "$(object_exists hero-shot.png)" = "yes" ]; then
+  ok "the upload is in the store"
 else
-  bad "file landed inside the media directory" "${MEDIA}/hero-shot.png exists" "missing"
+  bad "the upload is in the store" "hero-shot.png present" "absent"
+fi
+# Path containment is an fs-specific property; on Blob the "media/" pathname
+# prefix plays the same role and is covered by the listing above.
+if [ "$BACKEND_UNDER_TEST" = "fs" ]; then
+  if [ -f "${MEDIA}/hero-shot.png" ]; then
+    ok "file landed inside the media directory"
+  else
+    bad "file landed inside the media directory" "${MEDIA}/hero-shot.png exists" "missing"
+  fi
 fi
 
 res="$(body POST /api/media -H "$AUTH" -F "file=@${FIX}/doc.pdf" -F "name=rate-card")"
@@ -293,29 +390,42 @@ expect_eq "third upload continues the sequence" "collide-3.png" "$(printf '%s' "
 
 group "Public read"
 
-expect_status "GET /media/<file> needs no token" 200 GET /media/hero-shot.png
-expect_status "HEAD /media/<file> needs no token" 200 HEAD /media/hero-shot.png
-expect_status "GET a missing file is 404" 404 GET /media/does-not-exist.png
+expect_url_status "GET /media/<file> needs no token" 200 GET "${MEDIA_ORIGIN}/hero-shot.png"
+expect_url_status "HEAD /media/<file> needs no token" 200 HEAD "${MEDIA_ORIGIN}/hero-shot.png"
+expect_url_status "GET a missing file is 404" 404 GET "${MEDIA_ORIGIN}/does-not-exist.png"
 
-ctype="$(curl -s -o /dev/null -w '%{content_type}' "${BASE}/media/hero-shot.png")"
+ctype="$(curl -s -o /dev/null -w '%{content_type}' --max-time 30 "${MEDIA_ORIGIN}/hero-shot.png")"
 case "$ctype" in
   image/png*) ok "public read serves the detected Content-Type" ;;
   *)          bad "public read serves the detected Content-Type" "image/png" "$ctype" ;;
 esac
 
-hdrs="$(curl -s -D - -o /dev/null "${BASE}/media/hero-shot.png")"
-case "$hdrs" in
-  *osniff*) ok "public read sends X-Content-Type-Options: nosniff" ;;
-  *)        bad "public read sends X-Content-Type-Options: nosniff" "nosniff" "absent" ;;
-esac
-case "$hdrs" in
-  *immutable*) ok "public read sends a long immutable cache header" ;;
-  *)           bad "public read sends a long immutable cache header" "immutable" "absent" ;;
-esac
+# These two headers are applied by vercel.json to /media/* on the brand
+# domain. Fetching a Blob store directly bypasses that layer, so on blob they
+# are not assertable locally -- they are what the post-deploy live-domain
+# check exists to confirm. Skipped rather than quietly passed.
+hdrs="$(curl -s -D - -o /dev/null --max-time 30 "${MEDIA_ORIGIN}/hero-shot.png")"
+if [ "$BACKEND_UNDER_TEST" = "fs" ]; then
+  case "$hdrs" in
+    *osniff*) ok "public read sends X-Content-Type-Options: nosniff" ;;
+    *)        bad "public read sends X-Content-Type-Options: nosniff" "nosniff" "absent" ;;
+  esac
+  case "$hdrs" in
+    *immutable*) ok "public read sends a long immutable cache header" ;;
+    *)           bad "public read sends a long immutable cache header" "immutable" "absent" ;;
+  esac
+else
+  printf '  %sSKIP%s  nosniff + immutable headers (added by vercel.json on the brand domain, not by the store; verified post-deploy)
+' "$DIM" "$OFF"
+  case "$hdrs" in
+    *max-age=31536000*) ok "the store itself sends the long max-age we asked for" ;;
+    *)                  bad "the store itself sends the long max-age we asked for" "max-age=31536000" "absent" ;;
+  esac
+fi
 
 # The bytes served back must be byte-identical to the bytes uploaded - this is
 # what Buffer will fetch, so a corrupted round-trip would be silent breakage.
-curl -s -o "${WORK}/roundtrip.png" "${BASE}/media/hero-shot.png"
+curl -s -o "${WORK}/roundtrip.png" --max-time 60 "${MEDIA_ORIGIN}/hero-shot.png"
 if cmp -s "${FIX}/pixel.png" "${WORK}/roundtrip.png"; then
   ok "uploaded bytes round-trip unchanged"
 else
@@ -324,17 +434,17 @@ fi
 
 # Requirement 5 of the brief: HEAD must return the same Content-Type and
 # Content-Length as GET. Buffer issues a HEAD before fetching.
-get_ct="$(curl -s -o /dev/null -w '%{content_type}' "${BASE}/media/brand-lockup-v2.png")"
-head_ct="$(curl -s -o /dev/null -w '%{content_type}' -I "${BASE}/media/brand-lockup-v2.png")"
+get_ct="$(curl -s -o /dev/null -w '%{content_type}' --max-time 30 "${MEDIA_ORIGIN}/brand-lockup-v2.png")"
+head_ct="$(curl -s -o /dev/null -w '%{content_type}' -I --max-time 30 "${MEDIA_ORIGIN}/brand-lockup-v2.png")"
 expect_eq "HEAD reports the same Content-Type as GET" "$get_ct" "$head_ct"
 
-get_len="$(curl -s -D - -o /dev/null "${BASE}/media/brand-lockup-v2.png" | tr -d '\r' | awk 'tolower($1)=="content-length:"{print $2}')"
-head_len="$(curl -s -I "${BASE}/media/brand-lockup-v2.png" | tr -d '\r' | awk 'tolower($1)=="content-length:"{print $2}')"
+get_len="$(curl -s -D - -o /dev/null --max-time 30 "${MEDIA_ORIGIN}/brand-lockup-v2.png" | tr -d '\r' | awk 'tolower($1)=="content-length:"{print $2}')"
+head_len="$(curl -s -I --max-time 30 "${MEDIA_ORIGIN}/brand-lockup-v2.png" | tr -d '\r' | awk 'tolower($1)=="content-length:"{print $2}')"
 expect_eq "HEAD reports the same Content-Length as GET" "$get_len" "$head_len"
 expect_eq "  ...and it matches the real file size" "67" "$head_len"
 
 # Requirement 4: a direct 200, not a redirect chain.
-redirects="$(curl -s -o /dev/null -w '%{num_redirects}' "${BASE}/media/brand-lockup-v2.png")"
+redirects="$(curl -s -o /dev/null -w '%{num_redirects}' --max-time 30 "${MEDIA_ORIGIN}/brand-lockup-v2.png")"
 expect_eq "public read answers directly with no redirect" "0" "$redirects"
 
 # ------------------------------------------------------------------ listing ---
@@ -368,13 +478,24 @@ esac
 group "Delete"
 
 expect_status "DELETE returns 204" 204 DELETE /api/media/hero-shot.png -H "$AUTH"
-expect_status "the deleted file is gone from public read" 404 GET /media/hero-shot.png
+if [ "$BACKEND_UNDER_TEST" = "fs" ]; then
+  expect_url_status "the deleted file is gone from public read" 404 GET "${MEDIA_ORIGIN}/hero-shot.png"
+else
+  # The object was fetched earlier in this run, so the edge has it cached for
+  # up to s-maxage. Deletion is authoritative at the store, not instant at the
+  # CDN. Asserted through the API instead; see README.
+  printf '  %sSKIP%s  deleted file gone from public read (Blob CDN serves a cached copy for up to s-maxage=300)
+' "$DIM" "$OFF"
+fi
 expect_status "DELETE is idempotent" 204 DELETE /api/media/hero-shot.png -H "$AUTH"
 
-if [ -e "${MEDIA}/hero-shot.png.meta.json" ]; then
-  bad "delete removes the metadata sidecar too" "sidecar gone" "sidecar remains"
-else
-  ok "delete removes the metadata sidecar too"
+expect_absent "delete removes the object from the store" hero-shot.png
+if [ "$BACKEND_UNDER_TEST" = "fs" ]; then
+  if [ -e "${MEDIA}/hero-shot.png.meta.json" ]; then
+    bad "delete removes the metadata sidecar too" "sidecar gone" "sidecar remains"
+  else
+    ok "delete removes the metadata sidecar too"
+  fi
 fi
 
 # ------------------------------------------------- client uploads: step 1 ---
@@ -443,7 +564,7 @@ tok1="$(drop_last "$raw")"
 
 CLIENT_FILE="$(printf '%s' "$tok1" | field filename)"
 expect_eq "the name is sanitised at token time" "three-seconds-12s.mp4" "$CLIENT_FILE"
-expect_eq "the promised url is on the media path" "${BASE}/media/three-seconds-12s.mp4" "$(printf '%s' "$tok1" | field url)"
+expect_eq "the promised url is on the media path" "${MEDIA_ORIGIN}/three-seconds-12s.mp4" "$(printf '%s' "$tok1" | field url)"
 
 # Pull the upload object apart with node: it is nested, so `field` cannot.
 upload_field() {
@@ -461,9 +582,10 @@ esac
 
 # The pathname travels as a query parameter, not a path segment. Getting this
 # wrong is the single easiest way to break a replayed request.
+expected_pathname="${MEDIA_PREFIX:-media}/three-seconds-12s.mp4"
 case "$(upload_field "$tok1" url)" in
-  *"?pathname=media%2Fthree-seconds-12s.mp4") ok "the upload url pins the pathname as a query parameter" ;;
-  *) bad "the upload url pins the pathname as a query parameter" "?pathname=media%2F..." "$(upload_field "$tok1" url)" ;;
+  *"?pathname=${MEDIA_PREFIX:-media}%2Fthree-seconds-12s.mp4") ok "the upload url pins the pathname as a query parameter" ;;
+  *) bad "the upload url pins the pathname as a query parameter" "?pathname=<prefix>%2F..." "$(upload_field "$tok1" url)" ;;
 esac
 
 # 30 minutes, not hours.
@@ -477,9 +599,29 @@ esac
 # what the storage service enforces. A token scoped to a prefix, or with no
 # ceiling, would let one upload authorise far more than one write.
 payload_field() {
-  printf '%s' "$1" | node -e 'let raw="";process.stdin.on("data",c=>raw+=c);process.stdin.on("end",()=>{try{const t=JSON.parse(raw).upload.headers.authorization.replace(/^Bearer /,"").replace(/^local_blob_client_/,"");const enc=t.slice(0,t.lastIndexOf("."));const p=JSON.parse(Buffer.from(enc,"base64url").toString("utf8"));const v=p[process.argv[1]];process.stdout.write(v===undefined?"":JSON.stringify(v));}catch{process.stdout.write("<unparseable>");}});' "$2"
+  printf '%s' "$1" | node -e '
+    let raw = "";
+    process.stdin.on("data", (c) => { raw += c; });
+    process.stdin.on("end", async () => {
+      try {
+        const token = JSON.parse(raw).upload.headers.authorization.replace(/^Bearer /, "");
+        let payload;
+        if (token.startsWith("local_blob_client_")) {
+          const bare = token.replace(/^local_blob_client_/, "");
+          const enc = bare.slice(0, bare.lastIndexOf("."));
+          payload = JSON.parse(Buffer.from(enc, "base64url").toString("utf8"));
+        } else {
+          // Real Vercel token: let the SDK decode its own format.
+          const { getPayloadFromClientToken } = await import("@vercel/blob/client");
+          payload = getPayloadFromClientToken(token);
+        }
+        const v = payload[process.argv[1]];
+        process.stdout.write(v === undefined ? "" : JSON.stringify(v));
+      } catch (e) { process.stdout.write("<unparseable>"); }
+    });
+  ' "$2"
 }
-expect_eq "the credential pins the exact pathname" '"media/three-seconds-12s.mp4"' "$(payload_field "$tok1" pathname)"
+expect_eq "the credential pins the exact pathname" "\"${expected_pathname}\"" "$(payload_field "$tok1" pathname)"
 expect_eq "the credential allows only the one requested type" '["video/mp4"]' "$(payload_field "$tok1" allowedContentTypes)"
 expect_eq "the credential carries the 200 MB ceiling" "209715200" "$(payload_field "$tok1" maximumSizeInBytes)"
 expect_eq "the credential forbids a random suffix" "false" "$(payload_field "$tok1" addRandomSuffix)"
@@ -507,6 +649,7 @@ CLIENT_URL="$(upload_field "$tok1" url)"
 # property step 2 exists to prove.
 put_replay() {
   curl -s -o /dev/null -w '%{http_code}' -X PUT "$1" \
+    -H "Expect:" \
     -H "authorization: ${4:-$CLIENT_AUTH}" \
     -H "x-api-version: 9" \
     -H "x-content-type: $2" \
@@ -514,12 +657,14 @@ put_replay() {
     --data-binary "@$3" --max-time 120
 }
 
-expect_eq "a credential cannot be redirected to another path" "403" \
-  "$(put_replay "${BASE}/__blob__?pathname=media%2Fsomewhere-else.mp4" video/mp4 "$VIDEO")"
-expect_eq "a credential cannot be used for another content type" "415" \
+# Point the credential at a different pathname than the one it was minted for.
+elsewhere="$(printf '%s' "$CLIENT_URL" | sed 's/pathname=[^&]*/pathname=somewhere%2Felse.mp4/')"
+expect_refused "a credential cannot be redirected to another path" \
+  "$(put_replay "$elsewhere" video/mp4 "$VIDEO")"
+expect_refused "a credential cannot be used for another content type" \
   "$(put_replay "$CLIENT_URL" image/png "$VIDEO")"
-expect_eq "a tampered credential is refused" "401" \
-  "$(curl -s -o /dev/null -w '%{http_code}' -X PUT "$CLIENT_URL" \
+expect_refused "a tampered credential is refused" \
+  "$(curl -s -o /dev/null -w '%{http_code}' -X PUT "$CLIENT_URL" -H "Expect:" \
       -H "authorization: ${CLIENT_AUTH}tampered" -H 'x-content-type: video/mp4' \
       --data-binary "@$VIDEO" --max-time 120)"
 
@@ -547,7 +692,7 @@ raw="$(json_post /api/media/verify "{\"filename\":\"${CLIENT_FILE}\"}")"
 expect_eq "verifying a good upload returns 200" "200" "$(last_line "$raw")"
 res="$(drop_last "$raw")"
 # Shape must match POST /api/media's 201 exactly, so one code path reads both.
-expect_eq "  ...with the same url field" "${BASE}/media/${CLIENT_FILE}" "$(printf '%s' "$res" | field url)"
+expect_eq "  ...with the same url field" "${MEDIA_ORIGIN}/${CLIENT_FILE}" "$(printf '%s' "$res" | field url)"
 expect_eq "  ...the same filename field" "$CLIENT_FILE" "$(printf '%s' "$res" | field filename)"
 expect_eq "  ...the same contentType field" "video/mp4" "$(printf '%s' "$res" | field contentType)"
 expect_eq "  ...and the same bytes field" "$VID_BYTES" "$(printf '%s' "$res" | field bytes)"
@@ -555,8 +700,8 @@ expect_eq "  ...and the same bytes field" "$VID_BYTES" "$(printf '%s' "$res" | f
 verified="$(body GET /api/media -H "$AUTH" | node -e 'let raw="";process.stdin.on("data",c=>raw+=c);process.stdin.on("end",()=>{try{const f=JSON.parse(raw).files.find(x=>x.filename===process.argv[1]);process.stdout.write(String(f?f.verified:"missing"));}catch{process.stdout.write("x");}});' "$CLIENT_FILE")"
 expect_eq "the file is published once verified" "true" "$verified"
 
-expect_status "the verified file is publicly readable" 200 GET "/media/${CLIENT_FILE}"
-ctype="$(curl -s -o /dev/null -w '%{content_type}' "${BASE}/media/${CLIENT_FILE}")"
+expect_url_status "the verified file is publicly readable" 200 GET "${MEDIA_ORIGIN}/${CLIENT_FILE}"
+ctype="$(curl -s -o /dev/null -w '%{content_type}' --max-time 30 "${MEDIA_ORIGIN}/${CLIENT_FILE}")"
 case "$ctype" in
   video/mp4*) ok "the verified file serves as video/mp4" ;;
   *)          bad "the verified file serves as video/mp4" "video/mp4" "$ctype" ;;
@@ -585,30 +730,18 @@ liar_flow() {
 out="$(liar_flow video/mp4 67 "${FIX}/pixel.png")"
 code="${out%%|*}"; fn="${out##*|}"
 expect_eq "PNG bytes declared as video are rejected 415" "415" "$code"
-if [ -e "${MEDIA}/${fn}" ]; then
-  bad "  ...and the object is deleted from storage" "gone" "still present"
-else
-  ok "  ...and the object is deleted from storage"
-fi
-expect_status "  ...and its public URL now 404s" 404 GET "/media/${fn}"
+expect_absent "  ...and the object is deleted from storage" "$fn"
+expect_url_status "  ...and its public URL now 404s" 404 GET "${MEDIA_ORIGIN}/${fn}"
 
 out="$(liar_flow image/png 95 "${FIX}/payload.svg")"
 code="${out%%|*}"; fn="${out##*|}"
 expect_eq "an SVG declared as PNG is rejected 415" "415" "$code"
-if [ -e "${MEDIA}/${fn}" ]; then
-  bad "  ...and the SVG is deleted from storage" "gone" "still present"
-else
-  ok "  ...and the SVG is deleted from storage"
-fi
+expect_absent "  ...and the SVG is deleted from storage" "$fn"
 
 out="$(liar_flow video/mp4 1000 "$VIDEO")"
 code="${out%%|*}"; fn="${out##*|}"
 expect_eq "a materially wrong declared size is rejected 400" "400" "$code"
-if [ -e "${MEDIA}/${fn}" ]; then
-  bad "  ...and the object is deleted from storage" "gone" "still present"
-else
-  ok "  ...and the object is deleted from storage"
-fi
+expect_absent "  ...and the object is deleted from storage" "$fn"
 
 # ------------------------------------------------------------------ sweep ---
 
@@ -624,34 +757,40 @@ expect_status "the sweep accepts CRON_SECRET" 200 GET /api/media/sweep \
 fresh="$(drop_last "$(json_post /api/media/upload-token \
   '{"name":"fresh-pending.mp4","contentType":"video/mp4","bytes":500}')" | field filename)"
 res="$(body GET /api/media/sweep -H "$AUTH")"
-case "$res" in
-  *"$fresh"*) ok "a reservation issued just now is kept" ;;
-  *)          bad "a reservation issued just now is kept" "$fresh listed as pending" "$res" ;;
-esac
+kept_fresh="$(printf '%s' "$res" | node -e 'let raw="";process.stdin.on("data",c=>raw+=c);process.stdin.on("end",()=>{try{process.stdout.write((JSON.parse(raw).stillPending||[]).includes(process.argv[1])?"yes":"no");}catch{process.stdout.write("error");}});' "$fresh")"
+expect_eq "a reservation issued just now is kept" "yes" "$kept_fresh"
 
-# Backdate one past the 24 hour horizon and confirm it is collected along with
-# its bytes. Writing the sidecar directly is the only way to age it.
-aged="aged-upload.mp4"
-cp "${FIX}/clip.mp4" "${MEDIA}/${aged}"
-printf '{"contentType":"video/mp4","uploadedAt":"2026-09-07T00:00:00.000Z"}' > "${MEDIA}/${aged}.meta.json"
-printf '{"filename":"%s","declaredBytes":40,"declaredContentType":"video/mp4","issuedAt":"2026-09-07T00:00:00.000Z"}' "$aged" > "${MEDIA}/${aged}.pending.json"
+# Let a real reservation age past the (shortened) horizon and confirm it is
+# collected with its bytes. Nothing is faked: the reservation is created by the
+# token route, the bytes are uploaded for real, verify is deliberately never
+# called, and then we simply wait.
+aged_tok="$(drop_last "$(json_post /api/media/upload-token \
+  '{"name":"abandoned-upload.mp4","contentType":"video/mp4","bytes":9000028}')")"
+aged="$(printf '%s' "$aged_tok" | field filename)"
+
+put_replay "$(upload_field "$aged_tok" url)" video/mp4 "$VIDEO" \
+  "$(upload_field "$aged_tok" 'headers.authorization')" > /dev/null
+
+if [ "$(object_exists "$aged")" = "yes" ]; then
+  ok "an abandoned upload is in the store before the sweep"
+else
+  bad "an abandoned upload is in the store before the sweep" "$aged present" "absent"
+fi
+
+# Past the horizon.
+sleep 6
 
 res="$(body GET /api/media/sweep -H "$AUTH")"
-case "$res" in
-  *"$aged"*) ok "a reservation older than 24 hours is collected" ;;
-  *)         bad "a reservation older than 24 hours is collected" "$aged in deleted" "$res" ;;
-esac
-if [ -e "${MEDIA}/${aged}" ]; then
-  bad "  ...and its abandoned bytes are deleted" "gone" "still present"
-else
-  ok "  ...and its abandoned bytes are deleted"
-fi
-if [ -e "${MEDIA}/${aged}.pending.json" ]; then
-  bad "  ...and its reservation is cleared" "gone" "still present"
-else
-  ok "  ...and its reservation is cleared"
-fi
+collected="$(printf '%s' "$res" | node -e 'let raw="";process.stdin.on("data",c=>raw+=c);process.stdin.on("end",()=>{try{const d=JSON.parse(raw).deleted||[];process.stdout.write(d.includes(process.argv[1])?"yes":"no");}catch{process.stdout.write("error");}});' "$aged")"
+# Checks the "deleted" array specifically. Grepping the whole body was the
+# flaw that hid a sweep failure earlier: the filename appears in
+# "stillPending" too, so the assertion passed while nothing was collected.
+expect_eq "a reservation past the horizon is collected" "yes" "$collected"
+expect_absent "  ...and its abandoned bytes are deleted" "$aged"
 
+res="$(body GET /api/media/sweep -H "$AUTH")"
+again="$(printf '%s' "$res" | node -e 'let raw="";process.stdin.on("data",c=>raw+=c);process.stdin.on("end",()=>{try{const j=JSON.parse(raw);process.stdout.write([...(j.deleted||[]),...(j.stillPending||[])].includes(process.argv[1])?"yes":"no");}catch{process.stdout.write("error");}});' "$aged")"
+expect_eq "  ...and its reservation is cleared" "no" "$again"
 
 # ---------------------------------------------------------------- size cap ---
 

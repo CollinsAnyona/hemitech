@@ -11,7 +11,7 @@
 // mechanics, this file changes and the calling code does not.
 
 import { createHmac, timingSafeEqual, createHash } from 'node:crypto';
-import { BACKEND } from './storage.js';
+import { BACKEND, PREFIX } from './storage.js';
 
 /** 30 minutes: long enough for 80 MB on a Nairobi connection, short enough
  *  that a leaked token is close to worthless. */
@@ -101,7 +101,7 @@ export function verifyLocalToken(token) {
  * @returns {Promise<{ upload: object, expiresAt: string }>}
  */
 export async function mintUploadCredential({ filename, contentType, maxBytes, cacheMaxAge = 31536000 }) {
-  const pathname = `media/${filename}`;
+  const pathname = `${PREFIX}/${filename}`;
   const validUntil = Date.now() + TOKEN_TTL_MS;
 
   // One token, one path, one type. Never a prefix or a wildcard.

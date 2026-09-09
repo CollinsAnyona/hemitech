@@ -281,7 +281,18 @@ async function discard(filename) {
 
 /* ------------------------------------------------------------- sweep ----- */
 
-export const SWEEP_AFTER_MS = 24 * 60 * 60 * 1000;
+const DEFAULT_SWEEP_AFTER_MS = 24 * 60 * 60 * 1000;
+
+/**
+ * How long an unverified reservation may live before the sweep collects it.
+ *
+ * Configurable so the acceptance suite can exercise this code path with a
+ * short horizon. The alternative -- rewriting a stored reservation to backdate
+ * it -- meant mutating a document the app treats as write-once, and depended
+ * on read-after-overwrite consistency that object storage does not promise.
+ */
+export const SWEEP_AFTER_MS = Number(process.env.MEDIA_SWEEP_AFTER_MS)
+  > 0 ? Number(process.env.MEDIA_SWEEP_AFTER_MS) : DEFAULT_SWEEP_AFTER_MS;
 
 /**
  * Delete anything still unverified 24 hours after its token was issued.

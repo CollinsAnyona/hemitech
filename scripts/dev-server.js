@@ -11,7 +11,7 @@ import path from 'node:path';
 import {
   collectionRoute, itemRoute, uploadTokenRoute, verifyRoute, sweepRoute,
 } from '../api/_lib/handlers.js';
-import { MEDIA_DIR, fsWriteDirect } from '../api/_lib/storage.js';
+import { MEDIA_DIR, fsWriteDirect, PREFIX } from '../api/_lib/storage.js';
 import { verifyLocalToken } from '../api/_lib/clienttoken.js';
 import { reset as resetRateLimit } from '../api/_lib/ratelimit.js';
 
@@ -167,7 +167,7 @@ async function serveBlobStandIn(req, res, url) {
   if (aborted) return reply(413, { error: 'file_too_large' });
   if (total === 0) return reply(400, { error: 'bad_request', detail: 'empty body' });
 
-  const filename = pathname.replace(/^media\//, '');
+  const filename = pathname.replace(new RegExp(`^${PREFIX}/`), '');
   // Deliberately no validation of the bytes here: mirroring reality, the
   // storage service stores what it is given. /api/media/verify is what
   // catches a lie, which is exactly the gap the verify step exists to close.
