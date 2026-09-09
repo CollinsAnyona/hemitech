@@ -1,0 +1,17 @@
+{
+  "name": "hemitech-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "HemiTech marketing site plus the media hosting API that Buffer fetches from.",
+  "scripts": {
+    "dev:media": "node scripts/dev-server.js",
+    "test:media": "bash scripts/acceptance.sh"
+  },
+  "dependencies": {
+    "@vercel/blob": "^0.27.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

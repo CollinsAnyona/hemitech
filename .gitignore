@@ -1,0 +1,8 @@
+node_modules/
+.env
+.env.local
+.vercel/
+# Anchored to the repo root on purpose. An unanchored "media/" also matches
+# api/media/, which silently excluded every route file in this API from
+# version control - _lib would deploy with no routes behind it.
+/media/
