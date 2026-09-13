@@ -9,3 +9,8 @@ node_modules/
 
 # Form submissions written by the fs backend in local development.
 /.submissions/
+
+# Screenshots written by the live acceptance run.
+/nojs-home.png
+/.shots-tmp/
+/.og-tmp/
