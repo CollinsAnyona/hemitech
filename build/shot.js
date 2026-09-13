@@ -23,7 +23,7 @@ export function hasShot(name) {
 
 /**
  * @param {string} name   file stem, e.g. "joline-desktop"
- * @param {string} alt    what the screenshot shows — never "screenshot of website"
+ * @param {string} alt    what the screenshot shows: never "screenshot of website"
  * @param {object} opts   { w, h, sizes, priority }
  */
 function picture(name, alt, opts = {}) {

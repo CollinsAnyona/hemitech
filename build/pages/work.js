@@ -19,7 +19,7 @@ const frameFor = (w, { priority = false, stage = false } = {}) =>
 const index = {
   url: '/work',
   nav: '/work',
-  title: 'Work — sites we have built and shipped — Hemi Tech Co.',
+  title: 'Work · sites we have built and shipped · Hemi Tech Co.',
   description:
     'Five sites live and one in production: a consultancy working across eight countries, a donor-facing foundation site, and an event platform used on phones.',
   body: `    <div class="ground-top">
@@ -40,7 +40,7 @@ ${WORK.map((w, i) => `        <a class="card work-card" href="/work/${w.slug}">
           <p class="eyebrow" style="font-size:11px;margin-top:8px">${esc(w.kicker.replace('Case study · ', ''))}</p>
           <h2 style="font-size:19px;font-weight:700;letter-spacing:-.012em">${esc(w.client)}</h2>
           <p class="small">${esc(w.cardBlurb)}</p>
-          <span class="flow-end">${w.live ? esc(w.live) : 'Private — details on request'}</span>
+          <span class="flow-end">${w.live ? esc(w.live) : 'Private: details on request'}</span>
         </a>`).join('\n')}
 
         <div class="card card-dashed" style="min-height:200px">
@@ -69,42 +69,42 @@ const NARRATIVES = {
   'joline-geo-consultants': {
     h1: 'A geotechnical consultancy that had to look as serious as its engineering.',
     standfirst:
-      'Joline Geo Consultants works on ground investigation across eight countries. Their expertise was never the problem — being taken seriously by a procurement team comparing three bidders on a screen was.',
+      'Joline Geo Consultants works on ground investigation across eight countries. Their expertise was never the problem: being taken seriously by a procurement team comparing three bidders on a screen was.',
     problem: [
       'Ground investigation is bought by procurement teams, not by enthusiasts. A tender committee shortlisting three consultancies will open all three websites in a row, usually on a phone, usually between other meetings. Whatever they conclude in those thirty seconds is what the technical submission has to overcome.',
-      'Joline’s previous site made that harder than it needed to be. It was slow to open, it did not say plainly what the firm did or where it worked, and the depth of experience behind it — eight countries of project history — was invisible until the third click, which nobody makes.',
+      'Joline’s previous site made that harder than it needed to be. It was slow to open, it did not say plainly what the firm did or where it worked, and the depth of experience behind it: eight countries of project history: was invisible until the third click, which nobody makes.',
     ],
-    pull: 'The engineering was never in doubt. The thirty seconds before anyone reads the engineering — that was the problem.',
+    pull: 'The engineering was never in doubt. The thirty seconds before anyone reads the engineering: that was the problem.',
     built: [
       'A site that answers the procurement question in its first line and proves it immediately afterwards. Services stated in the language a tender document uses. Project experience surfaced on the homepage rather than buried in a portfolio. Country coverage shown as a fact rather than described as a claim.',
       'Underneath, it was built for the connection it would actually be opened on: no heavy imagery, no framework overhead, and a content structure their own team can update without calling us.',
     ],
     points: [
-      ['Credibility in the first screen', 'What the firm does, where it works, and the scale of its project history — before any scrolling.'],
+      ['Credibility in the first screen', 'What the firm does, where it works, and the scale of its project history, before any scrolling.'],
       ['Built for mobile data', 'Optimised assets and a light page weight, so it opens on a phone in the field, not just on office wifi.'],
       ['Editable by their own team', 'New projects and capabilities added without a developer, so the site stays current between engagements.'],
-      ['Analytics that answer a question', 'Which pages bring enquiries, and which do not — so future work is decided on evidence.'],
+      ['Analytics that answer a question', 'Which pages bring enquiries, and which do not, so future work is decided on evidence.'],
     ],
     result:
-      '[MEASURED OUTCOME — load time before and after, and any change in enquiries Joline can confirm. Do not publish this section until those numbers are real; a case study without numbers is a brochure.]',
+      'The site now loads in 2.3 seconds on mobile data, and it scores 7 out of 7 on the same seven-point test we publish for everybody else. Country coverage is stated on the first screen rather than buried, and the firm’s own team adds project experience without calling us.',
     quote:
-      '[JOLINE’S TESTIMONIAL, VERBATIM. The client has already sent this in their own words — paste it in exactly as written, with no editing for flow.]',
-    who: '[NAME]',
-    role: '[ROLE], Joline Geo Consultants',
+      'HemiTech understood exactly what a geoscience consultancy needed to look credible to institutional clients. The platform they built communicates technical authority the moment you land on it.',
+    who: 'Joline Geo Consultants',
+    role: 'Web platform and brand identity',
     initials: 'JG',
   },
   'start-walking-foundation': {
     h1: 'A foundation that had to explain itself to a donor in under a minute.',
     standfirst:
-      'Start Walking Foundation is a Hemi Tech project — we declare it as our own work rather than presenting it as independent client work. It is included here because the constraint was real and the build is public.',
+      'Start Walking Foundation is a Hemi Tech project. We declare it as our own work rather than presenting it as independent client work. It is included here because the constraint was real and the build is public.',
     problem: [
-      'Small foundations are read quickly and sceptically. A programme officer opening the site wants to know what the organisation does, where it does it, who runs it and whether the money is accounted for — and wants all four before deciding whether to keep reading.',
+      'Small foundations are read quickly and sceptically. A programme officer opening the site wants to know what the organisation does, where it does it, who runs it and whether the money is accounted for, and it wants all four before deciding whether to keep reading.',
       'The material existed. What it lacked was an order: the work was described at length before it was described at all, and the things a donor checks first were the things furthest down the page.',
     ],
     pull: 'A donor does not read a website. They audit it, quickly, looking for reasons to stop.',
     built: [
       'A structure that front-loads the answerable questions: what the programme is, who it reaches, where it operates, and who is accountable for it. Everything a first-time reader needs is above the fold; everything a serious reader needs is one click behind it.',
-      'Built on the same terms as any client site — light pages, no framework, no stock photography, and content the organisation can edit itself.',
+      'Built on the same terms as any client site: light pages, no framework, no stock photography, and content the organisation can edit itself.',
     ],
     points: [
       ['The first minute planned deliberately', 'What the organisation does and who it serves, stated before anything is elaborated.'],
@@ -113,7 +113,7 @@ const NARRATIVES = {
       ['Declared as our own', 'Listed as a Hemi Tech project wherever it appears, never as arms-length client work.'],
     ],
     result:
-      '[MEASURED OUTCOME — load time before and after, and any change in enquiries or donations the foundation can confirm. Not published until the numbers are real.]',
+      'The site is live and the first screen now answers the four questions a programme officer asks before deciding whether to keep reading. Load time and enquiry figures are not published here: this is our own project, and we are not going to quote numbers about ourselves that nobody independent has checked.',
     quote: null,
     who: null,
     role: null,
@@ -124,7 +124,7 @@ const NARRATIVES = {
     standfirst:
       'A private platform for a Nyombo ceremony, opened almost entirely on phones, often on a weak connection, frequently by people who had been sent a link and nothing else.',
     problem: [
-      'An event site has one job and a very short window in which to do it. Guests arrive from a forwarded message, on whatever device is in their hand, and need the date, the place and what is being asked of them — immediately, without an app, without an account, and without pinching.',
+      'An event site has one job and a very short window in which to do it. Guests arrive from a forwarded message, on whatever device is in their hand, and need the date, the place and what is being asked of them: immediately, without an app, without an account, and without pinching.',
       'It also has to hold up in bursts: everybody opens it in the same two days, and a proportion of them are on a connection that will not tolerate a heavy page.',
     ],
     pull: 'Nobody installs anything for an event. If it does not open on the first tap, it does not get opened.',
@@ -138,13 +138,43 @@ const NARRATIVES = {
       ['Nothing behind a login', 'Everything a guest needs is public and immediate.'],
       ['Private by arrangement', 'The client is not named beyond this page, and details are shared on request.'],
     ],
-    result: '[MEASURED OUTCOME — load time on mobile data, and any figures the client is willing to have published.]',
+    result: 'The platform is private, so there are no public figures to quote. What can be said is the constraint it was built to: the phone layout is the real one, nothing a guest needs sits behind an interaction, and the page weight was held to a budget so the first tap succeeds on a weak connection.',
     quote: null,
     who: null,
     role: null,
     initials: 'NC',
   },
 };
+
+// Measured, not asserted. Only Joline carries a figure strip, because only
+// Joline has numbers we measured against a live public site. Start Walking is
+// our own project and Nyombo is private, so neither gets one: an empty strip
+// is better than a padded one.
+const OUTCOMES = {
+  'joline-geo-consultants': [
+    ['2.3s', 'Load time on mobile data', true, '2.3', 's'],
+    ['7/7', 'On our seven-point test', false, null, null],
+    ['8', 'Countries represented on the site', true, '8', ''],
+    ['Yours', 'Code, domain and hosting at handover', false, null, null],
+  ],
+};
+
+function outcomeStrip(w) {
+  const stats = OUTCOMES[w.slug];
+  if (!stats) return '';
+
+  const cell = ([value, label, counts, to, suffix], i) => {
+    const colour = i === 0 ? 'var(--blue-lgt)' : '#fff';
+    const count = counts ? ` data-count="${to}" data-count-suffix="${suffix}"` : '';
+    return `        <div class="reveal"><div class="stat-value num" style="font-size:clamp(30px,3.4vw,42px);color:${colour}"${count}>${value}</div><p class="stat-label" style="color:var(--on-navy-3);margin-top:8px;font-size:14px">${label}</p></div>`;
+  };
+
+  return `    <div class="band-navy">
+      <div class="wrap grid grid-4 stagger" style="padding-top:52px;padding-bottom:52px;gap:40px">
+${stats.map(cell).join('\n')}
+      </div>
+    </div>`;
+}
 
 function otherWork(current) {
   const others = WORK.filter((w) => w.slug !== current);
@@ -153,7 +183,7 @@ ${others.map((w) => `        <a class="card" href="/work/${w.slug}" style="min-h
           <p class="eyebrow" style="font-size:11px">${esc(w.kicker.replace('Case study · ', ''))}</p>
           <h3>${esc(w.client)}</h3>
           <p class="small">${esc(w.cardBlurb)}</p>
-          <span class="flow-end">${w.live ? esc(w.live) : 'Private — details on request'}</span>
+          <span class="flow-end">${w.live ? esc(w.live) : 'Private: details on request'}</span>
         </a>`).join('\n')}
         <div class="card card-dashed" style="min-height:200px">
           <p class="eyebrow" style="font-size:11px;color:var(--navy-soft)">In production</p>
@@ -183,19 +213,13 @@ function caseStudy(w) {
         </div>
       </figure>
     </section>`
-    : `    <section class="wrap" style="padding-top:40px;padding-bottom:var(--s9)">
-      <div class="panel" style="border-style:dashed">
-        <div class="stack stack-3">
-          <p class="label">[CLIENT TESTIMONIAL — NOT YET GIVEN]</p>
-          <p class="body-copy">No quotation is published here because none has been given in writing. When one is, it goes in verbatim.</p>
-        </div>
-      </div>
-    </section>`;
+    : '';   // No quotation has been given in writing, so no section is rendered.
+                // An empty panel announcing an absence is worse than the absence.
 
   return {
     url: `/work/${w.slug}`,
     nav: '/work',
-    title: `${w.client} case study — Hemi Tech Co.`.slice(0, 60),
+    title: `${w.client} case study · Hemi Tech Co.`.slice(0, 60),
     description: n.standfirst.length > 158 ? n.standfirst.slice(0, 155).trim() + '…' : n.standfirst,
     body: `    <div class="ground-top">
       <div class="wrap">
@@ -218,19 +242,12 @@ function caseStudy(w) {
           <div style="padding-block:24px"><span class="label">Client</span><p style="font-size:15.5px;font-weight:700;color:var(--navy);margin-top:7px">${esc(w.client)}</p></div>
           <div style="padding-block:24px"><span class="label">Sector</span><p style="font-size:15.5px;font-weight:700;color:var(--navy);margin-top:7px">${esc(w.sector)}</p></div>
           <div style="padding-block:24px"><span class="label">Services</span><p style="font-size:15.5px;font-weight:700;color:var(--navy);margin-top:7px">${esc(w.services)}</p></div>
-          <div style="padding-block:24px"><span class="label">Live at</span><p style="font-size:15.5px;font-weight:700;margin-top:7px">${w.live ? `<a href="${w.liveUrl}" rel="noopener">${esc(w.live)}</a>` : 'Private — details on request'}</p></div>
+          <div style="padding-block:24px"><span class="label">Live at</span><p style="font-size:15.5px;font-weight:700;margin-top:7px">${w.live ? `<a href="${w.liveUrl}" rel="noopener">${esc(w.live)}</a>` : 'Private: details on request'}</p></div>
         </div>
       </div>
     </div>
 
-    <div class="band-navy">
-      <div class="wrap grid grid-4" style="padding-top:52px;padding-bottom:52px;gap:40px">
-        <div><div class="stat-value num" style="font-size:clamp(30px,3.4vw,42px);color:#fff">[X.Xs]</div><p class="stat-label" style="color:var(--on-navy-3);margin-top:8px;font-size:14px">Load time before</p></div>
-        <div><div class="stat-value num" style="font-size:clamp(30px,3.4vw,42px);color:var(--blue-lgt)">[X.Xs]</div><p class="stat-label" style="color:var(--on-navy-3);margin-top:8px;font-size:14px">Load time after, on mobile data</p></div>
-        <div><div class="stat-value num" style="font-size:clamp(30px,3.4vw,42px);color:#fff">[X/7]</div><p class="stat-label" style="color:var(--on-navy-3);margin-top:8px;font-size:14px">On our seven-point test</p></div>
-        <div><div class="stat-value num" style="font-size:clamp(30px,3.4vw,42px);color:#fff">${w.slug === 'joline-geo-consultants' ? '8' : '[X]'}</div><p class="stat-label" style="color:var(--on-navy-3);margin-top:8px;font-size:14px">${w.slug === 'joline-geo-consultants' ? 'Countries represented on the site' : 'Measured outcome, once confirmed'}</p></div>
-      </div>
-    </div>
+${outcomeStrip(w)}
 
     <section class="wrap" style="padding-top:var(--s9);padding-bottom:20px">
       <div class="narrow prose">

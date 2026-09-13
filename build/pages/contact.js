@@ -10,7 +10,7 @@ import { esc, ICONS, phoneLink, mailLink } from '../layout.js';
 const contact = {
   url: '/contact',
   nav: '/contact',
-  title: 'Contact — tell us what’s broken — Hemi Tech Co.',
+  title: 'Contact · tell us what’s broken · Hemi Tech Co.',
   description:
     'Four fields, because every extra one costs a reply. We answer within one working day from a person, and we will tell you plainly if you do not need us.',
   body: `    <div class="ground-top">
@@ -112,7 +112,7 @@ const contact = {
           <ol class="steps compact-steps">
             <li><span class="ord">01</span><p class="small">We reply within one working day, from a person, not an autoresponder.</p></li>
             <li><span class="ord">02</span><p class="small">If you have a site, we run the seven checks first and send you what we find.</p></li>
-            <li><span class="ord">03</span><p class="small">Then a short call. We quote on the call — we don’t make you wait for a number.</p></li>
+            <li><span class="ord">03</span><p class="small">Then a short call. We quote on the call; we don’t make you wait for a number.</p></li>
           </ol>
         </div>
       </aside>
@@ -126,7 +126,7 @@ const contact = {
 const sent = {
   url: '/thank-you',
   nav: '/contact',
-  title: 'Thank you — we have your message — Hemi Tech Co.',
+  title: 'Thank you, we have your message · Hemi Tech Co.',
   description:
     'Your message reached us and has been stored. A person will reply within one working day, and we will tell you plainly if you do not need us.',
   body: `    <div class="ground-top">
@@ -135,7 +135,7 @@ const sent = {
           <p class="eyebrow">Received</p>
           <h1>Got it. A person will reply within one working day.</h1>
           <div class="rule"></div>
-          <p class="lede">Your message is stored and someone will read it — not an autoresponder, and not a queue. If you sent us a site to check, we will run all seven checks properly and send you what we find, whether or not you ever work with us.</p>
+          <p class="lede">Your message is stored and someone will read it: not an autoresponder, and not a queue. If you sent us a site to check, we will run all seven checks properly and send you what we find, whether or not you ever work with us.</p>
           <p class="body-copy">If it is urgent, ${phoneLink()} or ${mailLink(SITE.email)} will reach us faster.</p>
           <div class="btn-row" style="margin-top:var(--s2)">
             <a class="btn" href="/">Back to the homepage</a>
@@ -149,9 +149,9 @@ const sent = {
 const check = {
   url: '/check-your-details',
   nav: '/contact',
-  title: 'One of those fields needs another look — Hemi Tech Co.',
+  title: 'One of those fields needs another look · Hemi Tech Co.',
   description:
-    'Your message did not go through because one of the fields was empty or the email address was incomplete. Nothing was lost — go back and send it again.',
+    'Your message did not go through because one of the fields was empty or the email address was incomplete. Nothing was lost: go back and send it again.',
   body: `    <div class="ground-top">
       <div class="wrap" style="padding-top:72px;padding-bottom:72px">
         <div class="stack stack-5" style="max-width:66ch">
@@ -160,11 +160,11 @@ const check = {
           <div class="rule"></div>
           <p class="lede">We did not send it, because one of these was true:</p>
           <ul class="prose" style="max-width:60ch">
-            <li>A required field was empty — name, organisation, email or the message itself.</li>
+            <li>A required field was empty: name, organisation, email or the message itself.</li>
             <li>The email address was missing everything after the @.</li>
             <li>The message was longer than we accept in one go. Send us the short version and we will ask for the rest.</li>
           </ul>
-          <p class="body-copy">Go back, fix the one that applies, and send it again. Or write to ${mailLink(SITE.email)} directly — that always works.</p>
+          <p class="body-copy">Go back, fix the one that applies, and send it again. Or write to ${mailLink(SITE.email)} directly; that always works.</p>
           <div class="btn-row" style="margin-top:var(--s2)">
             <a class="btn" href="/contact">Back to the form</a>
             <a class="btn ghost" href="/">Homepage</a>

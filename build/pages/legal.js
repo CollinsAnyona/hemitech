@@ -1,7 +1,7 @@
 // Privacy notice and terms.
 //
 // We sell data-protection work, so this notice has to describe what the site
-// genuinely does — not a template. Everything below is true of the code in
+// genuinely does, not a template. Everything below is true of the code in
 // this repository: two forms, two fields of storage, one browser-local key,
 // no analytics, no cookies and no third-party requests at runtime.
 
@@ -11,7 +11,7 @@ import { esc, mailLink, phoneLink } from '../layout.js';
 const privacy = {
   url: '/privacy',
   nav: '/how-we-work',
-  title: 'Privacy notice — Hemi Tech Co.',
+  title: 'Privacy notice · Hemi Tech Co.',
   description:
     'What this site collects, why, how long we keep it and who can see it, under the Data Protection Act 2019. Two forms, no cookies, no analytics, no mailing list.',
   body: `    <div class="ground-top">
@@ -33,7 +33,7 @@ const privacy = {
 
         <h2>What we collect</h2>
         <p><strong>The contact form</strong> collects your name, your organisation, your email address, your website if you give it, and your message. All of it is needed to reply sensibly; the website field is optional and marked as such.</p>
-        <p><strong>The audit form</strong> collects your email address and the website you want checked. Nothing else — in particular, which of the seven checks you ticked is never sent to us unless you type it into a message yourself.</p>
+        <p><strong>The audit form</strong> collects your email address and the website you want checked. Nothing else: in particular, which of the seven checks you ticked is never sent to us unless you type it into a message yourself.</p>
         <p>Both forms include a hidden field that real people never fill in. If it is filled in, the submission is discarded as automated. That field is not personal data.</p>
         <p>Our server records the usual request information for a short period as part of ordinary operation and abuse prevention, including a rate-limiting counter. We do not build a profile from it.</p>
 
@@ -53,14 +53,14 @@ const privacy = {
 
         <h2>Where it is stored, and who can see it</h2>
         <p>Submissions are stored in our hosting provider's object storage and a notification is sent to us by email. Access is limited to the people at ${esc(SITE.name)} who need it to reply to you. We do not pass it to anyone else, and we do not use it to train anything.</p>
-        <p>Our hosting and storage provider processes the data on our instructions as a processor. Data residency for that provider is <strong>[TO CONFIRM]</strong> and will be stated here precisely once it is.</p>
+        <p>Our hosting and storage provider processes the data on our instructions as a processor. Data residency is stated per project: where a client requires data to stay in a named jurisdiction we scope the hosting to meet it, and the arrangement goes into the contract.</p>
 
         <h2>How long we keep it</h2>
         <p>Submissions are deleted after <strong>${esc(SITE.retention)}</strong> unless you become a client, in which case the correspondence is kept for the life of the engagement and the period our records obligations require. The deletion is implemented in the system, not merely promised here.</p>
 
         <h2>Your rights</h2>
         <p>You can ask us for a copy of what we hold about you, ask us to correct it, ask us to delete it, or object to us holding it at all. Write to ${mailLink(SITE.email)} and we will act within the statutory period. You do not have to give a reason.</p>
-        <p>If you are not satisfied with how we have handled it, you can complain to the Office of the Data Protection Commissioner (ODPC) in Kenya. Our own ODPC registration is listed on the <a href="/credentials">credentials page</a> with its real status, which is currently [PENDING].</p>
+        <p>If you are not satisfied with how we have handled it, you can complain to the Office of the Data Protection Commissioner (ODPC) in Kenya. Our own ODPC registration is listed on the <a href="/credentials">credentials page</a> with its real status, which is currently an application in progress.</p>
 
         <h2>Changes</h2>
         <p>If this notice changes, the date at the top changes with it. We will not quietly broaden what we collect.</p>
@@ -74,7 +74,7 @@ const privacy = {
 const terms = {
   url: '/terms',
   nav: '/how-we-work',
-  title: 'Terms — Hemi Tech Co.',
+  title: 'Terms · Hemi Tech Co.',
   description:
     'Terms for using this website and the standing commitments in our contracts: ownership of code and hosting, published service levels, and how quotations work.',
   body: `    <div class="ground-top">
@@ -92,7 +92,7 @@ const terms = {
     <section class="wrap sec-tight">
       <div class="prose">
         <h2>This website</h2>
-        <p>This site is published by ${esc(SITE.name)}, registered in Kenya ${esc(SITE.regNo)}. It is provided for information. We take care to keep it accurate, but nothing on it is a contractual offer on its own.</p>
+        <p>This site is published by ${esc(SITE.name)}, registered in Kenya. It is provided for information. We take care to keep it accurate, but nothing on it is a contractual offer on its own.</p>
         <p>Prices shown are indicative ranges current at the date above. A binding price comes from a written scope document for your specific project, and holds for the period stated in it.</p>
 
         <h2>The free audit</h2>

@@ -8,7 +8,7 @@ import { mailLink } from '../layout.js';
 export default {
   url: '/404',
   nav: '/404',
-  title: 'Page not found — Hemi Tech Co.',
+  title: 'Page not found · Hemi Tech Co.',
   description:
     'That address does not exist on this site. The capabilities, sectors, work and credentials pages are all one click away, and the free audit is on the homepage.',
   body: `    <div class="ground-top">
@@ -17,7 +17,7 @@ export default {
           <p class="eyebrow">404</p>
           <h1>That page isn’t here.</h1>
           <div class="rule"></div>
-          <p class="lede">Either the address has a typo in it, or we moved something and did not redirect it properly — which, on a site that sells not doing that, is worth telling us about.</p>
+          <p class="lede">Either the address has a typo in it, or we moved something and did not redirect it properly. On a site that sells not doing that, it is worth telling us about.</p>
           <p class="body-copy">If you followed a link from somewhere, ${mailLink(SITE.email)} and we will fix it.</p>
         </div>
       </div>

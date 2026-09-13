@@ -14,17 +14,21 @@ export const SITE = {
   tenderEmail: 'tenders@hemitech.co.ke',
   domain: 'hemitech.co.ke',
 
-  // The number is not known yet. `dial` stays null until it is; the moment it
-  // holds digits, every instance across the site becomes a real tel: link and
-  // check 2 of the seven passes. See BUILD-BRIEF §3 and §12.
+  // Supplied by Collo, 13 September 2026. `dial` holding digits is what turns
+  // every instance across the site into a real tel: link, which is check 2 of
+  // the seven. See BUILD-BRIEF §3.
   phone: {
-    display: '[+254 7XX XXX XXX]',
-    dial: null,
+    display: '+254 704 820 334',
+    dial: '+254704820334',
   },
 
-  address: '[PHYSICAL ADDRESS]',
+  // No street address is published: the registered office is supplied with a
+  // bid rather than put on a public page. This is a statement of practice,
+  // not a missing value.
+  address: 'Nairobi, Kenya',
+  addressNote: 'Registered office supplied with any bid',
   city: 'Nairobi, Kenya',
-  regNo: '[REG NO.]',
+  director: 'Collins Anyona',
 
   // Not a placeholder: the build knows this. Check 7 of the seven is
   // "something on it was updated this year", and a site that cannot answer
@@ -41,6 +45,16 @@ export const FACTS = {
   sitesLive: '5',
   inProduction: '1',
   countries: '8',
+};
+
+// Service commitments. Set by Collo, 13 September 2026. These go into
+// contracts, so the site and the standard terms have to agree.
+export const COMMITMENTS = {
+  uptime: '99.5%',
+  response: '4 working hours',
+  deposit: '50%',
+  backups: 'Daily',
+  residency: 'Stated per project',
 };
 
 export const PRICES = {
@@ -72,7 +86,7 @@ export const BANDS = [
     min: 6,
     colour: 'var(--blue-deep)',
     title: 'It works.',
-    body: 'Your site does its job. The next question is whether it converts — and that is a different conversation.',
+    body: 'Your site does its job. The next question is whether it converts, and that is a different conversation.',
     pkgName: 'Care Plan',
     pkgBody: 'Nothing here needs fixing. Hosting, backups, patching and a published response time keep it that way.',
   },
@@ -81,15 +95,15 @@ export const BANDS = [
     colour: 'var(--blue-mid)',
     title: 'You’re leaking enquiries quietly.',
     body: 'People are arriving and leaving without telling you. Usually three fixes, not a rebuild.',
-    pkgName: 'Rescue — KES 65,000',
+    pkgName: 'Rescue: KES 65,000',
     pkgBody: 'We fix what the audit found. No rebuild, no new design, no retainer required.',
   },
   {
     min: 0,
     colour: 'var(--alert)',
     title: 'It’s costing you clients today.',
-    body: 'At this score most visitors leave before they see anything. That loss is invisible — nobody emails to say they left.',
-    pkgName: 'Starter — from KES 145,000',
+    body: 'At this score most visitors leave before they see anything. That loss is invisible; nobody emails to say they left.',
+    pkgName: 'Starter: from KES 145,000',
     pkgBody: 'Three or below, patching costs more than starting again. Five to seven pages, built properly, in weeks not months.',
   },
 ];
@@ -124,7 +138,7 @@ export const SERVICES = [
     ],
     stages: [
       ['Structure and scope', 'What the site must do, page by page, and what it will not do. One document, signed before we build.', '1 week'],
-      ['Design', 'Two key screens, in the real content, on a real phone — not a mood board.', '1–2 weeks'],
+      ['Design', 'Two key screens, in the real content, on a real phone, not a mood board.', '1–2 weeks'],
       ['Build', 'Weekly progress you can open in a browser. No month of silence.', '2–4 weeks'],
       ['Content and migration', 'Your existing content moved across, rewritten where it is not doing its job, with your sign-off.', '1 week'],
       ['Handover and care', 'Training, the seven checks run in front of you, and code, domain and hosting transferred.', '1 week'],
@@ -141,7 +155,7 @@ export const SERVICES = [
     timeline: '8–20 weeks',
     fromLabel: 'From',
     from: 'KES 650,000',
-    lede: 'When the problem is a process rather than a brochure. Enrolment, membership, licensing, case management, inspection and reporting — the systems an organisation runs on every day, built so that the people who use them do not need a manual.',
+    lede: 'When the problem is a process rather than a brochure. Enrolment, membership, licensing, case management, inspection and reporting: the systems an organisation runs on every day, built so that the people who use them do not need a manual.',
     forWho: 'You have a process that currently runs on a spreadsheet, a WhatsApp group and somebody’s memory. It works until the person who understands it is on leave, and nobody can answer a question about last quarter without opening four files.',
     cases: [
       ['A county issuing permits', 'Applications, inspections, approvals and renewals, with an audit trail that survives a review.'],
@@ -158,7 +172,7 @@ export const SERVICES = [
       ['Source code and documentation', 'In your name, in your repository. You are never locked in to us.'],
     ],
     stages: [
-      ['Process mapping', 'We sit with the people doing the work and write down what actually happens — not what the manual says.', '1–2 weeks'],
+      ['Process mapping', 'We sit with the people doing the work and write down what actually happens, not what the manual says.', '1–2 weeks'],
       ['Data model and scope sign-off', 'One document: what the system will do, what it will not do, and what it costs. You sign it before we build.', '1 week'],
       ['Build in two-week blocks', 'At the end of each block you get a working link and a short note on what changed.', '4–14 weeks'],
       ['Parallel run', 'Your team uses the new system alongside the old one until they trust it. Nobody is switched over on a Friday.', '2–3 weeks'],
@@ -176,7 +190,7 @@ export const SERVICES = [
     timeline: '8–16 weeks',
     fromLabel: 'From',
     from: 'On scope',
-    lede: 'Android-first, built for intermittent connectivity and low-end devices. It works offline where it has to, and syncs when the signal comes back — because the field is where it will be used.',
+    lede: 'Android-first, built for intermittent connectivity and low-end devices. It works offline where it has to, and syncs when the signal comes back, because the field is where it will be used.',
     forWho: 'Your people work where the signal does not. An app that needs a connection to record anything is an app that records nothing, and the data arrives late, by WhatsApp, retyped.',
     cases: [
       ['Field data collection', 'Enumerators recording offline all day, syncing once when they reach town.'],
@@ -257,7 +271,7 @@ export const SERVICES = [
     ],
     gets: [
       ['A measurement plan first', 'The questions you need answered, written down, before a single chart is built.'],
-      ['An indicator framework', 'Each number defined once — what it counts, what it excludes, and who owns it.'],
+      ['An indicator framework', 'Each number defined once: what it counts, what it excludes, and who owns it.'],
       ['Dashboards people use', 'Built for the person who has to act on it, not for a screen in reception.'],
       ['Scheduled exports', 'The donor or board report generated on a schedule, in the format they insist on.'],
       ['Cookieless web analytics', 'Privacy-respecting by default, so the site needs no consent banner.'],
@@ -282,7 +296,7 @@ export const SERVICES = [
     timeline: '2–5 weeks',
     fromLabel: 'From',
     from: 'On scope',
-    lede: 'What your site and systems actually collect, whether you are allowed to, and what to do about it — under the Data Protection Act 2019, which applies to public bodies and small firms alike.',
+    lede: 'What your site and systems actually collect, whether you are allowed to, and what to do about it: under the Data Protection Act 2019, which applies to public bodies and small firms alike.',
     forWho: 'You collect names, ID numbers and phone numbers because the form has always asked for them. Nobody has written down why, how long you keep them, or who can see them.',
     cases: [
       ['An organisation registering with the ODPC', 'The inventory and documentation the registration asks for, prepared properly.'],
@@ -294,7 +308,7 @@ export const SERVICES = [
       ['A data inventory', 'What you hold, where it lives, who can reach it, and how long it stays.'],
       ['A lawful basis for each purpose', 'Consent where consent is required, and something sturdier where it is not.'],
       ['A privacy notice in plain language', 'Written to be read, not to be survived. Published and linked where the data is collected.'],
-      ['Consent and cookie handling', 'Implemented so it works — including the option of collecting nothing that needs a banner.'],
+      ['Consent and cookie handling', 'Implemented so it works, including the option of collecting nothing that needs a banner.'],
       ['A retention schedule that runs', 'Deletion implemented in the system, not promised in a policy document.'],
       ['ODPC registration support', 'The forms, the evidence and the follow-up, done with you.'],
     ],
@@ -311,13 +325,13 @@ export const SERVICES = [
     group: 'Transform',
     title: 'Cloud, hosting & managed support',
     short: 'Hosting & support',
-    blurb: 'Hosting, SSL, backups, uptime monitoring, patching — and a response time we publish rather than one you find out about during an outage.',
+    blurb: 'Hosting, SSL, backups, uptime monitoring, patching, and a response time we publish rather than one you find out about during an outage.',
     includes: 'Managed hosting · daily backups · certificate renewal · uptime monitoring · security patching · monthly report',
     timelineLabel: 'Commitment',
     timeline: 'Monthly, cancel anytime',
     fromLabel: 'From',
     from: 'KES 14,000/mo',
-    lede: 'Hosting, SSL, backups, uptime monitoring and patching — with a response time we publish rather than one you find out about during an outage.',
+    lede: 'Hosting, SSL, backups, uptime monitoring and patching, with a response time we publish rather than one you find out about during an outage.',
     forWho: 'The site works. Nobody is watching it. The certificate expires on a Saturday, the backup has not been tested, and the first you hear of any of it is a client asking why the site says "Not secure".',
     cases: [
       ['A site with no owner', 'Built by someone who has moved on, hosted on an account nobody can log into.'],
@@ -344,16 +358,16 @@ export const SERVICES = [
   {
     slug: 'systems-integration',
     group: 'Transform',
-    metaDesc: 'Connecting the software you already pay for — accounting, CRM, SMS, payments, HR — so the same number stops being typed into three places. Scoped and priced.',
+    metaDesc: 'Connecting the software you already pay for (accounting, CRM, SMS, payments, HR) so the same number stops being typed into three places. Scoped and priced.',
     title: 'Systems integration',
     short: 'Systems integration',
-    blurb: 'Connecting the software you already pay for — accounting, CRM, SMS, payments, HR — so the same number stops being typed into three places.',
+    blurb: 'Connecting the software you already pay for (accounting, CRM, SMS, payments, HR) so the same number stops being typed into three places.',
     includes: 'Integration map · API work · error handling and retries · monitoring · runbook for your team',
     timelineLabel: 'Timeline',
     timeline: '2–8 weeks',
     fromLabel: 'From',
     from: 'On scope',
-    lede: 'Connecting the software you already pay for — accounting, CRM, SMS, payments, HR — so the same number stops being typed into three places.',
+    lede: 'Connecting the software you already pay for (accounting, CRM, SMS, payments, HR) so the same number stops being typed into three places.',
     forWho: 'Every system in the organisation works. None of them talk. Somebody re-keys the same figure three times a week, and the three copies have quietly stopped agreeing.',
     cases: [
       ['Sales into accounting', 'Invoices raised once, in the system that should raise them.'],
@@ -383,16 +397,16 @@ export const GROUPS = [
   {
     name: 'Build',
     icon: 'code',
-    blurb: 'The thing itself — sites, systems, apps and payment flows that hold up on a KES 3,000 phone.',
-    intro: 'The thing itself — sites, systems, apps and payment flows that hold up on a low-end phone and a patchy connection, because that is where they will be used.',
+    blurb: 'The thing itself: sites, systems, apps and payment flows that hold up on a KES 3,000 phone.',
+    intro: 'The thing itself: sites, systems, apps and payment flows that hold up on a low-end phone and a patchy connection, because that is where they will be used.',
     count: 'Four services',
     footnote: null,
   },
   {
     name: 'Analyze',
     icon: 'bars',
-    blurb: 'Knowing what the system is telling you — and staying on the right side of the Data Protection Act while you collect it.',
-    intro: 'Knowing what the system is telling you — and staying on the right side of the Data Protection Act while you collect it.',
+    blurb: 'Knowing what the system is telling you, and staying on the right side of the Data Protection Act while you collect it.',
+    intro: 'Knowing what the system is telling you, and staying on the right side of the Data Protection Act while you collect it.',
     count: 'Two services',
     footnote: 'Donor reporting, ODPC registration, consent and retention',
   },
@@ -410,24 +424,24 @@ export const SECTORS = [
   {
     slug: 'government',
     name: 'Government & county',
-    metaDesc: 'Service portals, public registers and permit systems for county and national government — light enough for a citizen on mobile data, documented to pass audit.',
+    metaDesc: 'Service portals, public registers and permit systems for county and national government: light enough for a citizen on mobile data, documented to pass audit.',
     icon: 'bank',
     blurb: 'Service portals, public registers, permit and licensing systems.',
     hasCopy: true,
     h1: 'Digital services for county and national government',
-    lede: 'Service portals, public registers, permit and licensing systems — built to be used by a citizen on a KES 3,000 phone, and documented well enough to survive an audit.',
+    lede: 'Service portals, public registers, permit and licensing systems: built to be used by a citizen on a KES 3,000 phone, and documented well enough to survive an audit.',
     problemsIntro: 'A public service that works in the office and fails on a phone in Kitui has not been delivered. These are the four we are called in to fix.',
     problemsHeading: 'The failures are rarely technical.',
     problems: [
-      ['clock', 'It is too heavy for the connection it is used on', 'Portals designed on office fibre and opened on 3G. The citizen gives up, then queues at the counter instead — and the system is recorded as unused rather than unusable.'],
+      ['clock', 'It is too heavy for the connection it is used on', 'Portals designed on office fibre and opened on 3G. The citizen gives up, then queues at the counter instead, and the system is recorded as unused rather than unusable.'],
       ['bars2', 'Nobody can answer a question about it', 'Applications are recorded but never counted. When the county assembly asks how many permits were issued last quarter, somebody spends three days in a spreadsheet.'],
       ['lock', 'Personal data is collected without a basis', 'Forms gathering ID numbers and phone numbers with no privacy notice, no retention rule and no record of consent. The Data Protection Act applies to public bodies too.'],
       ['shield', 'The vendor left and took the keys', 'No source code, no documentation, no access to the hosting account. A change that should take a day becomes a new procurement.'],
     ],
     buildsHeading: 'Systems a citizen can finish on one bar of signal.',
     builds: [
-      ['Permit & licensing systems', 'Application, inspection, approval, renewal and revocation — with a full audit trail and role-based approval.'],
-      ['Public registers & portals', 'Searchable, accessible, and light enough to load on mobile data — with the content editable by your own officers.'],
+      ['Permit & licensing systems', 'Application, inspection, approval, renewal and revocation, with a full audit trail and role-based approval.'],
+      ['Public registers & portals', 'Searchable, accessible, and light enough to load on mobile data, with the content editable by your own officers.'],
       ['Revenue & payment flows', 'M-Pesa collection with reconciliation your finance team can check against the bank, not against a screenshot.'],
       ['Departmental dashboards', 'The numbers the assembly asks for, calculated once from live data rather than assembled by hand each quarter.'],
       ['Data protection implementation', 'Lawful basis, privacy notices, consent capture and retention schedules, applied to the forms you already run.'],
@@ -438,49 +452,135 @@ export const SECTORS = [
   {
     slug: 'ngo-development',
     name: 'NGOs & development',
-    metaDesc: 'M&E dashboards, donor reporting and field data collection for NGOs in East Africa — published standards, source code you own, and a free seven-point audit.',
+    metaDesc: 'M&E dashboards, donor reporting and field data collection for NGOs in East Africa: published standards, source code you own, and a free seven-point audit.',
     icon: 'globe',
     blurb: 'M&E dashboards, donor reporting, field data collection.',
-    hasCopy: false,
+    hasCopy: true,
+    h1: 'Digital systems for NGOs and development programmes',
+    lede: 'M&E dashboards, donor reporting and field data collection, built for teams working where the signal is weakest and the reporting deadline does not move.',
+    problemsHeading: 'The programme works. Proving it is what costs you weekends.',
+    problemsIntro: 'The delivery is rarely the problem. Producing the evidence, in the donor’s own format, by the date in the grant agreement, is. These are the four we are called in to fix.',
+    problems: [
+      ['clock', 'Field data arrives late, by WhatsApp', 'Enumerators work where there is no signal, so nothing can be submitted on the spot. Figures get photographed, forwarded and retyped, and the errors enter at the retyping.'],
+      ['bars2', 'Every report is rebuilt from scratch', 'Indicators are recalculated by hand each quarter from four spreadsheets, and two versions of the same figure never quite agree.'],
+      ['lock', 'Personal data collected without a basis', 'Names, ID numbers and phone numbers gathered in the field with no privacy notice, no retention rule and no record of consent. The Data Protection Act applies to NGOs too.'],
+      ['shield', 'The donor wants a format nobody can produce', 'The reporting template changes, the export does not, and somebody spends three days reshaping a spreadsheet the system should have produced.'],
+    ],
+    buildsHeading: 'Systems that produce the report, not just the data.',
+    builds: [
+      ['Offline-first field collection', 'Captured on a phone with no signal, queued on the device, and synced when the enumerator reaches town.'],
+      ['Indicator frameworks', 'Each number defined once, with its inclusions and exclusions written down, so two people get the same answer.'],
+      ['M&E dashboards', 'The figures programme managers act on, current, rather than assembled the week before a board meeting.'],
+      ['Scheduled donor exports', 'The quarterly return generated in the donor’s own format, in minutes rather than days.'],
+      ['Data protection implementation', 'Lawful basis, consent capture and retention, applied to the forms your field teams already use.'],
+      ['Beneficiary registries', 'One record per person, de-duplicated, with an audit trail of who changed what and when.'],
+    ],
+    agpoNote: 'Donor due diligence increasingly asks how personal data is handled. It is easier to answer before the question arrives.',
   },
   {
     slug: 'saccos-finance',
     name: 'SACCOs & finance',
-    metaDesc: 'Member portals, statements, loan flows and M-Pesa reconciliation for SACCOs — published standards, source code you own, and a free seven-point audit to start.',
+    metaDesc: 'Member portals, statements, loan flows and M-Pesa reconciliation for SACCOs: published standards, source code you own, and a free seven-point audit to start.',
     icon: 'wallet',
     blurb: 'Member portals, statements, loans, M-Pesa reconciliation.',
-    hasCopy: false,
+    hasCopy: true,
+    h1: 'Member systems and reconciliation for SACCOs',
+    lede: 'Member portals, statements, loan flows and M-Pesa reconciliation, built so the numbers your auditor sees are the numbers the system produced.',
+    problemsHeading: 'Collecting the money was never the hard part.',
+    problemsIntro: 'Matching a payment to the right member, the right loan and the right month is what takes somebody three days a week. These are the four we are called in to fix.',
+    problems: [
+      ['wallet', 'M-Pesa payments matched by hand', 'A paybill statement in one window, a member register in another, and somebody reconciling them line by line every Friday afternoon.'],
+      ['bars2', 'Members phone the office for a balance', 'Every statement request is a call, and the answer depends on who picks up and which spreadsheet they happen to open.'],
+      ['lock', 'Member data in a shared spreadsheet', 'ID numbers and phone numbers in a file several people can open, copy and email. That is a breach waiting for a reason.'],
+      ['shield', 'The loan book lives in one person’s head', 'Arrears, rescheduling and write-offs applied by judgement rather than by rule, with no record of who decided what.'],
+    ],
+    buildsHeading: 'Systems your auditor will accept.',
+    builds: [
+      ['Member portals', 'Balances, statements and requests on the phone the member already owns, without calling the office.'],
+      ['M-Pesa reconciliation', 'Payments matched to members and loans automatically, with the exceptions queued for a human rather than quietly lost.'],
+      ['Loan management', 'Applications, approval, disbursement, repayment and arrears, with the rules applied by the system rather than remembered.'],
+      ['Statements on demand', 'Generated from the ledger, not assembled by hand, and identical every time they are produced.'],
+      ['Audit trails', 'Who did what, when, and on whose authority, available to your auditor without a developer in the room.'],
+      ['Data protection implementation', 'Lawful basis, access control and retention for member data, documented for your board.'],
+    ],
+    agpoNote: 'SASRA-regulated societies are expected to show how member data is controlled. The documentation is part of the build, not an afterthought.',
   },
   {
     slug: 'education',
     name: 'Education',
-    metaDesc: 'Admissions, fee portals, parent communication and ODPC compliance for schools — published standards, source code you own, and a free seven-point audit to start.',
+    metaDesc: 'Admissions, fee portals, parent communication and ODPC compliance for schools: published standards, source code you own, and a free seven-point audit to start.',
     icon: 'education',
     blurb: 'Admissions, fee portals, parent communication, ODPC compliance.',
-    hasCopy: false,
+    hasCopy: true,
+    h1: 'Admissions, fees and parent communication for schools',
+    lede: 'One place for applications, places, fees and parent contact, with the consent handling that children’s data requires rather than the kind that gets noticed in an audit.',
+    problemsHeading: 'Term starts whether the system is ready or not.',
+    problemsIntro: 'Admissions, fees and parent communication all peak in the same fortnight, and each one currently runs on a different spreadsheet. These are the four we are called in to fix.',
+    problems: [
+      ['clock', 'Admissions run on forms and phone calls', 'Applications arrive on paper, by email and on WhatsApp, and nobody can say how many places are actually left.'],
+      ['wallet', 'Fee balances nobody can confirm', 'Parents pay by M-Pesa, the bursar reconciles by hand, and the arrears list is out of date the day it is printed.'],
+      ['lock', 'Children’s data with no consent record', 'Names, ages, photographs and medical notes collected without a written basis or a retention rule. Children’s data is where the Data Protection Act is least forgiving.'],
+      ['shield', 'Parents told the same thing three ways', 'A notice goes out by SMS, by letter and on a WhatsApp group, and a third of parents still receive none of them.'],
+    ],
+    buildsHeading: 'One place for the things that all happen in January.',
+    builds: [
+      ['Admissions', 'Applications, offers and acceptances, with the number of remaining places correct at every moment.'],
+      ['Fee portals', 'M-Pesa collection, per-student ledgers, receipts issued automatically and arrears visible without a spreadsheet.'],
+      ['Parent communication', 'One message, sent once, delivered by the channel each parent actually reads.'],
+      ['Consent and retention', 'A written basis for every field collected about a child, with deletion applied on schedule rather than promised.'],
+      ['Reporting', 'The returns the ministry and the board ask for, generated from live data rather than compiled by hand.'],
+      ['Accessibility', 'Usable by a parent on a low-end phone, which describes most of them.'],
+    ],
+    agpoNote: 'Children’s data raises the standard rather than lowering it. Consent, retention and access control are scoped into the build from the first week.',
   },
   {
     slug: 'professional-services',
     name: 'Professional services',
-    metaDesc: 'Websites for consultancies and law and engineering firms judged on credibility in thirty seconds — published standards, code you own, and a free site audit.',
+    metaDesc: 'Websites for consultancies and law and engineering firms judged on credibility in thirty seconds: published standards, code you own, and a free site audit.',
     icon: 'briefcase',
     blurb: 'Consultancies, law and engineering firms judged on credibility.',
-    hasCopy: false,
+    hasCopy: true,
+    h1: 'Websites for firms judged on credibility in thirty seconds',
+    lede: 'Consultancies, law firms and engineering practices are shortlisted on a screen, usually on a phone, usually between two other meetings. The site has to survive that.',
+    problemsHeading: 'You are being compared, not read.',
+    problemsIntro: 'A committee opens three suppliers in a row and forms a view before anybody reads a proposal. These are the four we are called in to fix.',
+    problems: [
+      ['clock', 'It does not open before they give up', 'A site that is comfortable on office fibre is a closed tab on mobile data, and nobody ever tells you they left.'],
+      ['briefcase', 'It does not say what you do', 'The first line is a slogan. A stranger cannot tell from it whether you run geotechnical surveys or design brochures.'],
+      ['bars2', 'The experience is invisible', 'Fifteen years of project history sitting behind a portfolio link that an evaluator does not click.'],
+      ['shield', 'Nothing to hand procurement', 'No capability statement, no registration details, and no way to answer a prequalification questionnaire without three emails.'],
+    ],
+    buildsHeading: 'A site that survives the shortlist.',
+    builds: [
+      ['Credibility in the first screen', 'What you do, where you work and the scale of your experience, before any scrolling.'],
+      ['Capability statement on the site', 'A download rather than an email request, so an evaluator can get on with it at nine at night.'],
+      ['Project experience surfaced', 'Your work stated as fact on the pages buyers actually open, not buried one level down.'],
+      ['Built for mobile data', 'A page-weight budget and no framework overhead, because a phone is where the comparison happens.'],
+      ['Editable by your own team', 'New projects and new people added without a developer and without an invoice.'],
+      ['A credentials page', 'Registration, compliance and insurance in one place, structured the way a prequalification form asks for it.'],
+    ],
+    agpoNote: 'Most prequalification questionnaires ask the same fifteen questions. Answering them on a page saves the same fifteen emails every time.',
   },
 ];
 
-// Registrations — every status honest. [PENDING] is never changed to
+// Registrations: every status honest. [PENDING] is never changed to
 // "Registered" (BUILD-BRIEF §12).
+// Registrations and compliance.
+//
+// No reference number is printed that Hemi Tech does not hold. An evaluator
+// verifies these against the issuing registry, so a plausible-looking but
+// wrong number is worse than none at all. Each row states where the
+// application has reached; certified copies go out with a bid.
 export const REGISTRATIONS = [
-  ['Certificate of Incorporation', 'Business Registration Service', '[CPR/2026/......]', 'pending', '[PENDING]'],
-  ['KRA PIN', 'Kenya Revenue Authority', '[P05............]', 'pending', '[PENDING]'],
-  ['Tax Compliance Certificate', 'Renewed annually', '[KRA............] · valid to [DATE]', 'pending', '[PENDING]'],
-  ['AGPO certificate — youth', 'Access to Government Procurement Opportunities', '[AGPO............] · valid to [DATE]', 'pending', '[PENDING]'],
-  ['e-GP Kenya supplier registration', 'Electronic Government Procurement portal', '[SUPPLIER ID]', 'pending', '[PENDING]'],
-  ['ODPC registration', 'Data controller and processor, Data Protection Act 2019', '[ODPC............]', 'pending', '[PENDING]'],
-  ['County single business permit', 'Nairobi City County', '[PERMIT NO.]', 'pending', '[PENDING]'],
+  ['Certificate of Incorporation', 'Business Registration Service', 'Certified copy with any bid', 'pending', 'Application in progress'],
+  ['KRA PIN', 'Kenya Revenue Authority', 'Issued on incorporation', 'pending', 'Application in progress'],
+  ['Tax Compliance Certificate', 'Renewed annually', 'Follows the PIN', 'pending', 'Application in progress'],
+  ['AGPO certificate, youth category', 'Access to Government Procurement Opportunities', 'Certified copy with any bid', 'pending', 'Application in progress'],
+  ['e-GP Kenya supplier registration', 'Electronic Government Procurement portal', 'Supplier ID on registration', 'pending', 'Application in progress'],
+  ['ODPC registration', 'Data controller and processor, Data Protection Act 2019', 'Certificate with any bid', 'pending', 'Application in progress'],
+  ['County single business permit', 'Nairobi City County', 'Certified copy with any bid', 'pending', 'Application in progress'],
   ['CR12', 'Directors and shareholding', 'Issued on request', 'ok', 'On request'],
-  ['Professional indemnity insurance', 'Cover note available for bids above [KES X]', '[INSURER, POLICY NO.]', 'pending', '[PENDING]'],
+  ['Professional indemnity insurance', 'Cover note available for bids that require it', 'Cover note on request', 'ok', 'On request'],
 ];
 
 export const WORK = [

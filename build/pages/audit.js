@@ -1,4 +1,4 @@
-// The website audit — the site's lead engine.
+// The website audit: the site's lead engine.
 // From design-source/AuditTool.dc.html. The scoring logic in that file's
 // renderVals() is the specification; audit.js ports it exactly.
 
@@ -23,7 +23,7 @@ function checkRow([label, hint], i) {
 }
 
 // No colour is carried here. --alert is allowed once on a screen, and on this
-// page it belongs to the live ring when the score is 3 or below — not to a
+// page it belongs to the live ring when the score is 3 or below, not to a
 // static explainer card sitting next to it.
 function bandExplainer(b, range) {
   return `            <div class="card">
@@ -41,7 +41,7 @@ function bandExplainer(b, range) {
 export default {
   url: '/audit',
   nav: '/audit',
-  title: 'Free website audit — seven checks — Hemi Tech Co.',
+  title: 'Free website audit · seven checks · Hemi Tech Co.',
   description:
     'Score your own site in two minutes against seven checks: load time on mobile data, a tappable phone number, no pinching, a clear first line and one next step.',
   scripts: ['/audit.js'],
@@ -51,7 +51,7 @@ export default {
           <p class="eyebrow">The free audit</p>
           <h1 class="max-18">Score your own website in two minutes.</h1>
           <div class="rule"></div>
-          <p class="lede" style="max-width:62ch">Open your site on your phone, on mobile data — not office wifi — and work down the list. Tick what is true. Nothing is sent anywhere until you ask for the written report.</p>
+          <p class="lede" style="max-width:62ch">Open your site on your phone, on mobile data (not office wifi) and work down the list. Tick what is true. Nothing is sent anywhere until you ask for the written report.</p>
         </div>
       </div>
     </div>
@@ -151,9 +151,9 @@ ${bandExplainer(BANDS[2], '0–3')}
             <h2 id="next-h" style="font-size:clamp(24px,2.6vw,32px);line-height:1.16">Most sites scoring 4 or 5 don’t need rebuilding. We’ll tell you if yours doesn’t.</h2>
           </div>
           <ol class="navy-rows">
-            <li><span class="ord">01</span><p><strong>We run the seven checks properly</strong> — measured load times, real devices, and we write down what we find.</p></li>
-            <li><span class="ord">02</span><p><strong>You get the report, free</strong> — yours to keep and to act on, whether or not you ever work with us.</p></li>
-            <li><span class="ord">03</span><p><strong>Only then do we talk about money</strong> — and only about the things the report actually found.</p></li>
+            <li><span class="ord">01</span><p><strong>We run the seven checks properly</strong>: measured load times, real devices, and we write down what we find.</p></li>
+            <li><span class="ord">02</span><p><strong>You get the report, free</strong>: yours to keep and to act on, whether or not you ever work with us.</p></li>
+            <li><span class="ord">03</span><p><strong>Only then do we talk about money</strong>, and only about the things the report actually found.</p></li>
           </ol>
         </div>
       </div>

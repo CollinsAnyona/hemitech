@@ -3,7 +3,7 @@
 // BUILD-BRIEF §9: "Header nav, footer and the seven audit checks must be
 // byte-identical wherever they repeat. Put them in one place." They live here,
 // and scripts/build-site.js stamps them into every page. The deployed site is
-// still plain static HTML with no runtime framework — the assembly happens
+// still plain static HTML with no runtime framework: the assembly happens
 // once, here, not in the browser.
 
 import { SITE, CHECKS, ORIGIN } from './site.js';
@@ -54,16 +54,35 @@ export const quoteMark = (w = 34) =>
   `<svg width="${w}" height="${Math.round(w * 28 / 34)}" viewBox="0 0 34 28" fill="none" aria-hidden="true" focusable="false">` +
   `<path d="M0 28V16C0 7 5 1.5 14 0l1.5 5C10 6.5 7.5 9.5 7.5 14H14v14H0zm20 0V16c0-9 5-14.5 14-16l1.5 5C30 6.5 27.5 9.5 27.5 14H34v14H20z" fill="#2587FC" opacity=".9"></path></svg>`;
 
-export const logo = (size = 34, mark = '#02123C') =>
-  `<svg width="${size}" height="${size}" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false">` +
-  `<path d="M7 6h7v11h12V6h7v28h-7V23H14v11H7z" fill="${mark}"></path>` +
-  `<path d="M27 6h7v11h-7z" fill="#2587FC"></path></svg>`;
+/* ------------------------------------------------------------------ logo -- */
+// The real brand artwork, prepared by scripts/build-logo.js from the masters.
+// The mark is 368x413 in the master, so it is served at that ratio and sized
+// by height in CSS. `light` picks the version drawn for a navy ground.
+
+export const logoMark = (height = 38, light = false) => {
+  const stem = light ? 'mark-light' : 'mark';
+  const w = Math.round((368 / 413) * height);
+  return `<picture class="logo-mark">
+          <source type="image/avif" srcset="/Images/brand/${stem}-80.avif 80w, /Images/brand/${stem}-160.avif 160w" sizes="${w}px">
+          <img src="/Images/brand/${stem}-80.webp" alt="" width="${w}" height="${height}" decoding="async">
+        </picture>`;
+};
+
+/** The full lockup, wordmark and tagline included. Used where it can breathe. */
+export const logoLockup = (width = 240, light = true) => {
+  const stem = light ? 'lockup-light' : 'lockup';
+  const h = Math.round((413 / 1273) * width);
+  return `<picture class="logo-lockup">
+          <source type="image/avif" srcset="/Images/brand/${stem}-280.avif 280w, /Images/brand/${stem}-560.avif 560w" sizes="${width}px">
+          <img src="/Images/brand/${stem}-280.webp" alt="${esc(SITE.name)}: build, analyze, transform" width="${width}" height="${h}" decoding="async">
+        </picture>`;
+};
 
 /* -------------------------------------------------------------- contact --- */
 // One phone element, everywhere. The moment SITE.phone.dial holds digits this
 // becomes a real tel: link on every page at once and check 2 passes. Until
 // then it renders the bracketed placeholder rather than a link that dials
-// nothing — inventing the number is forbidden by §12.
+// nothing: inventing the number is forbidden by §12.
 
 export function phoneLink(cls = '') {
   const c = cls ? ` class="${cls}"` : '';
@@ -117,9 +136,9 @@ function header(current) {
   <header class="site-header">
     <div class="wrap">
       <a class="brand" href="/">
-        ${logo(34)}
+        ${logoMark(38)}
         <span class="wordmark">${esc(SITE.shortName)}</span>
-        <span class="visually-hidden">— home</span>
+        <span class="visually-hidden">, home</span>
       </a>
 
       <nav class="nav" id="site-nav" aria-label="Main">
@@ -183,10 +202,9 @@ ${links.map(([label, href]) => `          <li><a href="${href}">${label}</a></li
   return `  <footer class="site-footer">
     <div class="wrap footer-grid">
       <div class="footer-brand stack stack-4">
-        <div class="brand">
-          ${logo(30, '#ffffff')}
-          <span class="wordmark">${esc(SITE.name.toUpperCase())}</span>
-        </div>
+        <a class="footer-lockup" href="/">
+          ${logoLockup(248, true)}
+        </a>
         <p>Build · Analyze · Transform. A Kenyan software and data engineering firm.</p>
         <address class="footer-contact">
           ${esc(SITE.address)}<br>${esc(SITE.city)}<br>${phoneLink()}<br>${mailLink()}
@@ -195,7 +213,7 @@ ${links.map(([label, href]) => `          <li><a href="${href}">${label}</a></li
 ${FOOTER_COLS.map(col).join('\n')}
     </div>
     <div class="wrap footer-base">
-      <span>© 2026 ${esc(SITE.name)} Registered in Kenya ${esc(SITE.regNo)}</span>
+      <span>© 2026 ${esc(SITE.name)}. Registered in Kenya, ${esc(SITE.city)}.</span>
       <span>Last updated ${esc(SITE.lastUpdated)}</span>
     </div>
   </footer>`;
@@ -257,7 +275,7 @@ export function page(p) {
   <meta property="og:image" content="${og}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="${esc(SITE.name)} — ${esc(p.title.split(' — ')[0])}">
+  <meta property="og:image:alt" content="${esc(SITE.name)}: ${esc(p.title.split(': ')[0])}">
   <meta property="og:locale" content="en_KE">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="${og}">

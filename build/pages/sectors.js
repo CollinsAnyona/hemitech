@@ -2,18 +2,17 @@
 // From design-source/Sector.dc.html.
 //
 // BUILD-BRIEF §9.7: the "what usually goes wrong" cards and the sector copy
-// must be rewritten per sector. Four sectors have no copy yet, so those pages
-// render the template with a clearly marked [COPY NEEDED — <sector>] block
-// rather than the government copy pasted across, and rather than invented
-// copy dressed up as research.
+// are written per sector. The government copy is never pasted across; each
+// page states the failures and the builds that belong to that sector alone.
+// copyNeeded() stays as the fallback for any sector added without copy.
 
-import { SECTORS } from '../site.js';
+import { SECTORS, COMMITMENTS } from '../site.js';
 import { esc, ICONS } from '../layout.js';
 
 const index = {
   url: '/sectors',
   nav: '/sectors',
-  title: 'Sectors we build for in East Africa — Hemi Tech Co.',
+  title: 'Sectors we build for in East Africa · Hemi Tech Co.',
   description:
     'A permit portal and a donor dashboard fail in completely different ways. Government, NGOs, SACCOs, education and professional services, each written for alone.',
   body: `    <div class="ground-top">
@@ -33,7 +32,7 @@ ${SECTORS.map((s) => `        <a class="card" href="/sectors/${s.slug}" style="m
           ${ICONS[s.icon](24, '#0F5FDB')}
           <h2 style="font-size:19px;font-weight:700;letter-spacing:-.012em">${s.name.replace('&', '&amp;')}</h2>
           <p class="small">${s.blurb.replace(/&/g, '&amp;')}</p>
-          <span class="flow-end">${s.hasCopy ? 'Read the sector page' : 'Sector page in progress'}</span>
+          <span class="flow-end">Read the sector page</span>
         </a>`).join('\n')}
       </div>
     </section>
@@ -42,9 +41,9 @@ ${SECTORS.map((s) => `        <a class="card" href="/sectors/${s.slug}" style="m
       <div class="wrap sec-tight split">
         <h2 id="why-h">Why it is split this way</h2>
         <div class="stack stack-5">
-          <p class="body-copy">Every one of these buyers is answerable to somebody: an assembly, a donor, a board, a regulator, a parent. What they need from a supplier is not a different technology — it is a different set of things written down before the contract is signed.</p>
+          <p class="body-copy">Every one of these buyers is answerable to somebody: an assembly, a donor, a board, a regulator, a parent. What they need from a supplier is not a different technology; it is a different set of things written down before the contract is signed.</p>
           <p class="body-copy">A county needs an audit trail and an accessibility standard. An NGO needs indicators that survive a donor’s own definitions. A SACCO needs reconciliation its auditor accepts. A school needs consent handling for children’s data. A consultancy needs to look credible in thirty seconds on a phone.</p>
-          <p class="body-copy">So each sector page states the failures we are actually called in to fix, what we build for that sector, and what we commit to in writing — rather than a page of stock photography with the word “solutions” in the heading.</p>
+          <p class="body-copy">So each sector page states the failures we are actually called in to fix, what we build for that sector, and what we commit to in writing, rather than a page of stock photography with the word “solutions” in the heading.</p>
         </div>
       </div>
     </section>`,
@@ -98,8 +97,8 @@ function copyNeeded(s) {
 
       <div class="panel" style="border-style:dashed">
         <div class="stack stack-4">
-          <p class="label">[COPY NEEDED — ${esc(s.name)}]</p>
-          <p class="body-copy">This page carries the sector template and nothing else yet. The four “what usually goes wrong” cards and the “what we build for this sector” list have to be written specifically for ${esc(s.name.toLowerCase())} — the government copy is not transferable, and inventing it would put claims on the site that nobody can stand behind.</p>
+          <p class="label">[COPY NEEDED: ${esc(s.name)}]</p>
+          <p class="body-copy">This page carries the sector template and nothing else yet. The four “what usually goes wrong” cards and the “what we build for this sector” list have to be written specifically for ${esc(s.name.toLowerCase())}: the government copy is not transferable, and inventing it would put claims on the site that nobody can stand behind.</p>
           <p class="body-copy">What is needed: four failures we have actually been called in to fix in this sector, and six things we build for it. Until then the capabilities pages carry the detail, and the audit is the honest starting point.</p>
           <div class="btn-row" style="margin-top:var(--s2)">
             <a class="btn" href="/capabilities">See all capabilities</a>
@@ -114,7 +113,7 @@ function detail(s) {
   return {
     url: `/sectors/${s.slug}`,
     nav: '/sectors',
-    title: `${s.name.replace('&', 'and')} — Hemi Tech Co.`.slice(0, 60),
+    title: `${s.name.replace('&', 'and')} · Hemi Tech Co.`.slice(0, 60),
     description: s.metaDesc,
     body: `    <div class="band-navy on-navy-field">
       <div class="glow glow-br" aria-hidden="true"></div>
@@ -139,10 +138,10 @@ function detail(s) {
 
           <div class="status-panel">
             <h2 class="eyebrow" style="margin-bottom:16px">Procurement status</h2>
-            <div class="row-split"><span class="row-key">AGPO — youth category</span><span class="row-val">[PENDING]</span></div>
-            <div class="row-split"><span class="row-key">e-GP registered supplier</span><span class="row-val">[PENDING]</span></div>
-            <div class="row-split"><span class="row-key">Tax Compliance Certificate</span><span class="row-val">[VALID TO ...]</span></div>
-            <div class="row-split"><span class="row-key">ODPC data processor</span><span class="row-val">[PENDING]</span></div>
+            <div class="row-split"><span class="row-key">AGPO, youth category</span><span class="row-val">In progress</span></div>
+            <div class="row-split"><span class="row-key">e-GP registered supplier</span><span class="row-val">In progress</span></div>
+            <div class="row-split"><span class="row-key">Tax Compliance Certificate</span><span class="row-val">In progress</span></div>
+            <div class="row-split"><span class="row-key">ODPC data processor</span><span class="row-val">In progress</span></div>
             <div class="row-split"><span class="row-key">CR12 and incorporation</span><span class="row-val">On request</span></div>
             <p>30% of national procurement spend is reserved for youth, women and PWD-owned enterprises under AGPO.</p>
           </div>
@@ -166,9 +165,9 @@ ${s.hasCopy ? withCopy(s) : copyNeeded(s)}
         <ul class="commitments">
           <li><span class="key">Page load on mobile data</span><span class="val">under 2.5s</span></li>
           <li><span class="key">Accessibility</span><span class="val">WCAG 2.2 AA</span></li>
-          <li><span class="key">Uptime on supported systems</span><span class="val">[99.X%]</span></li>
-          <li><span class="key">Response to a reported fault</span><span class="val">[X hrs]</span></li>
-          <li><span class="key">Data residency</span><span class="val">[TO CONFIRM]</span></li>
+          <li><span class="key">Uptime on supported systems</span><span class="val">${COMMITMENTS.uptime}</span></li>
+          <li><span class="key">Response to a reported fault</span><span class="val">${COMMITMENTS.response}</span></li>
+          <li><span class="key">Data residency</span><span class="val">${COMMITMENTS.residency}</span></li>
           <li><span class="key">Source code &amp; hosting ownership</span><span class="val">Yours</span></li>
         </ul>
       </div>

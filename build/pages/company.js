@@ -1,13 +1,13 @@
 // How we work, Standards, Pricing, About and Insights.
 // Content extracted from the design files' own sections (BUILD-BRIEF §9.9–9.11).
 
-import { SITE, PRICES } from '../site.js';
+import { SITE, PRICES, COMMITMENTS } from '../site.js';
 import { esc, ICONS, phoneLink, mailLink, checksStatic } from '../layout.js';
 
 /* --------------------------------------------------------- how we work --- */
 
 const STAGES = [
-  ['Audit', 'The seven checks, measured — not estimated. We open your site on a phone, on mobile data, from cold, and write down what happens.', 'Free, and yours whether or not you hire us', '2 days'],
+  ['Audit', 'The seven checks, measured rather than estimated. We open your site on a phone, on mobile data, from cold, and write down what happens.', 'Free, and yours whether or not you hire us', '2 days'],
   ['Scope', 'One page: what we found, what it is costing you, what we would do about it, and what that costs. If the answer is “three fixes, not a rebuild”, that is what it says.', 'A fixed price and a date', '1 week'],
   ['Build', 'Weekly progress you can open in a browser. At the end of each block, a working link and a short note on what changed.', 'Something to look at every week', '2–14 weeks'],
   ['Handover', 'Code, domain and hosting transferred into your name. Training for the people who will use it, and the seven checks run in front of you.', 'Ownership, in writing', '1 week'],
@@ -17,7 +17,7 @@ const STAGES = [
 const howWeWork = {
   url: '/how-we-work',
   nav: '/how-we-work',
-  title: 'How we work — five stages, published — Hemi Tech Co.',
+  title: 'How we work · five stages, published · Hemi Tech Co.',
   description:
     'Five stages, each with a deliverable and a sign-off: audit, scope, build, handover, care. You know what is coming, what we need, and when you will see it.',
   body: `    <div class="ground-top">
@@ -74,7 +74,7 @@ ${STAGES.map(([h, p, deliverable, when], i) => `        <li><span class="ord">0$
 const standards = {
   url: '/standards',
   nav: '/how-we-work',
-  title: 'Standards we build to and publish — Hemi Tech Co.',
+  title: 'Standards we build to and publish · Hemi Tech Co.',
   description:
     'Load under 2.5 seconds on mobile data, WCAG 2.2 AA, source code and hosting in your name, and a published response time. In our standard terms, not per project.',
   body: `    <div class="ground-top">
@@ -83,7 +83,7 @@ const standards = {
           <p class="eyebrow">Standards</p>
           <h1 class="max-20">Published before you contract us, so you have something to point at.</h1>
           <div class="rule"></div>
-          <p class="lede" style="max-width:62ch">These are in our standard terms, not negotiated per project. Every one of them is a number somebody can hold us to — which is the only kind worth publishing.</p>
+          <p class="lede" style="max-width:62ch">These are in our standard terms, not negotiated per project. Every one of them is a number somebody can hold us to, which is the only kind worth publishing.</p>
         </div>
       </div>
     </div>
@@ -95,10 +95,10 @@ const standards = {
         <li><span class="key">Largest Contentful Paint, throttled mobile</span><span class="val">under 2.5s</span></li>
         <li><span class="key">Cumulative Layout Shift</span><span class="val">under 0.05</span></li>
         <li><span class="key">Accessibility</span><span class="val">WCAG 2.2 AA</span></li>
-        <li><span class="key">Uptime on supported systems</span><span class="val">[99.X%]</span></li>
-        <li><span class="key">Response to a reported fault</span><span class="val">[X hrs]</span></li>
+        <li><span class="key">Uptime on supported systems</span><span class="val">${COMMITMENTS.uptime}</span></li>
+        <li><span class="key">Response to a reported fault</span><span class="val">${COMMITMENTS.response}</span></li>
         <li><span class="key">Backups on supported systems</span><span class="val">Daily</span></li>
-        <li><span class="key">Data residency</span><span class="val">[TO CONFIRM]</span></li>
+        <li><span class="key">Data residency</span><span class="val">${COMMITMENTS.residency}</span></li>
         <li><span class="key">Source code &amp; hosting ownership</span><span class="val">Yours</span></li>
       </ul>
     </section>
@@ -117,7 +117,7 @@ const standards = {
             <div class="card"><h3>No tracking that needs a banner</h3><p class="small">Cookieless and privacy-respecting, or nothing at all. A consent banner on a page selling data protection is an own goal.</p></div>
             <div class="card"><h3>Works without JavaScript</h3><p class="small">Every page is readable and navigable with scripting off, and both forms still submit.</p></div>
           </div>
-          <p class="small">The measured results of our own audit are published with each release. Current figures: <a href="/audit">run the checks yourself</a> — the point of the test is that you do not have to take our word for it.</p>
+          <p class="small">The measured results of our own audit are published with each release. Current figures: <a href="/audit">run the checks yourself</a>: the point of the test is that you do not have to take our word for it.</p>
         </div>
       </div>
     </section>`,
@@ -137,7 +137,7 @@ const PACKAGES = [
 const pricing = {
   url: '/pricing',
   nav: '/how-we-work',
-  title: 'Pricing — published ranges, not “on request” — Hemi Tech Co.',
+  title: 'Pricing · published ranges, not “on request” · Hemi Tech Co.',
   description:
     'Audit free, Rescue KES 65,000, Starter KES 145,000, Business KES 295,000, Platform from KES 650,000, Care Plan KES 14,000 a month. Published, not on request.',
   body: `    <div class="ground-top">
@@ -168,7 +168,7 @@ ${items.map((i) => `            <li><span>${esc(i)}</span></li>`).join('\n')}
       </div>
 
       <div class="grid grid-2" style="margin-top:var(--s8)">
-        <div class="card"><h3>Deposit</h3><p class="small">[X%] to start, the balance on handover. Larger projects are staged against the blocks in the scope document.</p></div>
+        <div class="card"><h3>Deposit</h3><p class="small">${COMMITMENTS.deposit} to start, the balance on handover. Larger projects are staged against the blocks in the scope document.</p></div>
         <div class="card"><h3>What is never extra</h3><p class="small">Handover of code, domain and hosting. Training. The seven checks run in front of you at the end. None of these is a line item.</p></div>
       </div>
     </section>
@@ -178,7 +178,7 @@ ${items.map((i) => `            <li><span>${esc(i)}</span></li>`).join('\n')}
         <div class="cta-panel" style="background:#fff">
           <div class="stack stack-4" style="max-width:640px">
             <h2 id="which-h" style="font-size:clamp(24px,2.4vw,29px)">Not sure which of these you need?</h2>
-            <p style="font-size:16.5px;line-height:1.55">Start with the free audit. Most sites scoring 4 or 5 need three fixes, not a rebuild — and we will tell you so rather than sell you a Starter.</p>
+            <p style="font-size:16.5px;line-height:1.55">Start with the free audit. Most sites scoring 4 or 5 need three fixes, not a rebuild, and we will tell you so rather than sell you a Starter.</p>
           </div>
           <div class="btn-row" style="flex:none">
             <a class="btn" href="/audit">Run the seven checks</a>
@@ -194,7 +194,7 @@ ${items.map((i) => `            <li><span>${esc(i)}</span></li>`).join('\n')}
 const about = {
   url: '/about',
   nav: '/how-we-work',
-  title: 'About Hemi Tech Co. — who actually does the work',
+  title: 'About Hemi Tech Co. · who actually does the work',
   description:
     'A small Nairobi software and data engineering firm. You deal with the person who writes the code, and the work is done in Kenya by people you can name.',
   body: `    <div class="ground-top">
@@ -203,7 +203,7 @@ const about = {
           <p class="eyebrow">About</p>
           <h1 class="max-20">Small, Nairobi-based, and you deal with the person who does the work.</h1>
           <div class="rule"></div>
-          <p class="lede" style="max-width:62ch">There is no account manager between you and the build. That is the whole proposition — a firm this size cannot hide behind a department, so it does not try to.</p>
+          <p class="lede" style="max-width:62ch">There is no account manager between you and the build. That is the whole proposition: a firm this size cannot hide behind a department, so it does not try to.</p>
         </div>
       </div>
     </div>
@@ -221,7 +221,7 @@ const about = {
           <p class="body-copy">What it does not buy is a large delivery team, and we say so before a contract rather than after. Where a project needs more hands than we have, we say that too.</p>
           <div class="grid grid-2" style="margin-top:var(--s2)">
             <div class="card"><h3>Where the work happens</h3><p class="small">Nairobi. Everything is built here, by people in this country.</p></div>
-            <div class="card"><h3>Who owns what you buy</h3><p class="small">You do — code, domain and hosting, transferred at handover. Every time, without asking.</p></div>
+            <div class="card"><h3>Who owns what you buy</h3><p class="small">You do: code, domain and hosting, transferred at handover. Every time, without asking.</p></div>
           </div>
         </div>
       </div>
@@ -262,7 +262,7 @@ const about = {
 const insights = {
   url: '/insights',
   nav: '/insights',
-  title: 'Insights — Hemi Tech Co.',
+  title: 'Insights · Hemi Tech Co.',
   description:
     'Notes on building things that load quickly in East Africa: procurement, mobile data, accessibility and the Data Protection Act. Nothing yet, and never padded.',
   body: `    <div class="ground-top">
@@ -271,7 +271,7 @@ const insights = {
           <p class="eyebrow">Insights</p>
           <h1 class="max-20">Nothing here yet, and we are not going to pad it.</h1>
           <div class="rule"></div>
-          <p class="lede" style="max-width:62ch">When we publish here it will be because we learned something worth the reading time — measured, from a real project, and specific to building things that have to work on mobile data in this region.</p>
+          <p class="lede" style="max-width:62ch">When we publish here it will be because we learned something worth the reading time: measured, from a real project, and specific to building things that have to work on mobile data in this region.</p>
         </div>
       </div>
     </div>

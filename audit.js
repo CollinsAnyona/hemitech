@@ -2,7 +2,7 @@
  *
  * A direct port of renderVals() in design-source/AuditTool.dc.html: the same
  * seven checks, the same three bands, the same ring geometry. The wording is
- * not repeated here — it is read from the markup the build generated, so the
+ * not repeated here; it is read from the markup the build generated, so the
  * checks have exactly one source.
  *
  * The page works with this file absent: the checks are real checkboxes in a
@@ -34,7 +34,7 @@
       min: 6,
       colour: 'var(--blue-deep)',
       title: 'It works.',
-      body: 'Your site does its job. The next question is whether it converts — and that is a different conversation.',
+      body: 'Your site does its job. The next question is whether it converts, and that is a different conversation.',
       pkgName: 'Care Plan',
       pkgBody: 'Nothing here needs fixing. Hosting, backups, patching and a published response time keep it that way.'
     },
@@ -43,15 +43,15 @@
       colour: 'var(--blue-mid)',
       title: 'You’re leaking enquiries quietly.',
       body: 'People are arriving and leaving without telling you. Usually three fixes, not a rebuild.',
-      pkgName: 'Rescue — KES 65,000',
+      pkgName: 'Rescue: KES 65,000',
       pkgBody: 'We fix what the audit found. No rebuild, no new design, no retainer required.'
     },
     {
       min: 0,
       colour: 'var(--alert)',
       title: 'It’s costing you clients today.',
-      body: 'At this score most visitors leave before they see anything. That loss is invisible — nobody emails to say they left.',
-      pkgName: 'Starter — from KES 145,000',
+      body: 'At this score most visitors leave before they see anything. That loss is invisible; nobody emails to say they left.',
+      pkgName: 'Starter: from KES 145,000',
       pkgBody: 'Three or below, patching costs more than starting again. Five to seven pages, built properly, in weeks not months.'
     }
   ];
@@ -214,7 +214,7 @@
       })
       .catch(function () {
         submit.disabled = false;
-        setStatus('bad', 'That did not send — the connection dropped. Try again, or email hello@hemitech.co.ke.');
+        setStatus('bad', 'That did not send. The connection dropped. Try again, or email hello@hemitech.co.ke.');
       });
   });
 })();

@@ -1,7 +1,7 @@
 // Capabilities index and the eight service pages.
 // From design-source/Capabilities.dc.html and ServiceDetail.dc.html.
 
-import { SERVICES, GROUPS, PRICES } from '../site.js';
+import { SERVICES, GROUPS, PRICES, COMMITMENTS } from '../site.js';
 import { esc, ICONS } from '../layout.js';
 
 /* ---------------------------------------------------------------- index --- */
@@ -38,7 +38,7 @@ ${services.map((s, i) => serviceRow(s, i === services.length - 1)).join('\n')}`;
 const index = {
   url: '/capabilities',
   nav: '/capabilities',
-  title: 'Capabilities — eight services with prices — Hemi Tech Co.',
+  title: 'Capabilities · eight services with prices · Hemi Tech Co.',
   description:
     'Eight services in three groups, each with a named scope, a stated timeline and a published price, because a buyer who has to email for a price usually doesn’t.',
   body: `    <div class="ground-top">
@@ -109,7 +109,7 @@ function detail(s) {
   return {
     url: `/capabilities/${s.slug}`,
     nav: '/capabilities',
-    title: `${s.short} — Hemi Tech Co.`.slice(0, 60),
+    title: `${s.short} · Hemi Tech Co.`.slice(0, 60),
     description: s.metaDesc || (s.lede.length > 158 ? s.lede.slice(0, 155).trim() + '…' : s.lede),
     body: `    <div class="ground-top">
       <div class="wrap">
@@ -134,7 +134,7 @@ function detail(s) {
               <div class="stat-value" style="font-size:22px">${esc(s.from === 'On scope' ? 'On scope' : 'from ' + s.from)}</div>
             </div>
             <div class="row-split" style="padding-block:14px;border-bottom:1px solid var(--line-soft)"><span class="row-key" style="font-weight:600;color:var(--navy-soft)">Typical ${s.timelineLabel.toLowerCase()}</span><span class="row-val" style="font-size:14.5px">${esc(s.timeline)}</span></div>
-            <div class="row-split" style="padding-block:14px;border-bottom:1px solid var(--line-soft)"><span class="row-key" style="font-weight:600;color:var(--navy-soft)">Deposit</span><span class="row-val" style="font-size:14.5px">[X%] to start</span></div>
+            <div class="row-split" style="padding-block:14px;border-bottom:1px solid var(--line-soft)"><span class="row-key" style="font-weight:600;color:var(--navy-soft)">Deposit</span><span class="row-val" style="font-size:14.5px">${COMMITMENTS.deposit} to start</span></div>
             <div class="row-split" style="padding-block:14px;border-bottom:1px solid var(--line-soft)"><span class="row-key" style="font-weight:600;color:var(--navy-soft)">Source code</span><span class="row-val" style="font-size:14.5px">Yours at handover</span></div>
             <div class="row-split" style="padding-block:14px"><span class="row-key" style="font-weight:600;color:var(--navy-soft)">Support</span><span class="row-val" style="font-size:14.5px">Care Plan from ${PRICES.care}</span></div>
             <a class="btn btn-full" href="/contact" style="margin-top:18px">Discuss a ${s.group === 'Build' ? 'build' : 'project'}</a>

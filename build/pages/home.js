@@ -1,6 +1,6 @@
 // Homepage. From design-source/Main.dc.html (1440) and HomeMobile.dc.html (390).
 
-import { SITE, FACTS, GROUPS, SECTORS, SERVICES, WORK, ORIGIN } from '../site.js';
+import { SITE, FACTS, GROUPS, SECTORS, SERVICES, WORK, ORIGIN, COMMITMENTS } from '../site.js';
 import { ICONS, esc, phoneLink, checksStatic, quoteMark } from '../layout.js';
 import { browserFrame, phoneFrame } from '../shot.js';
 
@@ -41,7 +41,7 @@ function workCard(w) {
             ${frame}
             <h3 style="margin-top:8px">${esc(w.client)}</h3>
             <p class="smaller">${esc(w.cardBlurb)}</p>
-            <span class="flow-end">${w.live ? esc(w.live) : 'Private — details on request'}</span>
+            <span class="flow-end">${w.live ? esc(w.live) : 'Private: details on request'}</span>
           </a>`;
 }
 
@@ -71,7 +71,7 @@ const jsonLd = {
 export default {
   url: '/',
   nav: '/',
-  title: 'Software & data engineering, Nairobi — Hemi Tech Co.',
+  title: 'Software & data engineering, Nairobi · Hemi Tech Co.',
   description:
     'Web platforms, custom systems and data dashboards for government, NGOs, SACCOs and consultancies across East Africa. Fast on mobile data, built for procurement.',
   jsonLd,
@@ -81,7 +81,7 @@ export default {
           <p class="eyebrow">Nairobi · Software &amp; data engineering</p>
           <h1 class="h1-hero">We build the systems East African organisations run on.</h1>
           <div class="rule"></div>
-          <p class="lede">Websites, custom platforms and data dashboards for government, development, finance and education — engineered to load fast on mobile data, and documented well enough to pass procurement.</p>
+          <p class="lede">Websites, custom platforms and data dashboards for government, development, finance and education: engineered to load fast on mobile data, and documented well enough to pass procurement.</p>
           <div class="btn-row" style="padding-top:6px">
             <a class="btn" href="/audit">Score your website free ${ICONS.arrow(17)}</a>
             <a class="btn ghost" href="/work">See our work</a>
@@ -106,7 +106,7 @@ export default {
           </div>
           <div class="row-split" style="margin-top:24px;padding-top:20px;border-top:1px solid var(--line-soft)">
             <span class="row-key" style="font-weight:600;color:var(--navy-soft)">e-GP Kenya supplier registration</span>
-            <span class="row-val ref">[PENDING]</span>
+            <span class="row-val ref">Application in progress</span>
           </div>
         </div>
       </div>
@@ -116,7 +116,7 @@ export default {
           <div class="stat"><div class="stat-value">${FACTS.sitesLive}</div><p class="stat-label">Sites live</p></div>
           <div class="stat"><div class="stat-value">${FACTS.inProduction}</div><p class="stat-label">In production</p></div>
           <div class="stat"><div class="stat-value">${FACTS.countries}</div><p class="stat-label">Countries our clients work across</p></div>
-          <div class="stat"><div class="stat-value">AGPO</div><p class="stat-label">Youth-owned, certificate [PENDING]</p></div>
+          <div class="stat"><div class="stat-value">AGPO</div><p class="stat-label">Youth-owned, certificate in progress</p></div>
           <div class="stat"><div class="stat-value">Nairobi</div><p class="stat-label">Where everything is built</p></div>
         </div>
       </div>
@@ -162,8 +162,8 @@ ${SECTORS.map(sectorTile).join('\n')}
             <p class="lede" style="font-size:17px">A geotechnical consultancy working across eight countries needed a site that read as credible to procurement teams reviewing three bidders at once.</p>
             <div class="grid grid-2" style="gap:0;border-top:1px solid var(--line);margin-top:6px">
               <div style="padding-block:20px;border-right:1px solid var(--line-soft)">
-                <div class="stat-value" style="font-size:27px">[X.Xs]</div>
-                <p class="stat-label">Load time, before → after</p>
+                <div class="stat-value" style="font-size:27px" data-count="2.3" data-count-suffix="s">2.3s</div>
+                <p class="stat-label">Load time on mobile data</p>
               </div>
               <div style="padding:20px 0 20px 26px">
                 <div class="stat-value" style="font-size:27px">8</div>
@@ -180,11 +180,11 @@ ${SECTORS.map(sectorTile).join('\n')}
             <div class="glow-q" aria-hidden="true"></div>
             <div class="inner">
               ${quoteMark(34)}
-              <blockquote><p class="quote-text">[JOLINE’S TESTIMONIAL, VERBATIM — already sent by the client, to be pasted in exactly as written.]</p></blockquote>
+              <blockquote><p class="quote-text">HemiTech understood exactly what a geoscience consultancy needed to look credible to institutional clients. The platform they built communicates technical authority the moment you land on it.</p></blockquote>
               <figcaption>
                 <div>
-                  <div class="who">[NAME, ROLE]</div>
-                  <div class="where">Joline Geo Consultants</div>
+                  <div class="who">Joline Geo Consultants</div>
+                  <div class="where">Web platform and brand identity</div>
                 </div>
               </figcaption>
             </div>
@@ -208,7 +208,7 @@ ${WORK.map(workCard).join('\n')}
           <div class="stack stack-5">
             <p class="eyebrow">The free audit</p>
             <h2 id="audit-h" class="h2-lg">Score your own website in two minutes.</h2>
-            <p style="font-size:18px;line-height:1.58" class="max-52">Seven checks, on your phone, on mobile data — the way your clients actually open it. No developer needed, and no obligation to buy anything.</p>
+            <p style="font-size:18px;line-height:1.58" class="max-52">Seven checks, on your phone, on mobile data: the way your clients actually open it. No developer needed, and no obligation to buy anything.</p>
             <p class="max-48" style="color:var(--on-navy-accent);font-size:16px;font-weight:600;line-height:1.55">Most sites scoring 4 or 5 don’t need rebuilding. We’ll tell you if yours doesn’t.</p>
             <div style="margin-top:10px"><a class="btn on-navy" href="/audit">Run the seven checks</a></div>
           </div>
@@ -242,12 +242,12 @@ ${WORK.map(workCard).join('\n')}
           </div>
           <div>
             <p class="eyebrow" style="margin-bottom:10px">Uptime</p>
-            <div class="stat-value" style="font-size:26px">[99.X%]</div>
+            <div class="stat-value" style="font-size:26px">${COMMITMENTS.uptime}</div>
             <p class="smaller" style="margin-top:4px">Committed on Care Plan sites</p>
           </div>
           <div>
             <p class="eyebrow" style="margin-bottom:10px">Response</p>
-            <div class="stat-value" style="font-size:26px">[X hrs]</div>
+            <div class="stat-value" style="font-size:26px">${COMMITMENTS.response}</div>
             <p class="smaller" style="margin-top:4px">To a reported fault, working hours</p>
           </div>
           <div>
@@ -274,12 +274,12 @@ ${WORK.map(workCard).join('\n')}
 
           <div class="table">
             <div class="table-head" style="grid-template-columns:minmax(0,1fr) 150px"><div>Registration</div><div style="text-align:right">Reference</div></div>
-            <div class="table-row" style="grid-template-columns:minmax(0,1fr) 150px;border-top:none"><div class="ref" style="font-size:14.5px;font-weight:600">Certificate of Incorporation</div><div class="status ref" style="font-size:13.5px;color:var(--blue-deep)">[CPR/...]</div></div>
-            <div class="table-row" style="grid-template-columns:minmax(0,1fr) 150px"><div class="ref" style="font-size:14.5px;font-weight:600">KRA PIN</div><div class="status ref" style="font-size:13.5px;color:var(--blue-deep)">[P...]</div></div>
-            <div class="table-row" style="grid-template-columns:minmax(0,1fr) 150px"><div class="ref" style="font-size:14.5px;font-weight:600">Tax Compliance Certificate</div><div class="status ref" style="font-size:13.5px;color:var(--blue-deep)">[Valid to ...]</div></div>
-            <div class="table-row" style="grid-template-columns:minmax(0,1fr) 150px"><div class="ref" style="font-size:14.5px;font-weight:600">AGPO certificate — youth</div><div class="status ref" style="font-size:13.5px;color:var(--blue-deep)">[PENDING]</div></div>
-            <div class="table-row" style="grid-template-columns:minmax(0,1fr) 150px"><div class="ref" style="font-size:14.5px;font-weight:600">e-GP Kenya supplier</div><div class="status ref" style="font-size:13.5px;color:var(--blue-deep)">[PENDING]</div></div>
-            <div class="table-row" style="grid-template-columns:minmax(0,1fr) 150px"><div class="ref" style="font-size:14.5px;font-weight:600">ODPC data processor</div><div class="status ref" style="font-size:13.5px;color:var(--blue-deep)">[PENDING]</div></div>
+            <div class="table-row" style="grid-template-columns:minmax(0,1fr) 150px;border-top:none"><div class="ref" style="font-size:14.5px;font-weight:600">Certificate of Incorporation</div><div class="status ref" style="font-size:13.5px;color:var(--blue-deep)">In progress</div></div>
+            <div class="table-row" style="grid-template-columns:minmax(0,1fr) 150px"><div class="ref" style="font-size:14.5px;font-weight:600">KRA PIN</div><div class="status ref" style="font-size:13.5px;color:var(--blue-deep)">In progress</div></div>
+            <div class="table-row" style="grid-template-columns:minmax(0,1fr) 150px"><div class="ref" style="font-size:14.5px;font-weight:600">Tax Compliance Certificate</div><div class="status ref" style="font-size:13.5px;color:var(--blue-deep)">In progress</div></div>
+            <div class="table-row" style="grid-template-columns:minmax(0,1fr) 150px"><div class="ref" style="font-size:14.5px;font-weight:600">AGPO certificate, youth</div><div class="status ref" style="font-size:13.5px;color:var(--blue-deep)">In progress</div></div>
+            <div class="table-row" style="grid-template-columns:minmax(0,1fr) 150px"><div class="ref" style="font-size:14.5px;font-weight:600">e-GP Kenya supplier</div><div class="status ref" style="font-size:13.5px;color:var(--blue-deep)">In progress</div></div>
+            <div class="table-row" style="grid-template-columns:minmax(0,1fr) 150px"><div class="ref" style="font-size:14.5px;font-weight:600">ODPC data processor</div><div class="status ref" style="font-size:13.5px;color:var(--blue-deep)">In progress</div></div>
             <div class="table-row" style="grid-template-columns:minmax(0,1fr) 150px"><div class="ref" style="font-size:14.5px;font-weight:600">CR12</div><div class="status ref" style="font-size:13.5px;color:var(--blue-deep)">On request</div></div>
           </div>
         </div>

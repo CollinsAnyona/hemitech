@@ -1,7 +1,7 @@
 /* Everything the site needs in the browser, other than the audit tool.
  *
  * Two jobs: collapse the navigation on a small screen, and upgrade the contact
- * form from a page reload to an in-place reply. Both are enhancements — with
+ * form from a page reload to an in-place reply. Both are enhancements. With
  * this file absent the nav is simply open and the form posts normally.
  */
 (function () {
@@ -138,7 +138,7 @@
         submit.disabled = false;
         if (result.ok) {
           form.reset();
-          setStatus('ok', 'Got it. A person will reply within one working day — and we will tell you plainly if you don’t need us.');
+          setStatus('ok', 'Got it. A person will reply within one working day, and we will tell you plainly if you don’t need us.');
         } else if (result.body && result.body.error === 'rate_limited') {
           setStatus('bad', 'That is a few messages in a short time. Give it a minute, or email hello@hemitech.co.ke.');
         } else if (result.body && result.body.field) {
@@ -150,7 +150,7 @@
       })
       .catch(function () {
         submit.disabled = false;
-        setStatus('bad', 'That did not send — the connection dropped. Try again, or email hello@hemitech.co.ke.');
+        setStatus('bad', 'That did not send. The connection dropped. Try again, or email hello@hemitech.co.ke.');
       });
   });
 })();
