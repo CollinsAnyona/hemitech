@@ -78,6 +78,21 @@ export const logoLockup = (width = 240, light = true) => {
         </picture>`;
 };
 
+/**
+ * The same lockup, icon and wordmark, with the tagline and its rule removed
+ * rather than shrunk: at header height they'd blur into noise instead of
+ * getting smaller and staying legible. For places the full lockup doesn't
+ * have room to breathe — the header bar, mainly.
+ */
+export const logoLockupCompact = (width = 150, light = false) => {
+  const stem = light ? 'lockup-compact-light' : 'lockup-compact';
+  const h = Math.round((405 / 1273) * width); // the tagline/rule are cropped out; shorter than the full lockup
+  return `<picture class="logo-lockup logo-lockup-compact">
+          <source type="image/avif" srcset="/Images/brand/${stem}-280.avif 280w, /Images/brand/${stem}-560.avif 560w" sizes="${width}px">
+          <img src="/Images/brand/${stem}-280.webp" alt="${esc(SITE.name)}" width="${width}" height="${h}" decoding="async">
+        </picture>`;
+};
+
 /* -------------------------------------------------------------- contact --- */
 // One phone element, everywhere. The moment SITE.phone.dial holds digits this
 // becomes a real tel: link on every page at once and check 2 passes. Until
@@ -136,8 +151,7 @@ function header(current) {
   <header class="site-header">
     <div class="wrap">
       <a class="brand" href="/">
-        ${logoMark(38)}
-        <span class="wordmark">${esc(SITE.shortName)}</span>
+        ${logoLockupCompact(130)}
         <span class="visually-hidden">, home</span>
       </a>
 
@@ -201,19 +215,19 @@ ${links.map(([label, href]) => `          <li><a href="${href}">${label}</a></li
 
   return `  <footer class="site-footer">
     <div class="wrap footer-grid">
-      <div class="footer-brand stack stack-4">
+      <div class="footer-brand stack stack-5">
         <a class="footer-lockup" href="/">
           ${logoLockup(248, true)}
         </a>
         <p>Build · Analyze · Transform. A Kenyan software and data engineering firm.</p>
         <address class="footer-contact">
-          ${esc(SITE.address)}<br>${esc(SITE.city)}<br>${phoneLink()}<br>${mailLink()}
+          ${esc(SITE.address)}${SITE.address !== SITE.city ? `<br>${esc(SITE.city)}` : ''}<br>${phoneLink()}<br>${mailLink()}
         </address>
       </div>
 ${FOOTER_COLS.map(col).join('\n')}
     </div>
     <div class="wrap footer-base">
-      <span>© 2026 ${esc(SITE.name)}. Registered in Kenya, ${esc(SITE.city)}.</span>
+      <span>© 2026 ${esc(SITE.name)} Registered in Kenya, ${esc(SITE.city)}.</span>
       <span>Last updated ${esc(SITE.lastUpdated)}</span>
     </div>
   </footer>`;

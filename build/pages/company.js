@@ -248,7 +248,7 @@ const about = {
       <div class="panel">
         <div class="stack stack-4">
           <h2 id="reach-h" style="font-size:clamp(22px,2.1vw,26px)">How to reach us</h2>
-          <p class="body-copy">${phoneLink()} · ${mailLink(SITE.email)} · ${esc(SITE.address)}, ${esc(SITE.city)}</p>
+          <p class="body-copy">${phoneLink()} · ${mailLink(SITE.email)} · ${esc(SITE.address)}${SITE.address !== SITE.city ? `, ${esc(SITE.city)}` : ''}</p>
           <p class="small">Tender and prequalification queries go to ${mailLink(SITE.tenderEmail)} and are answered within one working day.</p>
         </div>
       </div>

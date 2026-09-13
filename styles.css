@@ -724,13 +724,7 @@ a.card h3, a.card h4 { color: var(--navy); }
 }
 
 .brand { display: flex; align-items: center; gap: 12px; flex: none; }
-.brand svg { flex: none; }
-.brand .wordmark {
-  font-weight: 800;
-  font-size: 19px;
-  color: var(--navy);
-  letter-spacing: -.01em;
-}
+.brand img { flex: none; display: block; }
 
 .nav-list {
   display: flex;
@@ -811,12 +805,11 @@ a.card h3, a.card h4 { color: var(--navy); }
 .footer-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
-  gap: 48px;
-  padding-top: 60px;
-  padding-bottom: 34px;
+  gap: 48px 40px;
+  padding-top: var(--s9);
+  padding-bottom: var(--s8);
 }
 .footer-grid p { font-size: 14px; line-height: 1.6; max-width: 34ch; }
-.footer-brand .wordmark { font-weight: 800; font-size: 17px; color: #fff; }
 .footer-contact {
   font-size: 14px;
   line-height: 1.7;
@@ -831,16 +824,16 @@ a.card h3, a.card h4 { color: var(--navy); }
   letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--on-navy-3);
-  margin-bottom: 4px;
+  margin-bottom: var(--s5);
   max-width: none;
 }
-.footer-col ul { display: flex; flex-direction: column; gap: 12px; }
+.footer-col ul { display: flex; flex-direction: column; gap: 14px; }
 .footer-col a { font-size: 14px; color: var(--on-navy-2); }
 .footer-col a:hover { color: #fff; }
 .footer-base {
   border-top: 1px solid rgba(255, 255, 255, .12);
-  padding-top: 22px;
-  padding-bottom: 34px;
+  padding-top: var(--s6);
+  padding-bottom: var(--s7);
   display: flex;
   justify-content: space-between;
   gap: 16px;
@@ -848,10 +841,11 @@ a.card h3, a.card h4 { color: var(--navy); }
   font-size: 13px;
 }
 @media (max-width: 980px) {
-  .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; padding-top: 40px; }
+  .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 32px; padding-top: var(--s7); padding-bottom: var(--s6); }
 }
 @media (max-width: 640px) {
-  .footer-grid { grid-template-columns: minmax(0, 1fr); gap: 26px; }
+  .footer-grid { grid-template-columns: minmax(0, 1fr); gap: var(--s7) 26px; }
+  .footer-col h2 { margin-bottom: var(--s4); }
 }
 
 /* ---------------------------------------------------------------- hero --- */
@@ -1613,9 +1607,9 @@ html[data-scrolled="true"] .site-header .wrap { min-height: 66px; }
 .link-arrow svg { transition: transform .2s cubic-bezier(.2, .7, .3, 1); }
 .link-arrow:hover svg, .link-arrow:focus-visible svg { transform: translateX(4px); }
 
-/* the mark in the header: a small confidence-building wink */
-.brand svg { transition: transform .3s cubic-bezier(.3, 1.5, .5, 1); }
-.brand:hover svg, .brand:focus-within svg { transform: rotate(-6deg) scale(1.05); }
+/* the logo in the header: a small confidence-building wink */
+.brand img { transition: transform .3s cubic-bezier(.3, 1.5, .5, 1); }
+.brand:hover img, .brand:focus-within img { transform: rotate(-2deg) scale(1.035); }
 
 /* mobile nav: slides and fades open where a browser supports transitioning
    a discrete display change; elsewhere it falls back to the instant

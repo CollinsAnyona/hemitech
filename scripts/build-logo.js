@@ -50,6 +50,42 @@ async function eraseWordmarkSliver(input) {
   return sharp(out, { raw: { width: info.width, height: info.height, channels: info.channels } }).png();
 }
 
+// The header needs the icon and wordmark at a height a nav bar can hold, but
+// the full lockup's tagline ("BUILD | ANALYZE | TRANSFORM") and the rule
+// under it are set small enough that they only read at the size the footer
+// gives them — shrunk into a header bar they blur into noise rather than
+// getting smaller and staying legible. So this crop keeps the icon and the
+// wordmark and erases the tagline and rule rather than just scaling them
+// down. Measured within the CONTENT crop (not the master): the icon's own
+// ink never reaches past x 262 once past y 270 (its top, wider with the
+// squares, stops at y 265, just under the wordmark's own baseline), and the
+// tagline's first letter and the rule both start past x 300 - so the erase
+// box (x >= 300, y >= 270) has clearance on both sides and touches neither.
+const TAGLINE_ERASE = { fromX: 300, fromY: 270 };
+
+// Once the tagline and rule are erased, the icon's own foot (the lowest ink
+// left in the frame, at y 401) is the real bottom of the content — the crop
+// height below is otherwise just the dead air the tagline used to fill. Trim
+// to it (plus a few px of breathing room) so the compact lockup's own
+// bounding box hugs its visible ink, the same way the full lockup's does.
+const COMPACT_HEIGHT = 405;
+
+/** Clear the tagline and its rule, keeping the icon and wordmark untouched. */
+async function eraseTagline(input) {
+  const { data, info } = await sharp(await input.toBuffer()).ensureAlpha().raw().toBuffer({ resolveWithObject: true });
+  const out = Buffer.from(data);
+
+  for (let y = TAGLINE_ERASE.fromY; y < info.height; y += 1) {
+    for (let x = TAGLINE_ERASE.fromX; x < info.width; x += 1) {
+      out[(y * info.width + x) * info.channels + 3] = 0;
+    }
+  }
+
+  return sharp(out, { raw: { width: info.width, height: info.height, channels: info.channels } })
+    .png()
+    .extract({ left: 0, top: 0, width: info.width, height: COMPACT_HEIGHT });
+}
+
 const KEY = { r: 28, g: 38, b: 72 };
 const KEY_FLOOR = 10;   // at or below this distance the pixel is background
 const KEY_CEIL = 44;    // at or above this distance the pixel is fully opaque
@@ -99,8 +135,10 @@ async function main() {
   const jobs = [
     [await eraseWordmarkSliver(light.clone().extract(MARK)), 'mark', [80, 160]],
     [light.clone().extract(CONTENT), 'lockup', [280, 560]],
+    [await eraseTagline(light.clone().extract(CONTENT)), 'lockup-compact', [280, 560]],
     [await eraseWordmarkSliver(dark.clone().extract(MARK)), 'mark-light', [80, 160]],
     [dark.clone().extract(CONTENT), 'lockup-light', [280, 560]],
+    [await eraseTagline(dark.clone().extract(CONTENT)), 'lockup-compact-light', [280, 560]],
   ];
 
   for (const [pipeline, name, widths] of jobs) {
@@ -112,6 +150,8 @@ async function main() {
   // A reference PNG of each, for anyone who needs one outside the browser.
   await light.clone().extract(CONTENT).resize({ width: 560 }).png().toFile(join(OUT, 'lockup.png'));
   await dark.clone().extract(CONTENT).resize({ width: 560 }).png().toFile(join(OUT, 'lockup-light.png'));
+  await (await eraseTagline(light.clone().extract(CONTENT))).resize({ width: 560 }).png().toFile(join(OUT, 'lockup-compact.png'));
+  await (await eraseTagline(dark.clone().extract(CONTENT))).resize({ width: 560 }).png().toFile(join(OUT, 'lockup-compact-light.png'));
   console.log('\n  reference PNGs written alongside.');
 }
 

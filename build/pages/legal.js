@@ -66,7 +66,7 @@ const privacy = {
         <p>If this notice changes, the date at the top changes with it. We will not quietly broaden what we collect.</p>
 
         <h2>Contact</h2>
-        <p>${esc(SITE.name)} · ${esc(SITE.address)}, ${esc(SITE.city)} · ${mailLink(SITE.email)} · ${phoneLink()}</p>
+        <p>${esc(SITE.name)} · ${esc(SITE.address)}${SITE.address !== SITE.city ? `, ${esc(SITE.city)}` : ''} · ${mailLink(SITE.email)} · ${phoneLink()}</p>
       </div>
     </section>`,
 };

@@ -93,7 +93,7 @@ const contact = {
             </a>
             <div class="direct-row">
               ${ICONS.pin(20, '#044ECD')}
-              <div><div class="direct-value" style="color:var(--navy)">${esc(SITE.address)}</div><p class="smaller" style="font-weight:600">${esc(SITE.city)}</p></div>
+              <div><div class="direct-value" style="color:var(--navy)">${esc(SITE.city)}</div><p class="smaller" style="font-weight:600">${SITE.address !== SITE.city ? esc(SITE.address) : esc(SITE.addressNote)}</p></div>
             </div>
           </div>
         </div>
