@@ -801,18 +801,24 @@ a.card h3, a.card h4 { color: var(--navy); }
 /* -------------------------------------------------------------- footer --- */
 
 .site-footer { background: var(--navy); color: #9DB9E4; }
-.site-footer .wrap { padding-block: 0; }
+/* No `.site-footer .wrap { padding-block: 0 }` here. It used to sit on this
+   line, and because it is two classes to .footer-grid's one it silently won
+   the cascade and zeroed the footer's own top and bottom padding — the logo
+   and the column headings started on the footer's very first pixel. Nothing
+   gives .wrap vertical padding to neutralise in the first place, so the rule
+   only ever did harm. Vertical padding for the footer belongs on the two
+   rows below. */
 .footer-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
-  gap: 48px 40px;
-  padding-top: var(--s9);
-  padding-bottom: var(--s8);
+  gap: var(--s9) var(--s7);
+  padding-top: var(--s10);
+  padding-bottom: var(--s9);
 }
-.footer-grid p { font-size: 14px; line-height: 1.6; max-width: 34ch; }
+.footer-grid p { font-size: 14px; line-height: 1.7; max-width: 34ch; }
 .footer-contact {
   font-size: 14px;
-  line-height: 1.7;
+  line-height: 2;
   color: var(--on-navy-2);
   font-style: normal;
 }
@@ -827,13 +833,13 @@ a.card h3, a.card h4 { color: var(--navy); }
   margin-bottom: var(--s5);
   max-width: none;
 }
-.footer-col ul { display: flex; flex-direction: column; gap: 14px; }
+.footer-col ul { display: flex; flex-direction: column; gap: var(--s4); }
 .footer-col a { font-size: 14px; color: var(--on-navy-2); }
 .footer-col a:hover { color: #fff; }
 .footer-base {
   border-top: 1px solid rgba(255, 255, 255, .12);
   padding-top: var(--s6);
-  padding-bottom: var(--s7);
+  padding-bottom: var(--s8);
   display: flex;
   justify-content: space-between;
   gap: 16px;
@@ -841,10 +847,16 @@ a.card h3, a.card h4 { color: var(--navy); }
   font-size: 13px;
 }
 @media (max-width: 980px) {
-  .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 32px; padding-top: var(--s7); padding-bottom: var(--s6); }
+  .footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s8) var(--s6);
+    padding-top: var(--s9);
+    padding-bottom: var(--s8);
+  }
+  .footer-base { padding-top: var(--s5); padding-bottom: var(--s7); }
 }
 @media (max-width: 640px) {
-  .footer-grid { grid-template-columns: minmax(0, 1fr); gap: var(--s7) 26px; }
+  .footer-grid { grid-template-columns: minmax(0, 1fr); gap: var(--s8); padding-top: var(--s8); }
   .footer-col h2 { margin-bottom: var(--s4); }
 }
 
