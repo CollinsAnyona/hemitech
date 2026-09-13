@@ -1,0 +1,19 @@
+# Normalise line endings, and never let a stray control byte make a source
+# file look binary to git.
+* text=auto eol=lf
+
+*.html   text diff=html
+*.css    text diff=css
+*.js     text
+*.json   text
+*.md     text
+*.xml    text
+*.txt    text
+
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.webp   binary
+*.avif   binary
+*.ico    binary
+*.woff2  binary
