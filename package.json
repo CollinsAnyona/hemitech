@@ -5,6 +5,7 @@
   "type": "module",
   "description": "HemiTech marketing site, the media hosting API that Buffer fetches from, and the generator that assembles the static pages.",
   "scripts": {
+    "vercel-build": "echo \"Pre-built site: HTML is committed, and .vercelignore strips build/ and scripts/ from the deployment. Nothing to build here.\"",
     "build": "node scripts/build-site.js",
     "check": "node scripts/build-site.js --check",
     "shots": "node scripts/capture-shots.js",
