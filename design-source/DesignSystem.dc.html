@@ -1,0 +1,329 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap');
+    :root{
+      --navy:#02123C; --soft:#2E4070; --deep:#044ECD; --mid:#0F5FDB; --lgt:#2587FC;
+      --alert:#CE303C; --tint:#F2F6FD; --tint2:#E4EDFC; --line:#D7E3F5; --line2:#E8EFFA;
+    }
+    *{box-sizing:border-box;}
+    body{margin:0;font-family:Montserrat,system-ui,sans-serif;color:var(--soft);
+      font-weight:500;font-size:15px;line-height:1.58;-webkit-font-smoothing:antialiased;background:#fff;}
+    a{color:var(--deep);text-decoration:none;} a:hover{color:var(--mid);}
+    h1,h2,h3{margin:0;color:var(--navy);letter-spacing:-.02em;}
+    h1{font-weight:800;font-size:42px;line-height:1.08;}
+    h2{font-weight:800;font-size:24px;line-height:1.16;}
+    h3{font-weight:700;font-size:15px;line-height:1.3;letter-spacing:-.008em;}
+    p{margin:0;}
+    .eyebrow{font-weight:600;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--deep);}
+    .wrap{max-width:1280px;margin:0 auto;padding:0 60px;}
+    .sec{padding:56px 0;border-top:1px solid var(--line);}
+    .lbl{font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);}
+    .sw{border-radius:4px;overflow:hidden;border:1px solid var(--line);}
+    .sw .chip{height:92px;}
+    .sw .info{padding:12px 13px 13px;background:#fff;}
+    .mono{font-variant-numeric:tabular-nums;letter-spacing:.01em;}
+    .pass{display:inline-flex;align-items:center;height:20px;padding:0 8px;border-radius:10px;
+      font-size:10.5px;font-weight:700;letter-spacing:.06em;background:#E4EFFD;color:var(--deep);}
+    .pass.warn{background:#FBE9EB;color:var(--alert);}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:52px;padding:0 24px;
+      border-radius:4px;background:var(--deep);color:#fff;font-weight:700;font-size:14.5px;}
+    .cell{border:1px solid var(--line);border-radius:5px;padding:22px 20px;background:#fff;}
+  </style>
+</helmet>
+
+<div style="width:1440px;background:#fff;overflow:hidden">
+
+  <!-- masthead -->
+  <div style="background:#02123C;position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,var(--lgt),var(--deep))"></div>
+    <div style="position:absolute;bottom:-160px;right:-80px;width:420px;height:420px;border-radius:50%;background:rgba(15,95,219,.28)"></div>
+    <div class="wrap" style="padding-top:56px;padding-bottom:52px;position:relative">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:26px">
+        <svg width="32" height="32" viewBox="0 0 40 40" fill="none"><path d="M7 6h7v11h12V6h7v28h-7V23H14v11H7z" fill="#fff"></path><path d="M27 6h7v11h-7z" fill="#2587FC"></path></svg>
+        <div style="font-weight:800;font-size:17px;color:#fff;letter-spacing:-.01em">HEMI TECH CO.</div>
+      </div>
+      <div class="eyebrow" style="color:#7FB8FF;margin-bottom:14px">Web design system &middot; v1 &middot; September 2026</div>
+      <h1 style="color:#fff;max-width:22ch">The locked brand, extended to a website.</h1>
+      <p style="color:#C4D8F6;font-size:17px;line-height:1.6;max-width:66ch;margin-top:18px">Nothing here invents a new colour or a second typeface. It takes the creative system locked on 8 September and adds what a website needs and a social post does not: interaction states, form controls, a spacing scale, and contrast verified against WCAG rather than assumed.</p>
+    </div>
+  </div>
+
+  <!-- palette -->
+  <div class="wrap sec" style="border-top:none">
+    <div style="display:flex;align-items:end;justify-content:space-between;margin-bottom:26px">
+      <div><div class="eyebrow" style="margin-bottom:10px">01 &middot; Colour</div><h2>The palette, with measured contrast.</h2></div>
+      <p style="font-size:14px;max-width:42ch;text-align:right">Every ratio below is computed, not estimated. WCAG AA needs 4.5:1 for body text and 3:1 for large text.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px">
+      <div class="sw">
+        <div class="chip" style="background:#02123C"></div>
+        <div class="info">
+          <h3>NAVY</h3>
+          <div class="mono" style="font-size:13px;font-weight:600;margin-top:3px">#02123C</div>
+          <p style="font-size:12.5px;line-height:1.45;margin-top:8px">Headlines, primary text, dark fields</p>
+          <div style="margin-top:10px;display:flex;align-items:center;gap:7px"><span class="mono" style="font-weight:800;color:var(--navy);font-size:14px">18.19</span><span class="pass">AAA on white</span></div>
+        </div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#2E4070"></div>
+        <div class="info">
+          <h3>NAVY_SOFT</h3>
+          <div class="mono" style="font-size:13px;font-weight:600;margin-top:3px">#2E4070</div>
+          <p style="font-size:12.5px;line-height:1.45;margin-top:8px">Body copy and secondary text. <strong style="color:var(--navy)">There is no grey in this system.</strong></p>
+          <div style="margin-top:10px;display:flex;align-items:center;gap:7px"><span class="mono" style="font-weight:800;color:var(--navy);font-size:14px">10.08</span><span class="pass">AAA on white</span></div>
+        </div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#044ECD"></div>
+        <div class="info">
+          <h3>BLUE_DEEP</h3>
+          <div class="mono" style="font-size:13px;font-weight:600;margin-top:3px">#044ECD</div>
+          <p style="font-size:12.5px;line-height:1.45;margin-top:8px">Eyebrows, links, primary buttons</p>
+          <div style="margin-top:10px;display:flex;align-items:center;gap:7px"><span class="mono" style="font-weight:800;color:var(--navy);font-size:14px">7.06</span><span class="pass">AAA on white</span></div>
+        </div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#0F5FDB"></div>
+        <div class="info">
+          <h3>BLUE_MID</h3>
+          <div class="mono" style="font-size:13px;font-weight:600;margin-top:3px">#0F5FDB</div>
+          <p style="font-size:12.5px;line-height:1.45;margin-top:8px">Hover state, rule start, small ordinals, focus ring</p>
+          <div style="margin-top:10px;display:flex;align-items:center;gap:7px"><span class="mono" style="font-weight:800;color:var(--navy);font-size:14px">5.71</span><span class="pass">AA on white</span></div>
+        </div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#2587FC"></div>
+        <div class="info">
+          <h3>BLUE_LGT</h3>
+          <div class="mono" style="font-size:13px;font-weight:600;margin-top:3px">#2587FC</div>
+          <p style="font-size:12.5px;line-height:1.45;margin-top:8px">Accents on navy, ornament, the logo counter. <strong style="color:var(--navy)">Never small text on white.</strong></p>
+          <div style="margin-top:10px;display:flex;align-items:center;gap:7px"><span class="mono" style="font-weight:800;color:var(--navy);font-size:14px">3.53</span><span class="pass warn">Large only</span></div>
+        </div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#CE303C"></div>
+        <div class="info">
+          <h3>ALERT &mdash; restricted</h3>
+          <div class="mono" style="font-size:13px;font-weight:600;margin-top:3px">#CE303C</div>
+          <p style="font-size:12.5px;line-height:1.45;margin-top:8px">One job only: a number that has crossed into failure. Never decoration, never a headline, once per screen. Its surface tint <span class="mono">#FBE9EB</span> is the single sanctioned non-blue tone, for error pills and field errors.</p>
+          <div style="margin-top:10px;display:flex;align-items:center;gap:7px"><span class="mono" style="font-weight:800;color:var(--navy);font-size:14px">5.11</span><span class="pass">AA on white</span></div>
+        </div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#F2F6FD"></div>
+        <div class="info">
+          <h3>TINT</h3>
+          <div class="mono" style="font-size:13px;font-weight:600;margin-top:3px">#F2F6FD</div>
+          <p style="font-size:12.5px;line-height:1.45;margin-top:8px">Alternate section ground. Blue-biased, never neutral grey.</p>
+          <div style="margin-top:10px;display:flex;align-items:center;gap:7px"><span class="mono" style="font-weight:800;color:var(--navy);font-size:14px">9.30</span><span class="pass">Body text on it</span></div>
+        </div>
+      </div>
+      <div class="sw">
+        <div class="chip" style="background:#D7E3F5"></div>
+        <div class="info">
+          <h3>LINE</h3>
+          <div class="mono" style="font-size:13px;font-weight:600;margin-top:3px">#D7E3F5</div>
+          <p style="font-size:12.5px;line-height:1.45;margin-top:8px">Card borders and dividers. Softer <span class="mono">#E8EFFA</span> for rows inside a card.</p>
+          <div style="margin-top:10px;font-size:12px;font-weight:600">Non-text &mdash; no ratio required</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;border:1px solid var(--line);border-radius:5px;padding:24px 26px;background:var(--tint)">
+      <h3 style="margin-bottom:12px">The ground is never flat</h3>
+      <p style="font-size:14.5px;line-height:1.55;max-width:80ch">White at the top easing to <span class="mono">#F3F8FE</span> at the bottom, plus two off-canvas corner glows &mdash; <span class="mono">BLUE_LGT</span> top-right at ~17%, <span class="mono">BLUE_MID</span> bottom-left at ~12%. The glows stay in the corners. A glow that reaches the centre of a page produces a grey blotch behind the text, which is exactly what went wrong on the first bright poster in August.</p>
+    </div>
+  </div>
+
+  <!-- type -->
+  <div class="wrap sec">
+    <div style="display:flex;align-items:end;justify-content:space-between;margin-bottom:26px">
+      <div><div class="eyebrow" style="margin-bottom:10px">02 &middot; Type</div><h2>Montserrat, and nothing else.</h2></div>
+      <p style="font-size:14px;max-width:44ch;text-align:right">The locked system says Montserrat only. A website is where that rule is usually broken &mdash; a second body face &ldquo;for readability&rdquo;. We are not breaking it. Numerals use <span class="mono">tabular-nums</span> so figures align in columns.</p>
+    </div>
+
+    <div style="border-top:2px solid var(--navy)">
+      <div style="display:grid;grid-template-columns:180px minmax(0,1fr) 300px;gap:32px;padding:22px 0;border-bottom:1px solid var(--line2);align-items:center">
+        <div class="lbl">Display / H1</div>
+        <div style="font-weight:800;font-size:44px;line-height:1.06;color:var(--navy);letter-spacing:-.022em">We build the systems</div>
+        <div style="font-size:13px;line-height:1.5">ExtraBold 800 &middot; 46&ndash;60px desktop, 34px mobile &middot; line-height 1.04&ndash;1.10 &middot; tracking &minus;0.02em &middot; <strong style="color:var(--navy)">sentence case</strong></div>
+      </div>
+      <div style="display:grid;grid-template-columns:180px minmax(0,1fr) 300px;gap:32px;padding:22px 0;border-bottom:1px solid var(--line2);align-items:center">
+        <div class="lbl">Section / H2</div>
+        <div style="font-weight:800;font-size:30px;line-height:1.14;color:var(--navy);letter-spacing:-.018em">Built to clear procurement.</div>
+        <div style="font-size:13px;line-height:1.5">ExtraBold 800 &middot; 26&ndash;38px &middot; line-height 1.12&ndash;1.16 &middot; max 24ch so it breaks in two lines, not four</div>
+      </div>
+      <div style="display:grid;grid-template-columns:180px minmax(0,1fr) 300px;gap:32px;padding:22px 0;border-bottom:1px solid var(--line2);align-items:center">
+        <div class="lbl">Card / H3</div>
+        <div style="font-weight:700;font-size:19px;line-height:1.26;color:var(--navy);letter-spacing:-.012em">Custom software &amp; information systems</div>
+        <div style="font-size:13px;line-height:1.5">Bold 700 &middot; 17&ndash;22px &middot; line-height 1.24&ndash;1.3</div>
+      </div>
+      <div style="display:grid;grid-template-columns:180px minmax(0,1fr) 300px;gap:32px;padding:22px 0;border-bottom:1px solid var(--line2);align-items:center">
+        <div class="lbl">Eyebrow</div>
+        <div class="eyebrow" style="font-size:12px">Capabilities</div>
+        <div style="font-size:13px;line-height:1.5">SemiBold 600 &middot; 11.5&ndash;12px &middot; ALL CAPS &middot; tracking 0.2em &middot; <span class="mono">BLUE_DEEP</span>. This is the one place capitals are allowed.</div>
+      </div>
+      <div style="display:grid;grid-template-columns:180px minmax(0,1fr) 300px;gap:32px;padding:22px 0;border-bottom:1px solid var(--line2);align-items:center">
+        <div class="lbl">Lede</div>
+        <div style="font-size:19px;line-height:1.58;color:var(--soft);font-weight:500">Websites, custom platforms and data dashboards for organisations across East Africa.</div>
+        <div style="font-size:13px;line-height:1.5">Medium 500 &middot; 17&ndash;19px &middot; line-height 1.56&ndash;1.62 &middot; <span class="mono">NAVY_SOFT</span> &middot; max 62ch</div>
+      </div>
+      <div style="display:grid;grid-template-columns:180px minmax(0,1fr) 300px;gap:32px;padding:22px 0;border-bottom:1px solid var(--line2);align-items:center">
+        <div class="lbl">Body</div>
+        <div style="font-size:15.5px;line-height:1.6;color:var(--soft);font-weight:500;max-width:56ch">Ground investigation is bought by procurement teams, not by enthusiasts. A committee shortlisting three consultancies will open all three websites in a row, usually on a phone.</div>
+        <div style="font-size:13px;line-height:1.5">Medium 500 &middot; 14.5&ndash;16px &middot; line-height 1.55&ndash;1.68 &middot; <span class="mono">NAVY_SOFT</span> &middot; max 66ch</div>
+      </div>
+      <div style="display:grid;grid-template-columns:180px minmax(0,1fr) 300px;gap:32px;padding:22px 0;border-bottom:1px solid var(--line2);align-items:center">
+        <div class="lbl">Data</div>
+        <div class="mono" style="font-weight:800;font-size:30px;color:var(--navy)">KES 295,000</div>
+        <div style="font-size:13px;line-height:1.5">ExtraBold 800 &middot; <span class="mono">font-variant-numeric: tabular-nums</span> everywhere a figure sits in a column or changes live</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- layout -->
+  <div class="wrap sec">
+    <div class="eyebrow" style="margin-bottom:10px">03 &middot; Layout</div>
+    <h2 style="margin-bottom:26px">Grid, spacing, and where the air goes.</h2>
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px">
+      <div class="cell">
+        <h3 style="margin-bottom:10px">Canvas</h3>
+        <p style="font-size:13.5px;line-height:1.5">1440 desktop, 1200 content maximum, 60px gutters. 390 mobile with 22px gutters. Nothing is centred except closing cards.</p>
+      </div>
+      <div class="cell">
+        <h3 style="margin-bottom:10px">Spacing scale</h3>
+        <p style="font-size:13.5px;line-height:1.5"><span class="mono">4 &middot; 8 &middot; 12 &middot; 16 &middot; 22 &middot; 32 &middot; 44 &middot; 56 &middot; 76 &middot; 96</span>. Sections are 70&ndash;96px on desktop, 44&ndash;48px on mobile.</p>
+      </div>
+      <div class="cell">
+        <h3 style="margin-bottom:10px">Rhythm</h3>
+        <p style="font-size:13.5px;line-height:1.5">Siblings are laid out with flex or grid and <span class="mono">gap</span>, never per-element margins. If a layout feels tight, cut copy &mdash; do not shrink the air.</p>
+      </div>
+      <div class="cell">
+        <h3 style="margin-bottom:10px">Radius &amp; elevation</h3>
+        <p style="font-size:13.5px;line-height:1.5">4px on controls, 5px on cards, 6px on full-width panels. One shadow, used only on a card that genuinely floats. Not everything is a card.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;border:1px solid var(--line);border-radius:5px;padding:26px 28px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px;align-items:center">
+      <div>
+        <h3 style="margin-bottom:8px">The rule</h3>
+        <p style="font-size:13.5px;line-height:1.5">6px, fully rounded, 180px, <span class="mono">BLUE_MID &rarr; BLUE_DEEP</span>. Sits under the headline. Never a flat navy line.</p>
+      </div>
+      <div style="height:6px;width:180px;border-radius:3px;background:linear-gradient(90deg,#0F5FDB,#044ECD)"></div>
+    </div>
+  </div>
+
+  <!-- components -->
+  <div class="wrap sec">
+    <div class="eyebrow" style="margin-bottom:10px">04 &middot; Components and states</div>
+    <h2 style="margin-bottom:26px">What a social post never needed.</h2>
+
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px">
+
+      <div class="cell">
+        <div class="lbl" style="margin-bottom:16px">Primary button</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:center;gap:14px"><span class="btn" style="background:#044ECD">Run the audit</span><span style="font-size:12.5px;font-weight:600">Rest</span></div>
+          <div style="display:flex;align-items:center;gap:14px"><span class="btn" style="background:#0F5FDB">Run the audit</span><span style="font-size:12.5px;font-weight:600">Hover</span></div>
+          <div style="display:flex;align-items:center;gap:14px"><span class="btn" style="background:#044ECD;outline:2px solid #0F5FDB;outline-offset:2px">Run the audit</span><span style="font-size:12.5px;font-weight:600">Focus</span></div>
+          <div style="display:flex;align-items:center;gap:14px"><span class="btn" style="background:#B9CBE6;color:#F2F6FD">Run the audit</span><span style="font-size:12.5px;font-weight:600">Disabled</span></div>
+        </div>
+        <p style="font-size:12.5px;line-height:1.45;margin-top:14px">52&ndash;54px tall. One primary action per screen, repeated &mdash; never three competing buttons.</p>
+      </div>
+
+      <div class="cell">
+        <div class="lbl" style="margin-bottom:16px">Secondary button</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:center;gap:14px"><span class="btn" style="background:#fff;color:var(--navy);border:1.5px solid #D7E3F5">See our work</span><span style="font-size:12.5px;font-weight:600">Rest</span></div>
+          <div style="display:flex;align-items:center;gap:14px"><span class="btn" style="background:#fff;color:#044ECD;border:1.5px solid #0F5FDB">See our work</span><span style="font-size:12.5px;font-weight:600">Hover</span></div>
+          <div style="display:flex;align-items:center;gap:14px"><span class="btn" style="background:#fff;color:#02123C">On navy</span><span style="font-size:12.5px;font-weight:600">Dark ground</span></div>
+        </div>
+        <p style="font-size:12.5px;line-height:1.45;margin-top:14px">On a navy field the primary becomes <span class="mono">BLUE_LGT</span>, because <span class="mono">BLUE_DEEP</span> on navy is unreadable.</p>
+      </div>
+
+      <div class="cell">
+        <div class="lbl" style="margin-bottom:16px">Form field</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="height:48px;border:1.5px solid #D7E3F5;border-radius:4px;display:flex;align-items:center;padding:0 14px;font-size:14.5px;color:#8296BD">you@organisation.co.ke</div>
+          <div style="height:48px;border:1.5px solid #0F5FDB;outline:2px solid #0F5FDB;outline-offset:1px;border-radius:4px;display:flex;align-items:center;padding:0 14px;font-size:14.5px;color:var(--navy);font-weight:600">jane@kitui.go.ke</div>
+          <div style="height:48px;border:1.5px solid #CE303C;border-radius:4px;display:flex;align-items:center;padding:0 14px;font-size:14.5px;color:var(--navy);font-weight:600">jane@</div>
+          <div style="font-size:12.5px;color:#CE303C;font-weight:600">That address is missing everything after the @.</div>
+        </div>
+        <p style="font-size:12.5px;line-height:1.45;margin-top:14px">Errors say what is wrong and how to fix it. No apologies, no &ldquo;invalid input&rdquo;.</p>
+      </div>
+
+      <div class="cell">
+        <div class="lbl" style="margin-bottom:16px">Tickbox &mdash; audit tool</div>
+        <div style="display:flex;align-items:center;gap:22px;margin-bottom:14px">
+          <div style="display:flex;align-items:center;gap:10px"><div style="width:26px;height:26px;border-radius:7px;border:2.5px solid #0F5FDB"></div><span style="font-size:13px;font-weight:600">Unticked</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><div style="width:26px;height:26px;border-radius:7px;background:#044ECD;display:flex;align-items:center;justify-content:center"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"></path></svg></div><span style="font-size:13px;font-weight:600">Ticked</span></div>
+        </div>
+        <p style="font-size:12.5px;line-height:1.45">The whole row is the target, not just the box &mdash; 66px tall, well past the 44px minimum.</p>
+      </div>
+
+      <div class="cell">
+        <div class="lbl" style="margin-bottom:16px">Status pill</div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px">
+          <span class="pass" style="height:26px;padding:0 12px;font-size:11.5px">Verified</span>
+          <span style="display:inline-flex;align-items:center;height:26px;padding:0 12px;border-radius:13px;background:#EDF1F8;color:var(--soft);font-size:11.5px;font-weight:700">[PENDING]</span>
+          <span style="display:inline-flex;align-items:center;height:26px;padding:0 12px;border-radius:13px;background:#FBE9EB;color:#CE303C;font-size:11.5px;font-weight:700">Expired</span>
+        </div>
+        <p style="font-size:12.5px;line-height:1.45">State is carried by shape and label as well as colour, so it survives greyscale printing and colour blindness.</p>
+      </div>
+
+      <div class="cell">
+        <div class="lbl" style="margin-bottom:16px">Icons</div>
+        <div style="display:flex;gap:18px;margin-bottom:14px;align-items:center">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#044ECD" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6l-5 6 5 6"></path><path d="M16 6l5 6-5 6"></path></svg>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#044ECD" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"></path><path d="M10 20V4"></path><path d="M16 20v-7"></path><path d="M22 20H2"></path></svg>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#044ECD" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v6"></path><path d="M12 15v6"></path><circle cx="12" cy="12" r="3"></circle><path d="M3 12h6"></path><path d="M15 12h6"></path></svg>
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#044ECD" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v6c0 4.5-3.2 7.6-8 8.9C7.2 20.6 4 17.5 4 13V7z"></path><path d="M9 12.5l2 2 4-4"></path></svg>
+        </div>
+        <p style="font-size:12.5px;line-height:1.45">Stroke-based, 24px grid, 1.8px weight, round caps and joins. Drawn as SVG so they scale and recolour. <strong style="color:var(--navy)">Never emoji.</strong></p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- accessibility -->
+  <div style="background:var(--tint);border-top:1px solid var(--line)">
+    <div class="wrap" style="padding-top:56px;padding-bottom:60px">
+      <div class="eyebrow" style="margin-bottom:10px">05 &middot; Accessibility and motion</div>
+      <h2 style="margin-bottom:12px">We are about to sell this as a service.</h2>
+      <p style="font-size:15px;line-height:1.58;max-width:76ch;margin-bottom:26px">Which means the site has to hold to it first. Public-sector buyers increasingly score accessibility in evaluation, and a supplier whose own site fails is an easy mark down.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px">
+        <div class="cell">
+          <h3 style="margin-bottom:9px">Contrast</h3>
+          <p style="font-size:13.5px;line-height:1.5">WCAG 2.2 AA throughout, verified by calculation. Two pairs were caught and changed during this design: small ordinals moved from <span class="mono">BLUE_LGT</span> (3.53) to <span class="mono">BLUE_MID</span> (5.71), and footer secondary text from <span class="mono">#5B7AB5</span> (4.24) to <span class="mono">#8FB4E8</span> (8.54).</p>
+        </div>
+        <div class="cell">
+          <h3 style="margin-bottom:9px">Targets and focus</h3>
+          <p style="font-size:13.5px;line-height:1.5">Minimum 44px on anything tappable; 46&ndash;54px in practice. A visible focus ring on every control &mdash; 2px <span class="mono">BLUE_MID</span>, offset 2px. Never <span class="mono">outline: none</span>.</p>
+        </div>
+        <div class="cell">
+          <h3 style="margin-bottom:9px">Motion</h3>
+          <p style="font-size:13.5px;line-height:1.5">Almost none. No scroll-triggered reveals &mdash; everything is readable the instant the page paints. Hover and focus transitions only, 120&ndash;180ms, and all of it disabled under <span class="mono">prefers-reduced-motion</span>.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;border:1px solid var(--line);border-radius:5px;padding:26px 28px;background:#fff">
+        <h3 style="margin-bottom:10px">The constraint that shapes everything above</h3>
+        <p style="font-size:14.5px;line-height:1.58;max-width:88ch">The product claim is that we build sites which load before people give up. So this design spends nothing on a video hero, a carousel, a web font beyond the one brand face, or a framework. Every visual effect here is a CSS gradient or an inline SVG. If the finished site cannot score 7/7 on our own seven-point test, on mobile data, none of the rest of it matters.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

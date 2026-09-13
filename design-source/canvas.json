@@ -1,0 +1,54 @@
+{
+  "pages": [
+    { "id": "page-1", "name": "Screens" },
+    { "id": "page-2", "name": "Design system" }
+  ],
+  "artboards": [
+    { "file": "Main.dc.html",        "x": 0,    "y": 0,     "w": 1440, "h": 6600, "title": "Homepage — desktop", "page": "page-1" },
+    { "file": "HomeMobile.dc.html",  "x": 1560, "y": 0,     "w": 390,  "h": 4700, "title": "Homepage — mobile",  "page": "page-1" },
+    { "file": "AuditTool.dc.html",   "x": 2070, "y": 0,     "w": 1440, "h": 1900, "title": "Website audit — interactive", "page": "page-1", "is_interactive": true },
+
+    { "file": "Capabilities.dc.html","x": 0,    "y": 7000,  "w": 1440, "h": 3200, "title": "Capabilities", "page": "page-1" },
+    { "file": "ServiceDetail.dc.html","x": 1560,"y": 7000,  "w": 1440, "h": 2900, "title": "Service detail — custom software", "page": "page-1" },
+    { "file": "Sector.dc.html",      "x": 3120, "y": 7000,  "w": 1440, "h": 2800, "title": "Sector — government & county", "page": "page-1" },
+
+    { "file": "CaseStudy.dc.html",   "x": 0,    "y": 10500, "w": 1440, "h": 3150, "title": "Case study — Joline Geo", "page": "page-1" },
+    { "file": "Credentials.dc.html", "x": 1560, "y": 10500, "w": 1440, "h": 2950, "title": "Credentials — procurement", "page": "page-1" },
+    { "file": "Contact.dc.html",     "x": 3120, "y": 10500, "w": 1440, "h": 1600, "title": "Contact", "page": "page-1" },
+
+    { "file": "DesignSystem.dc.html","x": 0,    "y": 0,     "w": 1440, "h": 4300, "title": "Web design system v1", "page": "page-2" }
+  ],
+  "annotations": [
+    {
+      "id": "note-start",
+      "x": 0, "y": -190, "w": 560,
+      "page": "page-1",
+      "text": "ROW 1 — the front door.\nDesktop and mobile homepage, plus the audit tool.\n\nAnything in [SQUARE BRACKETS] is a real fact I don't have yet — phone number, address, registration numbers, Joline's testimonial. Nothing is invented."
+    },
+    {
+      "id": "note-audit",
+      "x": 2070, "y": -190, "w": 500,
+      "page": "page-1",
+      "text": "THIS ONE WORKS.\nTick the seven checks and the score, the band, the colour and the recommended package all recalculate live. Try dropping below 4 — that is the only place the red is allowed to appear."
+    },
+    {
+      "id": "note-row2",
+      "x": 0, "y": 6760, "w": 560,
+      "page": "page-1",
+      "text": "ROW 2 — how a buyer navigates.\nCapabilities (all eight services with prices), one service detail as the pattern for the other eight, and one sector page as the pattern for the other four."
+    },
+    {
+      "id": "note-row3",
+      "x": 0, "y": 10280, "w": 560,
+      "page": "page-1",
+      "text": "ROW 3 — proof and contact.\nCredentials is the page that wins tenders. It lists every document a procurement team checks, with its status shown honestly — [PENDING] where the certificate isn't held yet."
+    },
+    {
+      "id": "note-system",
+      "x": 0, "y": -190, "w": 620,
+      "page": "page-2",
+      "text": "The design system, extended from the brand locked on 8 September.\nNo new colour, no second typeface. What's added is what a website needs and a social post never did: interaction states, form controls, a spacing scale, and contrast ratios computed rather than assumed."
+    }
+  ],
+  "launch": { "view": "canvas", "page": "page-1" }
+}

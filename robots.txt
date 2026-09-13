@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /thank-you
+Disallow: /check-your-details
 
 Sitemap: https://hemitech.co.ke/sitemap.xml

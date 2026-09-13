@@ -1,34 +1,157 @@
-# HemiTech - Technology & Design Studio
+# Hemi Tech Co. — hemitech.co.ke
 
 Live at **[hemitech.co.ke](https://hemitech.co.ke)**
 
-Multi-page website for HemiTech, a hybrid technology and creative agency based
-in Nairobi, Kenya. Nine pages (home, about, services, work, contact, careers,
-privacy policy, terms, cookie policy) built as a pure static site - no
-frameworks, no build step. Auto-deploys to Vercel on every push to `main`.
+The website for Hemi Tech Co., a Kenyan software and data engineering firm in
+Nairobi. It is aimed at procurement officers, county ICT directors, NGO
+programme managers, SACCO CEOs and consultancy partners across East Africa —
+most of whom open it on a phone, on mobile data, while comparing three
+suppliers.
 
-## Highlights
+The company's commercial argument is that other firms build sites that are
+slow, awkward on a phone and unclear. **So this site is the product
+demonstration**, and it has to pass the same seven-point test Hemi Tech runs on
+everybody else. That constraint outranks every other preference here.
 
-- Responsive layout with a mobile hamburger navigation (vanilla JS)
-- Animated hero with particle effects and mouse-tracking interaction
-- Scroll-aware navbar and smooth-scroll anchor navigation
-- Async contact-form handler (Formspree)
-- Real case-study photography across all 6 portfolio projects
-- Favicon set, Open Graph/Twitter social preview, JSON-LD Organization schema
-- `robots.txt` + `sitemap.xml` for search engine discovery
-- Single shared stylesheet and script across all pages
+Built from `BUILD-BRIEF.md` and the approved designs in `design-source/`.
 
-## Tech stack
+## The stack
 
-HTML5 · CSS3 · Vanilla JavaScript (ES6+)
+Static HTML, CSS and vanilla JavaScript. No framework, no CSS framework, no
+runtime build step. One `styles.css`, one `site.js` for the navigation and the
+contact form, one `audit.js` for the audit tool. Pages that need no JavaScript
+load none.
 
-## View locally
+Deployed to Vercel exactly as before, with `cleanUrls` so `/audit` serves
+`audit.html`.
 
-Open `index.html` in a browser, or serve the folder:
+### Pages are generated, then committed
+
+The header, footer and the seven audit checks must be byte-identical wherever
+they appear, so they live in one place and `scripts/build-site.js` stamps them
+into every page. **The generator runs here, not in the browser** — it writes
+plain HTML files into the repository and those files are what Vercel serves.
+
+```
+build/site.js          facts, placeholders, services, sectors, work
+build/layout.js        the page shell, header, footer, icons
+build/shot.js          image slots and device frames
+build/pages/*.js       one module per page or page family
+scripts/build-site.js  writes the .html files and sitemap.xml
+```
 
 ```bash
-python -m http.server 8000
+npm run build     # regenerate every page
+npm run check     # fail if a committed page is stale (use in CI)
 ```
+
+**Never hand-edit a generated `.html` file** — edit the module under `build/`
+and run `npm run build`.
+
+## Working on it locally
+
+```bash
+npm install
+npm run build
+node scripts/dev-site.js 8787     # preview with clean URLs, like Vercel
+```
+
+Then `http://127.0.0.1:8787`.
+
+## Tests
+
+```bash
+npm run test:site    # static checks + the audit tool driven in jsdom
+node scripts/dev-site.js 8787 &
+node scripts/acceptance-live.js   # real browser: mobile, keyboard, no-JS
+```
+
+`acceptance-live.js` drives Chrome over the DevTools protocol rather than using
+`--window-size`, because Chrome does not give you the viewport you asked for: a
+request for 390px comes back as 512px on Windows, and a "mobile" screenshot
+taken that way is a crop of a desktop layout. `scripts/cdp.js` is the client;
+it uses Node's built-in WebSocket, so there is nothing extra to install.
+
+## Type
+
+Montserrat only, self-hosted from `/fonts`, weights 500–800. Montserrat v31
+ships as a variable font, so two WOFF2 subsets (latin, latin-ext) cover every
+weight in 106 KB, and only the latin file — 37 KB — is on the critical path.
+**Nothing is requested from fonts.googleapis.com at runtime**; this site sells
+load time and a third-party round trip on the critical path would undercut it.
+
+## Images
+
+```bash
+npm run shots    # capture the work screenshots from the live sites
+npm run og       # regenerate the Open Graph cards
+```
+
+`scripts/capture-shots.js` screenshots each live site with Chrome, crops to the
+frame's aspect ratio from the top (so somebody else's cookie banner does not end
+up in our portfolio) and encodes AVIF with a WebP fallback at 480/960/1440.
+Budget: 120 KB per image.
+
+Where a capture does not exist the page still draws the CSS device frame and
+fills it with flat `--tint`. **A stock photo or an invented screenshot is never
+substituted** — a fake screenshot of fake work would be the worst thing on this
+site.
+
+Whitecrest is deliberately absent everywhere: not cleared for publication.
+
+## Forms
+
+Two: the audit request (`/audit`) and the contact form (`/contact`). Both post
+to a route under `api/`, following the conventions of the media API below —
+Web-standard `Request`/`Response`, JSON on every path including errors.
+
+- Validated on the server as well as in the browser.
+- **Stored first, notified second.** The notification provider is an
+  environment variable; if it is unset, misconfigured or down, the submission
+  is already stored and the visitor still sees success. A submission is never
+  silently lost.
+- Rate limited (5 per 10 minutes per caller) with a honeypot field. No CAPTCHA.
+- Encrypted at rest with AES-256-GCM when `SUBMISSIONS_KEY` is set. Set it in
+  production: Blob storage has no private tier, and these are people's names
+  and messages.
+- Without JavaScript the same endpoints accept a normal form post and redirect
+  to `/thank-you` or `/check-your-details`, so nothing is lost and no raw JSON
+  is ever shown to a person.
+
+Collected: contact — name, organisation, email, optional website, message.
+Audit — email and website. Nothing else; which checks a visitor ticked is never
+sent.
+
+## Analytics
+
+**None.** No cookies, no third-party scripts, no pixels. If analytics are ever
+wanted they must be cookieless and self-hosted — a consent banner on a site
+selling data-protection services, loading a US ad-tech tracker, would be an own
+goal. The privacy notice says exactly this and has to stay true.
+
+## Placeholders
+
+Everything in `[SQUARE BRACKETS]` is a real fact that does not exist yet. It
+renders as a visible bracketed placeholder and is **never** filled with a
+plausible value. Most live in `build/site.js`; change one there and every page
+picks it up on the next build.
+
+The phone number is the important one: `SITE.phone.dial` is `null`, so the
+number renders as text rather than a link that dials nothing. The moment it
+holds digits, every instance across the site becomes a real `tel:` link and
+check 2 of the seven passes.
+
+## The seven checks
+
+Defined once, in `build/site.js`:
+
+1. Loads in under 3 seconds on mobile data
+2. Your phone number dials when you tap it
+3. No pinching. No sideways scrolling.
+4. Line one says what you do, before scrolling
+5. One obvious next step, not five
+6. The padlock is there. No "Not secure".
+7. Something on it was updated this year
 
 ## Media hosting API
 

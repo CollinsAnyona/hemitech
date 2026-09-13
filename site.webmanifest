@@ -1,12 +1,13 @@
 {
-    "name": "HemiTech",
-    "short_name": "HemiTech",
-    "icons": [
-        { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
-        { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
-    ],
-    "theme_color": "#0f172a",
-    "background_color": "#0f172a",
-    "display": "standalone",
-    "start_url": "/"
+  "name": "Hemi Tech Co.",
+  "short_name": "Hemi Tech",
+  "description": "Software and data engineering, Nairobi.",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#02123C",
+  "background_color": "#02123C",
+  "display": "standalone",
+  "start_url": "/"
 }

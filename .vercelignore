@@ -1,0 +1,6 @@
+# Sources for the build, not part of the deployed site.
+design-source/
+build/
+scripts/
+BUILD-BRIEF.md
+.submissions/

@@ -1,0 +1,264 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap');
+    :root{
+      --navy:#02123C; --soft:#2E4070; --deep:#044ECD; --mid:#0F5FDB; --lgt:#2587FC;
+      --alert:#CE303C; --tint:#F2F6FD; --line:#D7E3F5; --line2:#E8EFFA;
+    }
+    *{box-sizing:border-box;}
+    body{margin:0;font-family:Montserrat,system-ui,sans-serif;color:var(--soft);
+      font-weight:500;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;background:#fff;}
+    a{color:var(--deep);text-decoration:none;} a:hover{color:var(--mid);}
+    h1,h2,h3{margin:0;color:var(--navy);letter-spacing:-.02em;text-wrap:balance;}
+    h1{font-weight:800;font-size:46px;line-height:1.08;}
+    h3{font-weight:700;font-size:20px;line-height:1.25;}
+    p{margin:0;}
+    .eyebrow{font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--deep);}
+    .rule{height:6px;width:180px;border-radius:3px;background:linear-gradient(90deg,var(--mid),var(--deep));}
+    .wrap{max-width:1200px;margin:0 auto;padding:0 60px;}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:54px;padding:0 26px;
+      border-radius:4px;background:var(--deep);color:#fff;font-weight:700;font-size:15px;border:none;
+      cursor:pointer;font-family:inherit;}
+    .btn:hover{background:var(--mid);}
+    .check{display:grid;grid-template-columns:30px minmax(0,1fr) 92px;gap:18px;align-items:center;
+      width:100%;text-align:left;background:#fff;border:none;border-top:1px solid var(--line2);
+      padding:20px 4px;cursor:pointer;font-family:inherit;}
+    .check:hover{background:#FAFCFF;}
+    .check:focus-visible{outline:2px solid var(--mid);outline-offset:-2px;}
+    .box{width:26px;height:26px;border-radius:7px;border:2.5px solid var(--mid);display:flex;
+      align-items:center;justify-content:center;flex:none;}
+    .box.on{background:var(--deep);border-color:var(--deep);}
+    .ctext{font-size:16.5px;font-weight:600;color:var(--navy);line-height:1.4;}
+    .cstate{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-align:right;}
+  </style>
+</helmet>
+
+<div style="width:1440px;background:#fff;overflow:hidden">
+
+  <!-- header -->
+  <div style="border-bottom:1px solid var(--line2);background:#fff">
+    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;height:84px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <svg width="34" height="34" viewBox="0 0 40 40" fill="none"><path d="M7 6h7v11h12V6h7v28h-7V23H14v11H7z" fill="#02123C"></path><path d="M27 6h7v11h-7z" fill="#2587FC"></path></svg>
+        <div style="font-weight:800;font-size:19px;color:var(--navy);letter-spacing:-.01em">HEMI TECH</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:32px;font-size:15px;font-weight:600;color:var(--navy)">
+        <span>Capabilities</span><span>Sectors</span><span>Work</span><span>How we work</span><span>Credentials</span><span>Insights</span>
+      </div>
+      <a class="btn" href="#" style="text-decoration:none">Free website audit</a>
+    </div>
+  </div>
+
+  <!-- intro -->
+  <div style="background:radial-gradient(700px 420px at 100% -20%, rgba(37,135,252,.15), transparent 62%),linear-gradient(180deg,#fff,#F5F9FE)">
+    <div class="wrap" style="padding-top:64px;padding-bottom:52px;display:flex;flex-direction:column;gap:22px;max-width:1200px">
+      <div class="eyebrow">The free audit</div>
+      <h1 style="max-width:18ch">Score your own website in two minutes.</h1>
+      <div class="rule"></div>
+      <p style="font-size:19px;line-height:1.58;max-width:62ch">Open your site on your phone, on mobile data &mdash; not office wifi &mdash; and work down the list. Tick what is true. Nothing is sent anywhere until you ask for the written report.</p>
+    </div>
+  </div>
+
+  <!-- the tool -->
+  <div class="wrap" style="padding-top:56px;padding-bottom:88px;display:grid;grid-template-columns:minmax(0,1.32fr) minmax(0,1fr);gap:56px;align-items:start">
+
+    <!-- checks -->
+    <div>
+      <div style="display:flex;align-items:end;justify-content:space-between;margin-bottom:6px">
+        <h3>The seven checks</h3>
+        <span style="font-size:13.5px;font-weight:600">{{ checkedCount }} of 7 ticked</span>
+      </div>
+      <div style="border-bottom:1px solid var(--line2)">
+        <sc-for list="{{ checks }}" as="item" hint-placeholder-count="7">
+          <button class="check" onClick="{{ item.toggle }}" type="button">
+            <div style="display:flex;align-items:center;justify-content:center">
+              <div class="{{ item.boxClass }}">
+                <sc-if value="{{ item.on }}" hint-placeholder-val="{{ true }}">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5l5.2 5.2L20 7"></path></svg>
+                </sc-if>
+              </div>
+            </div>
+            <div>
+              <div class="ctext">{{ item.label }}</div>
+              <div style="font-size:13.5px;line-height:1.45;margin-top:3px">{{ item.hint }}</div>
+            </div>
+            <div class="cstate" style="color: {{ item.stateColor }}">{{ item.stateLabel }}</div>
+          </button>
+        </sc-for>
+      </div>
+
+      <p style="font-size:14px;margin-top:22px;max-width:60ch">Not sure about the load time? Hold your phone off wifi, close the site completely, then open it and count. Three seconds is about as long as it takes to say &ldquo;one thousand, two thousand, three thousand&rdquo;.</p>
+    </div>
+
+    <!-- result -->
+    <div style="background:var(--tint);border:1px solid var(--line);border-radius:6px;padding:36px 34px 34px;position:sticky;top:24px">
+      <div class="eyebrow" style="margin-bottom:26px">Your score</div>
+
+      <div style="display:flex;align-items:center;gap:28px">
+        <div style="position:relative;width:168px;height:168px;flex:none">
+          <svg width="168" height="168" viewBox="0 0 168 168">
+            <circle cx="84" cy="84" r="72" fill="none" stroke="#DCE7F8" stroke-width="13"></circle>
+            <circle cx="84" cy="84" r="72" fill="none" stroke="{{ bandColor }}" stroke-width="13"
+                    stroke-linecap="{{ cap }}" stroke-dasharray="{{ dash }}"
+                    transform="rotate(-90 84 84)"></circle>
+          </svg>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <div style="font-weight:800;font-size:50px;line-height:1;color:{{ bandColor }};font-variant-numeric:tabular-nums">{{ score }}</div>
+            <div style="font-size:13px;font-weight:700;color:var(--soft);margin-top:2px">out of 7</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="font-weight:800;font-size:22px;line-height:1.2;color:var(--navy);letter-spacing:-.015em">{{ bandTitle }}</div>
+          <p style="font-size:14.5px;line-height:1.5">{{ bandBody }}</p>
+        </div>
+      </div>
+
+      <div style="margin-top:30px;padding-top:24px;border-top:1px solid var(--line)">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+          <span style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)">Where we&rsquo;d start</span>
+          <span style="font-size:15px;font-weight:800;color:var(--navy)">{{ pkgName }}</span>
+        </div>
+        <p style="font-size:14px;line-height:1.5">{{ pkgBody }}</p>
+      </div>
+
+      <div style="margin-top:28px;padding-top:26px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:12px">
+        <label for="audit-email" style="font-size:14.5px;font-weight:600;color:var(--navy)">Want the full written check? We&rsquo;ll run all seven properly and send it back.</label>
+        <input id="audit-email" type="email" placeholder="you@yourcompany.co.ke"
+               style="height:52px;border:1.5px solid var(--line);border-radius:4px;padding:0 16px;
+                      font-family:inherit;font-size:15px;font-weight:500;color:var(--navy);background:#fff;">
+        <label for="audit-site" style="font-size:14.5px;font-weight:600;color:var(--navy);margin-top:2px">Which site?</label>
+        <input id="audit-site" type="text" placeholder="yoursite.co.ke"
+               style="height:52px;border:1.5px solid var(--line);border-radius:4px;padding:0 16px;
+                      font-family:inherit;font-size:15px;font-weight:500;color:var(--navy);background:#fff;">
+        <button class="btn" type="button" style="width:100%;margin-top:4px">Send me my audit</button>
+        <p style="font-size:12.5px;line-height:1.45;margin-top:2px">Two emails maximum, then we stop. We never sell or share your address. <a href="#">Privacy notice</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- honest note -->
+  <div style="background:#02123C;position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,var(--lgt),var(--deep))"></div>
+    <div class="wrap" style="padding-top:72px;padding-bottom:72px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:72px;align-items:center;position:relative">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div class="eyebrow" style="color:#7FB8FF">What happens next</div>
+        <h3 style="color:#fff;font-size:32px;line-height:1.16">Most sites scoring 4 or 5 don&rsquo;t need rebuilding. We&rsquo;ll tell you if yours doesn&rsquo;t.</h3>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0">
+        <div style="display:grid;grid-template-columns:34px minmax(0,1fr);gap:16px;padding:18px 0;border-top:1px solid rgba(255,255,255,.14)">
+          <div style="font-weight:800;font-size:13px;color:#2587FC;letter-spacing:.1em;padding-top:3px">01</div>
+          <div style="color:#D3E3FA;font-size:15.5px;line-height:1.5"><strong style="color:#fff">We run the seven checks properly</strong> &mdash; measured load times, real devices, and we write down what we find.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:34px minmax(0,1fr);gap:16px;padding:18px 0;border-top:1px solid rgba(255,255,255,.14)">
+          <div style="font-weight:800;font-size:13px;color:#2587FC;letter-spacing:.1em;padding-top:3px">02</div>
+          <div style="color:#D3E3FA;font-size:15.5px;line-height:1.5"><strong style="color:#fff">You get the report, free</strong> &mdash; yours to keep and to act on, whether or not you ever work with us.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:34px minmax(0,1fr);gap:16px;padding:18px 0;border-top:1px solid rgba(255,255,255,.14);border-bottom:1px solid rgba(255,255,255,.14)">
+          <div style="font-weight:800;font-size:13px;color:#2587FC;letter-spacing:.1em;padding-top:3px">03</div>
+          <div style="color:#D3E3FA;font-size:15.5px;line-height:1.5"><strong style="color:#fff">Only then do we talk about money</strong> &mdash; and only about the things the report actually found.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{
+  "accent": {"editor":"color","default":"#044ECD","options":["#044ECD","#0F5FDB"],"section":"Theme"},
+  "startScore": {"editor":"int","default":3,"min":0,"max":7,"section":"Demo state"}
+}'>
+class Component extends DCLogic {
+  constructor(props){
+    super(props);
+    var n = this.props.startScore == null ? 3 : this.props.startScore;
+    var on = [];
+    for (var i = 0; i < 7; i++) on.push(i < n);
+    this.state = { on: on };
+  }
+
+  toggle(i){
+    var next = this.state.on.slice();
+    next[i] = !next[i];
+    this.setState({ on: next });
+  }
+
+  renderVals(){
+    var self = this;
+    var accent = this.props.accent || '#044ECD';
+
+    var LABELS = [
+      ['Loads in under 3 seconds on mobile data',  'Off wifi, from cold. Count it out loud.'],
+      ['Your phone number dials when you tap it',  'Not typed as plain text. It has to be a link.'],
+      ['No pinching. No sideways scrolling.',      'The page fits the phone without fighting you.'],
+      ['Line one says what you do, before scrolling', 'A stranger should know your business in one line.'],
+      ['One obvious next step, not five',          'Competing buttons are the same as no button.'],
+      ['The padlock is there. No "Not secure".',   'Check the address bar at the top of the browser.'],
+      ['Something on it was updated this year',    'A dead site reads as a closed business.']
+    ];
+
+    var score = 0;
+    for (var i = 0; i < this.state.on.length; i++) if (this.state.on[i]) score++;
+
+    var checks = LABELS.map(function(pair, i){
+      var on = !!self.state.on[i];
+      return {
+        label: pair[0],
+        hint: pair[1],
+        on: on,
+        boxClass: on ? 'box on' : 'box',
+        stateLabel: on ? 'Passes' : 'Not yet',
+        stateColor: on ? accent : '#2E4070',
+        toggle: function(){ self.toggle(i); }
+      };
+    });
+
+    var bandColor, bandTitle, bandBody, pkgName, pkgBody;
+    if (score >= 6){
+      bandColor = accent;
+      bandTitle = 'It works.';
+      bandBody  = 'Your site does its job. The next question is whether it converts — and that is a different conversation.';
+      pkgName   = 'Care Plan';
+      pkgBody   = 'Nothing here needs fixing. Hosting, backups, patching and a published response time keep it that way.';
+    } else if (score >= 4){
+      bandColor = '#0F5FDB';
+      bandTitle = 'You’re leaking enquiries quietly.';
+      bandBody  = 'People are arriving and leaving without telling you. Usually three fixes, not a rebuild.';
+      pkgName   = 'Rescue — KES 65,000';
+      pkgBody   = 'We fix what the audit found. No rebuild, no new design, no retainer required.';
+    } else {
+      bandColor = '#CE303C';
+      bandTitle = 'It’s costing you clients today.';
+      bandBody  = 'At this score most visitors leave before they see anything. That loss is invisible — nobody emails to say they left.';
+      pkgName   = 'Starter — from KES 145,000';
+      pkgBody   = 'Three or below, patching costs more than starting again. Five to seven pages, built properly, in weeks not months.';
+    }
+
+    var circ = 2 * Math.PI * 72;
+    var filled = circ * (score / 7);
+
+    return {
+      checks: checks,
+      score: score,
+      checkedCount: score,
+      dash: filled.toFixed(1) + ' ' + circ.toFixed(1),
+      cap: score > 0 ? 'round' : 'butt',
+      bandColor: bandColor,
+      bandTitle: bandTitle,
+      bandBody: bandBody,
+      pkgName: pkgName,
+      pkgBody: pkgBody
+    };
+  }
+}
+</script>
+</body>
+</html>

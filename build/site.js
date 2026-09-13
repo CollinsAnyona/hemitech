@@ -1,0 +1,520 @@
+// Facts, placeholders and shared copy.
+//
+// Everything in [SQUARE BRACKETS] is a real-world fact that does not exist
+// yet (BUILD-BRIEF §12). It renders as a visible bracketed placeholder and is
+// never filled with a plausible value. When Collo has the real thing, it is
+// changed here once and every page picks it up on the next build.
+
+export const ORIGIN = 'https://hemitech.co.ke';
+
+export const SITE = {
+  name: 'Hemi Tech Co.',
+  shortName: 'HEMI TECH',
+  email: 'hello@hemitech.co.ke',
+  tenderEmail: 'tenders@hemitech.co.ke',
+  domain: 'hemitech.co.ke',
+
+  // The number is not known yet. `dial` stays null until it is; the moment it
+  // holds digits, every instance across the site becomes a real tel: link and
+  // check 2 of the seven passes. See BUILD-BRIEF §3 and §12.
+  phone: {
+    display: '[+254 7XX XXX XXX]',
+    dial: null,
+  },
+
+  address: '[PHYSICAL ADDRESS]',
+  city: 'Nairobi, Kenya',
+  regNo: '[REG NO.]',
+  lastUpdated: '[MONTH 2026]',
+
+  // Retention period for form submissions — BUILD-BRIEF §11 says to ask Collo.
+  retention: '[RETENTION PERIOD]',
+};
+
+// True, unbracketed facts (BUILD-BRIEF §12).
+export const FACTS = {
+  sitesLive: '5',
+  inProduction: '1',
+  countries: '8',
+};
+
+export const PRICES = {
+  rescue: 'KES 65,000',
+  starter: 'KES 145,000',
+  business: 'KES 295,000',
+  platform: 'from KES 650,000',
+  care: 'KES 14,000/mo',
+};
+
+// The seven checks. Canonical wording, byte-identical everywhere it appears:
+// the homepage strip, the audit tool, and the no-JavaScript fallback all read
+// from this one array. BUILD-BRIEF §10.
+export const CHECKS = [
+  ['Loads in under 3 seconds on mobile data', 'Off wifi, from cold. Count it out loud.'],
+  ['Your phone number dials when you tap it', 'Not typed as plain text. It has to be a link.'],
+  ['No pinching. No sideways scrolling.', 'The page fits the phone without fighting you.'],
+  ['Line one says what you do, before scrolling', 'A stranger should know your business in one line.'],
+  ['One obvious next step, not five', 'Competing buttons are the same as no button.'],
+  ['The padlock is there. No "Not secure".', 'Check the address bar at the top of the browser.'],
+  ['Something on it was updated this year', 'A dead site reads as a closed business.'],
+];
+
+// Scoring bands, ported verbatim from AuditTool.dc.html renderVals().
+// The band title is always navy; only the ring and numeral take the band
+// colour, so --alert never lands on a headline.
+export const BANDS = [
+  {
+    min: 6,
+    colour: 'var(--blue-deep)',
+    title: 'It works.',
+    body: 'Your site does its job. The next question is whether it converts — and that is a different conversation.',
+    pkgName: 'Care Plan',
+    pkgBody: 'Nothing here needs fixing. Hosting, backups, patching and a published response time keep it that way.',
+  },
+  {
+    min: 4,
+    colour: 'var(--blue-mid)',
+    title: 'You’re leaking enquiries quietly.',
+    body: 'People are arriving and leaving without telling you. Usually three fixes, not a rebuild.',
+    pkgName: 'Rescue — KES 65,000',
+    pkgBody: 'We fix what the audit found. No rebuild, no new design, no retainer required.',
+  },
+  {
+    min: 0,
+    colour: 'var(--alert)',
+    title: 'It’s costing you clients today.',
+    body: 'At this score most visitors leave before they see anything. That loss is invisible — nobody emails to say they left.',
+    pkgName: 'Starter — from KES 145,000',
+    pkgBody: 'Three or below, patching costs more than starting again. Five to seven pages, built properly, in weeks not months.',
+  },
+];
+
+export const SERVICES = [
+  {
+    slug: 'web-platforms',
+    group: 'Build',
+    title: 'Web platforms & corporate sites',
+    short: 'Web platforms & corporate sites',
+    blurb: 'Custom design, mobile-first, sub-2.5-second load targets, and a content system you can edit yourself. Not a template with your logo dropped in.',
+    includes: 'Discovery and structure · design · build · content migration · analytics · training · handover of code, domain and hosting',
+    timelineLabel: 'Timeline',
+    timeline: '3–8 weeks',
+    fromLabel: 'From',
+    from: 'KES 145,000',
+    lede: 'The site is the first thing a buyer opens and usually the only thing they compare. It has to say what you do in one line, prove it immediately, and do both before the connection gives up.',
+    forWho: 'You are being judged on a screen, by someone who has two other suppliers open in other tabs. The work is good; the thirty seconds before anyone sees the work is the problem.',
+    cases: [
+      ['A consultancy chasing tenders', 'Credibility in the first screen, capability statement one click away, and a site that opens on a phone in a committee room.'],
+      ['An NGO explaining itself to donors', 'What the programme does and what it has changed, legible in under a minute, without a slide deck.'],
+      ['A firm whose site is five years old', 'Still accurate, but slow, awkward on a phone, and quietly losing the enquiries nobody hears about.'],
+      ['An organisation with no site at all', 'Five to seven pages that do the job properly, rather than a placeholder that stays up for three years.'],
+    ],
+    gets: [
+      ['A structure decided before design', 'What each page is for and who it is for, agreed on one page before anything is drawn.'],
+      ['Built for the connection it is used on', 'A page-weight budget, no framework overhead, and load times measured on mobile data rather than office wifi.'],
+      ['Editable by your own team', 'You add a project, a notice or a page without calling us or paying for it.'],
+      ['Accessible by default', 'WCAG 2.2 AA, keyboard operable, with contrast checked by calculation rather than by eye.'],
+      ['Analytics that answer a question', 'Cookieless and privacy-respecting, set up to tell you which pages bring enquiries.'],
+      ['Ownership at handover', 'Code, domain and hosting in your name. You are never locked in to us.'],
+    ],
+    stages: [
+      ['Structure and scope', 'What the site must do, page by page, and what it will not do. One document, signed before we build.', '1 week'],
+      ['Design', 'Two key screens, in the real content, on a real phone — not a mood board.', '1–2 weeks'],
+      ['Build', 'Weekly progress you can open in a browser. No month of silence.', '2–4 weeks'],
+      ['Content and migration', 'Your existing content moved across, rewritten where it is not doing its job, with your sign-off.', '1 week'],
+      ['Handover and care', 'Training, the seven checks run in front of you, and code, domain and hosting transferred.', '1 week'],
+    ],
+  },
+  {
+    slug: 'custom-software',
+    group: 'Build',
+    title: 'Custom software & information systems',
+    short: 'Custom software',
+    blurb: 'Enrolment, membership, licensing, case management, inspection and reporting systems. When the problem is a process, not a brochure.',
+    includes: 'Process mapping · data model · roles and permissions · audit trail · reporting · user training · source code and documentation',
+    timelineLabel: 'Timeline',
+    timeline: '8–20 weeks',
+    fromLabel: 'From',
+    from: 'KES 650,000',
+    lede: 'When the problem is a process rather than a brochure. Enrolment, membership, licensing, case management, inspection and reporting — the systems an organisation runs on every day, built so that the people who use them do not need a manual.',
+    forWho: 'You have a process that currently runs on a spreadsheet, a WhatsApp group and somebody’s memory. It works until the person who understands it is on leave, and nobody can answer a question about last quarter without opening four files.',
+    cases: [
+      ['A county issuing permits', 'Applications, inspections, approvals and renewals, with an audit trail that survives a review.'],
+      ['A SACCO with 4,000 members', 'Statements, loan applications and repayments, reconciled against M-Pesa without manual matching.'],
+      ['An NGO reporting to donors', 'Field data collected offline, indicators calculated once, and the quarterly export produced in minutes.'],
+      ['A school handling admissions', 'Applications, places, fees and parent communication in one place, with proper consent handling.'],
+    ],
+    gets: [
+      ['A mapped process', 'Written down before anything is built, and agreed by the people who actually do the work.'],
+      ['Roles and permissions', 'Who can see what, who can approve what, and a record of who did what and when.'],
+      ['Reporting built in', 'The reports you already produce by hand, generated from the same data the system runs on.'],
+      ['Data protection by design', 'Lawful basis, consent, retention and access reviewed as part of the build, not bolted on after.'],
+      ['Training your team keeps', 'Recorded sessions and a written guide, so a new staff member does not need us.'],
+      ['Source code and documentation', 'In your name, in your repository. You are never locked in to us.'],
+    ],
+    stages: [
+      ['Process mapping', 'We sit with the people doing the work and write down what actually happens — not what the manual says.', '1–2 weeks'],
+      ['Data model and scope sign-off', 'One document: what the system will do, what it will not do, and what it costs. You sign it before we build.', '1 week'],
+      ['Build in two-week blocks', 'At the end of each block you get a working link and a short note on what changed.', '4–14 weeks'],
+      ['Parallel run', 'Your team uses the new system alongside the old one until they trust it. Nobody is switched over on a Friday.', '2–3 weeks'],
+      ['Handover and care', 'Code, documentation, training, and a support arrangement with a response time in writing.', '1 week'],
+    ],
+  },
+  {
+    slug: 'mobile-applications',
+    group: 'Build',
+    title: 'Mobile applications',
+    short: 'Mobile applications',
+    blurb: 'Android-first, built for intermittent connectivity and low-end devices. Works offline where it has to, and syncs when the signal comes back.',
+    includes: 'Offline-first data layer · sync · Play Store release · crash reporting · update pipeline',
+    timelineLabel: 'Timeline',
+    timeline: '8–16 weeks',
+    fromLabel: 'From',
+    from: 'On scope',
+    lede: 'Android-first, built for intermittent connectivity and low-end devices. It works offline where it has to, and syncs when the signal comes back — because the field is where it will be used.',
+    forWho: 'Your people work where the signal does not. An app that needs a connection to record anything is an app that records nothing, and the data arrives late, by WhatsApp, retyped.',
+    cases: [
+      ['Field data collection', 'Enumerators recording offline all day, syncing once when they reach town.'],
+      ['Inspection and compliance', 'A checklist, photographs and a signature captured on site and filed automatically.'],
+      ['Member-facing services', 'Balances, statements and requests on the phone people already own, not the one they do not.'],
+      ['Internal operations', 'Stock, deliveries or attendance recorded where they happen rather than at a desk hours later.'],
+    ],
+    gets: [
+      ['Offline-first, not offline-tolerant', 'The local database is the source of truth on the device; sync is a background job, not a prerequisite.'],
+      ['Conflict handling that is decided', 'What happens when two people edit the same record is designed, not discovered in production.'],
+      ['Built for a low-end device', 'Tested on the phones your users actually carry, not on the newest one in the office.'],
+      ['Play Store release handled', 'Listing, signing, staged rollout and the update pipeline, in your own developer account.'],
+      ['Crash reporting from day one', 'You find out a build is broken from the dashboard, not from a user.'],
+      ['Source code and documentation', 'In your name, in your repository. You are never locked in to us.'],
+    ],
+    stages: [
+      ['Field scoping', 'Where the app is used, on what device, on what connection, and what has to work with none.', '1–2 weeks'],
+      ['Data and sync design', 'The local model, the sync rules and the conflict policy, agreed before any screen is built.', '1 week'],
+      ['Build in two-week blocks', 'An installable build at the end of each block, on a real device, in real conditions.', '4–10 weeks'],
+      ['Field trial', 'A small group uses it for real work while the old process still runs.', '2 weeks'],
+      ['Release and handover', 'Store listing, rollout, crash reporting, documentation and training.', '1 week'],
+    ],
+  },
+  {
+    slug: 'ecommerce-payments',
+    group: 'Build',
+    metaDesc: 'M-Pesa Daraja, card acquiring, and the part most people skip: reconciliation and settlement reporting your accountant can actually use. Prices published.',
+    title: 'E-commerce & payments',
+    short: 'E-commerce & payments',
+    blurb: 'M-Pesa Daraja, card acquiring, and the part most people skip: reconciliation and settlement reporting that your accountant can actually use.',
+    includes: 'Catalogue · checkout · STK push · callbacks and retries · reconciliation reports · refund handling',
+    timelineLabel: 'Timeline',
+    timeline: '4–10 weeks',
+    fromLabel: 'From',
+    from: 'KES 295,000',
+    lede: 'M-Pesa Daraja, card acquiring, and the part most people skip: reconciliation and settlement reporting your accountant can actually use.',
+    forWho: 'Money is coming in, and matching it to what was ordered is somebody’s Friday afternoon. The checkout is the easy half; the half that costs you is everything after the payment succeeds.',
+    cases: [
+      ['A retailer taking M-Pesa', 'STK push at checkout, with the order marked paid by the callback rather than by a screenshot.'],
+      ['A SACCO collecting repayments', 'Payments matched to members and loans automatically, with the unmatched ones queued for a human.'],
+      ['A county collecting revenue', 'Paybill collections reconciled against the bank statement, not against a till printout.'],
+      ['A school collecting fees', 'Per-student ledgers, receipts issued automatically, and arrears visible without a spreadsheet.'],
+    ],
+    gets: [
+      ['A checkout that finishes', 'Few steps, honest totals, and a state machine that survives a dropped connection mid-payment.'],
+      ['Callbacks handled properly', 'Idempotent, retried, logged, and verified against the payment API rather than trusted.'],
+      ['Reconciliation your accountant uses', 'A daily settlement report that ties transactions to orders to the bank, with exceptions listed.'],
+      ['Refunds and reversals', 'A documented path for the ones that go wrong, with an audit trail.'],
+      ['PCI-sensible card handling', 'Card details go to the acquirer, never through your server or ours.'],
+      ['Source code and documentation', 'In your name, in your repository. You are never locked in to us.'],
+    ],
+    stages: [
+      ['Money mapping', 'Every way money arrives today, and who reconciles it. Usually the first time it has been written down.', '1 week'],
+      ['Integration design', 'Daraja and acquirer setup, callback contracts, retry and failure policy, signed off.', '1 week'],
+      ['Build', 'Catalogue, checkout and the settlement reporting, with a sandbox you can put test payments through.', '2–6 weeks'],
+      ['Live with small amounts', 'Real transactions at low value until the reconciliation report matches the bank exactly.', '1–2 weeks'],
+      ['Handover and care', 'Runbook for failed payments, training for finance, and code and accounts in your name.', '1 week'],
+    ],
+  },
+  {
+    slug: 'data-analytics',
+    group: 'Analyze',
+    title: 'Data, analytics & M&E dashboards',
+    short: 'Analytics & dashboards',
+    blurb: 'Analytics installed properly, dashboards that answer a real question, and monitoring-and-evaluation reporting built for the people who have to submit it.',
+    includes: 'Measurement plan · instrumentation · indicator framework · dashboards · scheduled exports for donor reporting',
+    timelineLabel: 'Timeline',
+    timeline: '3–10 weeks',
+    fromLabel: 'From',
+    from: 'On scope',
+    lede: 'Analytics installed properly, dashboards that answer a real question, and monitoring-and-evaluation reporting built for the people who have to submit it.',
+    forWho: 'You have data and you still cannot answer the question. The numbers exist in four systems, the quarterly report is assembled by hand, and nobody is quite sure the two versions agree.',
+    cases: [
+      ['An NGO reporting to a donor', 'Indicators defined once, calculated from live data, and exported in the donor’s own format.'],
+      ['A county department', 'The figures the assembly asks for, current, rather than rebuilt from scratch each quarter.'],
+      ['A firm that cannot see its pipeline', 'Where enquiries come from and which of them convert, so marketing spend is decided on evidence.'],
+      ['An organisation with three systems', 'One set of numbers everybody agrees on, instead of three that nearly match.'],
+    ],
+    gets: [
+      ['A measurement plan first', 'The questions you need answered, written down, before a single chart is built.'],
+      ['An indicator framework', 'Each number defined once — what it counts, what it excludes, and who owns it.'],
+      ['Dashboards people use', 'Built for the person who has to act on it, not for a screen in reception.'],
+      ['Scheduled exports', 'The donor or board report generated on a schedule, in the format they insist on.'],
+      ['Cookieless web analytics', 'Privacy-respecting by default, so the site needs no consent banner.'],
+      ['Documentation', 'How every figure is derived, so the answer survives the analyst leaving.'],
+    ],
+    stages: [
+      ['Question setting', 'What decisions the data has to support. Anything that supports no decision is not built.', '1 week'],
+      ['Indicator definitions', 'Each number written down and agreed, including the awkward edge cases.', '1 week'],
+      ['Instrumentation', 'Collecting what is missing, and correcting what is being collected wrongly.', '1–3 weeks'],
+      ['Dashboards and exports', 'Built, reviewed against a period you already have reported, and corrected.', '2–4 weeks'],
+      ['Handover', 'Training, documentation, and ownership of every account.', '1 week'],
+    ],
+  },
+  {
+    slug: 'data-protection',
+    group: 'Analyze',
+    title: 'Data protection & digital compliance',
+    short: 'Data protection',
+    blurb: 'What your site actually collects, whether you are allowed to, and what to do about it. Privacy notices, consent capture, retention policy, and support with ODPC registration.',
+    includes: 'Data inventory · lawful basis review · privacy notice · consent and cookie handling · retention schedule · ODPC registration support',
+    timelineLabel: 'Timeline',
+    timeline: '2–5 weeks',
+    fromLabel: 'From',
+    from: 'On scope',
+    lede: 'What your site and systems actually collect, whether you are allowed to, and what to do about it — under the Data Protection Act 2019, which applies to public bodies and small firms alike.',
+    forWho: 'You collect names, ID numbers and phone numbers because the form has always asked for them. Nobody has written down why, how long you keep them, or who can see them.',
+    cases: [
+      ['An organisation registering with the ODPC', 'The inventory and documentation the registration asks for, prepared properly.'],
+      ['A school or clinic', 'Children’s and patients’ data, where consent and retention are not optional.'],
+      ['A firm being audited by a client', 'The vendor security questionnaire answered once, with evidence behind each answer.'],
+      ['Anyone running a web form', 'A lawful basis, a privacy notice people can understand, and a retention rule that is actually applied.'],
+    ],
+    gets: [
+      ['A data inventory', 'What you hold, where it lives, who can reach it, and how long it stays.'],
+      ['A lawful basis for each purpose', 'Consent where consent is required, and something sturdier where it is not.'],
+      ['A privacy notice in plain language', 'Written to be read, not to be survived. Published and linked where the data is collected.'],
+      ['Consent and cookie handling', 'Implemented so it works — including the option of collecting nothing that needs a banner.'],
+      ['A retention schedule that runs', 'Deletion implemented in the system, not promised in a policy document.'],
+      ['ODPC registration support', 'The forms, the evidence and the follow-up, done with you.'],
+    ],
+    stages: [
+      ['Inventory', 'Every form, system and spreadsheet that holds personal data, listed.', '1 week'],
+      ['Basis and gap review', 'Why you hold each item, and where that is not defensible.', '1 week'],
+      ['Documentation', 'Privacy notice, retention schedule, access rules, breach procedure.', '1 week'],
+      ['Implementation', 'The changes made in the systems, not just in the policy.', '1–2 weeks'],
+      ['Registration and handover', 'ODPC registration support, and a review date in the diary.', '1 week'],
+    ],
+  },
+  {
+    slug: 'cloud-hosting-support',
+    group: 'Transform',
+    title: 'Cloud, hosting & managed support',
+    short: 'Hosting & support',
+    blurb: 'Hosting, SSL, backups, uptime monitoring, patching — and a response time we publish rather than one you find out about during an outage.',
+    includes: 'Managed hosting · daily backups · certificate renewal · uptime monitoring · security patching · monthly report',
+    timelineLabel: 'Commitment',
+    timeline: 'Monthly, cancel anytime',
+    fromLabel: 'From',
+    from: 'KES 14,000/mo',
+    lede: 'Hosting, SSL, backups, uptime monitoring and patching — with a response time we publish rather than one you find out about during an outage.',
+    forWho: 'The site works. Nobody is watching it. The certificate expires on a Saturday, the backup has not been tested, and the first you hear of any of it is a client asking why the site says "Not secure".',
+    cases: [
+      ['A site with no owner', 'Built by someone who has moved on, hosted on an account nobody can log into.'],
+      ['An organisation with a compliance duty', 'Backups, patching and access control that have to be demonstrable, not assumed.'],
+      ['A team with no technical staff', 'One number to call, and a response time in writing.'],
+      ['A system that matters on Monday', 'Monitoring that tells us it is down before your users do.'],
+    ],
+    gets: [
+      ['Managed hosting', 'Provisioned, configured and documented, in your own account where you want it.'],
+      ['Daily backups, tested', 'A restore is rehearsed, not hoped for. Recovery point and recovery time stated.'],
+      ['Certificates that renew', 'Automatically, with monitoring in case the automation fails.'],
+      ['Uptime monitoring', 'Checked from outside, with an alert to us before it becomes an email from you.'],
+      ['Security patching', 'Applied on a schedule, out of hours, with a note of what changed.'],
+      ['A monthly report', 'Uptime, incidents, patches and what we would do next. One page.'],
+    ],
+    stages: [
+      ['Takeover audit', 'What is running, where, on whose account, and what is about to expire.', '1 week'],
+      ['Stabilise', 'Access recovered, certificates fixed, backups started, monitoring added.', '1 week'],
+      ['Document', 'A runbook your team can use, including how to reach us out of hours.', '1 week'],
+      ['Run', 'Monthly patching, monitoring and reporting, with a published response time.', 'Ongoing'],
+      ['Review', 'Quarterly: what broke, what we changed, and what should change next.', 'Quarterly'],
+    ],
+  },
+  {
+    slug: 'systems-integration',
+    group: 'Transform',
+    metaDesc: 'Connecting the software you already pay for — accounting, CRM, SMS, payments, HR — so the same number stops being typed into three places. Scoped and priced.',
+    title: 'Systems integration',
+    short: 'Systems integration',
+    blurb: 'Connecting the software you already pay for — accounting, CRM, SMS, payments, HR — so the same number stops being typed into three places.',
+    includes: 'Integration map · API work · error handling and retries · monitoring · runbook for your team',
+    timelineLabel: 'Timeline',
+    timeline: '2–8 weeks',
+    fromLabel: 'From',
+    from: 'On scope',
+    lede: 'Connecting the software you already pay for — accounting, CRM, SMS, payments, HR — so the same number stops being typed into three places.',
+    forWho: 'Every system in the organisation works. None of them talk. Somebody re-keys the same figure three times a week, and the three copies have quietly stopped agreeing.',
+    cases: [
+      ['Sales into accounting', 'Invoices raised once, in the system that should raise them.'],
+      ['A website into a CRM', 'Enquiries arriving where they will be followed up, with their source attached.'],
+      ['Payments into a ledger', 'Transactions posted automatically, with the exceptions queued rather than lost.'],
+      ['Anything into SMS', 'Notifications sent from the event that should trigger them, not from a person remembering.'],
+    ],
+    gets: [
+      ['An integration map', 'What talks to what, in which direction, and which system owns each field.'],
+      ['Error handling that is designed', 'Retries, backoff, dead-letter queue, and a human path for what cannot be automated.'],
+      ['Monitoring', 'You find out an integration has stopped from an alert, not from a missing invoice.'],
+      ['Idempotency', 'The same event arriving twice does not create two records.'],
+      ['A runbook for your team', 'What to do when a message fails, written for the person who will actually be there.'],
+      ['Source code and documentation', 'In your name, in your repository. You are never locked in to us.'],
+    ],
+    stages: [
+      ['Integration map', 'Systems, fields, directions and owners. Usually reveals a duplicate nobody knew about.', '1 week'],
+      ['Contract design', 'What each message contains, what happens when it fails, and who is told.', '1 week'],
+      ['Build', 'One integration at a time, each one live before the next is started.', '1–5 weeks'],
+      ['Parallel run', 'Automated and manual in step until the two agree for a full cycle.', '1–2 weeks'],
+      ['Handover', 'Runbook, monitoring access, and the code in your repository.', '1 week'],
+    ],
+  },
+];
+
+export const GROUPS = [
+  {
+    name: 'Build',
+    icon: 'code',
+    blurb: 'The thing itself — sites, systems, apps and payment flows that hold up on a KES 3,000 phone.',
+    intro: 'The thing itself — sites, systems, apps and payment flows that hold up on a low-end phone and a patchy connection, because that is where they will be used.',
+    count: 'Four services',
+    footnote: null,
+  },
+  {
+    name: 'Analyze',
+    icon: 'bars',
+    blurb: 'Knowing what the system is telling you — and staying on the right side of the Data Protection Act while you collect it.',
+    intro: 'Knowing what the system is telling you — and staying on the right side of the Data Protection Act while you collect it.',
+    count: 'Two services',
+    footnote: 'Donor reporting, ODPC registration, consent and retention',
+  },
+  {
+    name: 'Transform',
+    icon: 'transform',
+    blurb: 'Keeping it running, and making it talk to everything else the organisation already pays for.',
+    intro: 'Keeping it running, and making it talk to everything else the organisation already pays for.',
+    count: 'Two services',
+    footnote: 'Published uptime and response-time commitments',
+  },
+];
+
+export const SECTORS = [
+  {
+    slug: 'government',
+    name: 'Government & county',
+    metaDesc: 'Service portals, public registers and permit systems for county and national government — light enough for a citizen on mobile data, documented to pass audit.',
+    icon: 'bank',
+    blurb: 'Service portals, public registers, permit and licensing systems.',
+    hasCopy: true,
+    h1: 'Digital services for county and national government',
+    lede: 'Service portals, public registers, permit and licensing systems — built to be used by a citizen on a KES 3,000 phone, and documented well enough to survive an audit.',
+    problemsIntro: 'A public service that works in the office and fails on a phone in Kitui has not been delivered. These are the four we are called in to fix.',
+    problemsHeading: 'The failures are rarely technical.',
+    problems: [
+      ['clock', 'It is too heavy for the connection it is used on', 'Portals designed on office fibre and opened on 3G. The citizen gives up, then queues at the counter instead — and the system is recorded as unused rather than unusable.'],
+      ['bars2', 'Nobody can answer a question about it', 'Applications are recorded but never counted. When the county assembly asks how many permits were issued last quarter, somebody spends three days in a spreadsheet.'],
+      ['lock', 'Personal data is collected without a basis', 'Forms gathering ID numbers and phone numbers with no privacy notice, no retention rule and no record of consent. The Data Protection Act applies to public bodies too.'],
+      ['shield', 'The vendor left and took the keys', 'No source code, no documentation, no access to the hosting account. A change that should take a day becomes a new procurement.'],
+    ],
+    buildsHeading: 'Systems a citizen can finish on one bar of signal.',
+    builds: [
+      ['Permit & licensing systems', 'Application, inspection, approval, renewal and revocation — with a full audit trail and role-based approval.'],
+      ['Public registers & portals', 'Searchable, accessible, and light enough to load on mobile data — with the content editable by your own officers.'],
+      ['Revenue & payment flows', 'M-Pesa collection with reconciliation your finance team can check against the bank, not against a screenshot.'],
+      ['Departmental dashboards', 'The numbers the assembly asks for, calculated once from live data rather than assembled by hand each quarter.'],
+      ['Data protection implementation', 'Lawful basis, privacy notices, consent capture and retention schedules, applied to the forms you already run.'],
+      ['Accessibility remediation', 'Contrast, keyboard navigation, screen-reader structure. A public service has to work for every member of the public.'],
+    ],
+    agpoNote: '30% of national procurement spend is reserved for youth, women and PWD-owned enterprises under AGPO.',
+  },
+  {
+    slug: 'ngo-development',
+    name: 'NGOs & development',
+    metaDesc: 'M&E dashboards, donor reporting and field data collection for NGOs in East Africa — published standards, source code you own, and a free seven-point audit.',
+    icon: 'globe',
+    blurb: 'M&E dashboards, donor reporting, field data collection.',
+    hasCopy: false,
+  },
+  {
+    slug: 'saccos-finance',
+    name: 'SACCOs & finance',
+    metaDesc: 'Member portals, statements, loan flows and M-Pesa reconciliation for SACCOs — published standards, source code you own, and a free seven-point audit to start.',
+    icon: 'wallet',
+    blurb: 'Member portals, statements, loans, M-Pesa reconciliation.',
+    hasCopy: false,
+  },
+  {
+    slug: 'education',
+    name: 'Education',
+    metaDesc: 'Admissions, fee portals, parent communication and ODPC compliance for schools — published standards, source code you own, and a free seven-point audit to start.',
+    icon: 'education',
+    blurb: 'Admissions, fee portals, parent communication, ODPC compliance.',
+    hasCopy: false,
+  },
+  {
+    slug: 'professional-services',
+    name: 'Professional services',
+    metaDesc: 'Websites for consultancies and law and engineering firms judged on credibility in thirty seconds — published standards, code you own, and a free site audit.',
+    icon: 'briefcase',
+    blurb: 'Consultancies, law and engineering firms judged on credibility.',
+    hasCopy: false,
+  },
+];
+
+// Registrations — every status honest. [PENDING] is never changed to
+// "Registered" (BUILD-BRIEF §12).
+export const REGISTRATIONS = [
+  ['Certificate of Incorporation', 'Business Registration Service', '[CPR/2026/......]', 'pending', '[PENDING]'],
+  ['KRA PIN', 'Kenya Revenue Authority', '[P05............]', 'pending', '[PENDING]'],
+  ['Tax Compliance Certificate', 'Renewed annually', '[KRA............] · valid to [DATE]', 'pending', '[PENDING]'],
+  ['AGPO certificate — youth', 'Access to Government Procurement Opportunities', '[AGPO............] · valid to [DATE]', 'pending', '[PENDING]'],
+  ['e-GP Kenya supplier registration', 'Electronic Government Procurement portal', '[SUPPLIER ID]', 'pending', '[PENDING]'],
+  ['ODPC registration', 'Data controller and processor, Data Protection Act 2019', '[ODPC............]', 'pending', '[PENDING]'],
+  ['County single business permit', 'Nairobi City County', '[PERMIT NO.]', 'pending', '[PENDING]'],
+  ['CR12', 'Directors and shareholding', 'Issued on request', 'ok', 'On request'],
+  ['Professional indemnity insurance', 'Cover note available for bids above [KES X]', '[INSURER, POLICY NO.]', 'pending', '[PENDING]'],
+];
+
+export const WORK = [
+  {
+    slug: 'joline-geo-consultants',
+    client: 'Joline Geo Consultants',
+    kicker: 'Case study · Professional services',
+    sector: 'Geotechnical consultancy',
+    services: 'Web platform · Analytics',
+    live: 'jolinegeoconsultants.org',
+    liveUrl: 'https://jolinegeoconsultants.org',
+    cardBlurb: 'A consultancy working across eight countries, judged by procurement teams comparing three bidders at once.',
+    shot: 'joline',
+    hasPage: true,
+  },
+  {
+    slug: 'start-walking-foundation',
+    client: 'Start Walking Foundation',
+    kicker: 'Case study · Hemi Tech project',
+    sector: 'Non-profit',
+    services: 'Web platform',
+    live: 'startwalkingfoundation.org',
+    liveUrl: 'https://startwalkingfoundation.org',
+    cardBlurb: 'Donor-facing, built to make the work legible in under a minute.',
+    shot: 'start-walking',
+    hasPage: true,
+    relatedParty: true,
+  },
+  {
+    slug: 'nyombo-ceremony',
+    client: 'Nyombo Ceremony',
+    kicker: 'Case study · Private platform',
+    sector: 'Events',
+    services: 'Web platform',
+    live: null,
+    liveUrl: null,
+    cardBlurb: 'An event platform used almost entirely on phones, by guests on patchy data.',
+    shot: 'nyombo',
+    shotMobile: true,
+    hasPage: true,
+  },
+];

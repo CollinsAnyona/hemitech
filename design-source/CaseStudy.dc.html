@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap');
+    :root{
+      --navy:#02123C; --soft:#2E4070; --deep:#044ECD; --mid:#0F5FDB; --lgt:#2587FC;
+      --tint:#F2F6FD; --line:#D7E3F5; --line2:#E8EFFA;
+    }
+    *{box-sizing:border-box;}
+    body{margin:0;font-family:Montserrat,system-ui,sans-serif;color:var(--soft);
+      font-weight:500;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;background:#fff;}
+    a{color:var(--deep);text-decoration:none;} a:hover{color:var(--mid);}
+    h1,h2,h3,h4{margin:0;color:var(--navy);letter-spacing:-.02em;text-wrap:balance;}
+    h1{font-weight:800;font-size:48px;line-height:1.07;}
+    h2{font-weight:800;font-size:29px;line-height:1.16;}
+    h3{font-weight:700;font-size:18px;line-height:1.28;letter-spacing:-.01em;}
+    h4{font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);}
+    p{margin:0;}
+    .eyebrow{font-weight:600;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--deep);}
+    .rule{height:6px;width:180px;border-radius:3px;background:linear-gradient(90deg,var(--mid),var(--deep));}
+    .wrap{max-width:1200px;margin:0 auto;padding:0 60px;}
+    .narrow{max-width:760px;margin:0 auto;}
+    .btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 26px;border-radius:4px;
+      background:var(--deep);color:#fff;font-weight:700;font-size:15px;}
+    .btn:hover{background:var(--mid);color:#fff;}
+    .btn.ghost{background:transparent;color:var(--navy);border:1.5px solid var(--line);}
+    .body{font-size:17.5px;line-height:1.68;}
+  </style>
+</helmet>
+
+<div style="width:1440px;background:#fff;overflow:hidden">
+
+  <div style="border-bottom:1px solid var(--line2)">
+    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;height:84px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <svg width="34" height="34" viewBox="0 0 40 40" fill="none"><path d="M7 6h7v11h12V6h7v28h-7V23H14v11H7z" fill="#02123C"></path><path d="M27 6h7v11h-7z" fill="#2587FC"></path></svg>
+        <div style="font-weight:800;font-size:19px;color:var(--navy);letter-spacing:-.01em">HEMI TECH</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:32px;font-size:15px;font-weight:600;color:var(--navy)">
+        <span>Capabilities</span><span>Sectors</span>
+        <span style="color:var(--deep);border-bottom:2px solid var(--deep);padding-bottom:2px">Work</span>
+        <span>How we work</span><span>Credentials</span><span>Insights</span>
+      </div>
+      <a class="btn" href="#">Free website audit</a>
+    </div>
+  </div>
+
+  <!-- hero -->
+  <div style="background:radial-gradient(700px 440px at 100% -20%, rgba(37,135,252,.16), transparent 62%),linear-gradient(180deg,#fff,#F4F9FE)">
+    <div class="wrap" style="padding-top:26px">
+      <div style="font-size:13.5px;font-weight:600;display:flex;gap:9px;align-items:center">
+        <a href="#">Work</a><span style="color:var(--mid)">/</span><span style="color:var(--navy)">Joline Geo Consultants</span>
+      </div>
+    </div>
+    <div class="wrap" style="padding-top:44px;padding-bottom:52px;display:flex;flex-direction:column;gap:24px;max-width:1200px">
+      <div class="eyebrow">Case study &middot; Professional services</div>
+      <h1 style="max-width:20ch">A geotechnical consultancy that had to look as serious as its engineering.</h1>
+      <div class="rule"></div>
+      <p class="body" style="max-width:66ch">Joline Geo Consultants works on ground investigation across eight countries. Their expertise was never the problem &mdash; being taken seriously by a procurement team comparing three bidders on a screen was.</p>
+    </div>
+
+    <div style="border-top:1px solid var(--line)">
+      <div class="wrap" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0">
+        <div style="padding:24px 0"><h4 style="margin-bottom:7px">Client</h4><div style="font-size:15.5px;font-weight:700;color:var(--navy)">Joline Geo Consultants</div></div>
+        <div style="padding:24px 0"><h4 style="margin-bottom:7px">Sector</h4><div style="font-size:15.5px;font-weight:700;color:var(--navy)">Geotechnical consultancy</div></div>
+        <div style="padding:24px 0"><h4 style="margin-bottom:7px">Services</h4><div style="font-size:15.5px;font-weight:700;color:var(--navy)">Web platform &middot; Analytics</div></div>
+        <div style="padding:24px 0"><h4 style="margin-bottom:7px">Live at</h4><div style="font-size:15.5px;font-weight:700"><a href="#">jolinegeoconsultants.org</a></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- outcome numbers -->
+  <div style="background:#02123C;position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,var(--lgt),var(--deep))"></div>
+    <div class="wrap" style="padding-top:52px;padding-bottom:52px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:40px;position:relative">
+      <div><div style="font-weight:800;font-size:42px;color:#fff;line-height:1;font-variant-numeric:tabular-nums">[X.Xs]</div><div style="color:#8FB4E8;font-size:14px;font-weight:600;margin-top:8px">Load time before</div></div>
+      <div><div style="font-weight:800;font-size:42px;color:#2587FC;line-height:1;font-variant-numeric:tabular-nums">[X.Xs]</div><div style="color:#8FB4E8;font-size:14px;font-weight:600;margin-top:8px">Load time after, on mobile data</div></div>
+      <div><div style="font-weight:800;font-size:42px;color:#fff;line-height:1;font-variant-numeric:tabular-nums">[X/7]</div><div style="color:#8FB4E8;font-size:14px;font-weight:600;margin-top:8px">On our seven-point test</div></div>
+      <div><div style="font-weight:800;font-size:42px;color:#fff;line-height:1;font-variant-numeric:tabular-nums">8</div><div style="color:#8FB4E8;font-size:14px;font-weight:600;margin-top:8px">Countries represented on the site</div></div>
+    </div>
+  </div>
+
+  <!-- narrative -->
+  <div class="wrap" style="padding-top:76px;padding-bottom:20px">
+    <div class="narrow" style="display:flex;flex-direction:column;gap:44px">
+
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <h2>The problem</h2>
+        <p class="body">Ground investigation is bought by procurement teams, not by enthusiasts. A tender committee shortlisting three consultancies will open all three websites in a row, usually on a phone, usually between other meetings. Whatever they conclude in those thirty seconds is what the technical submission has to overcome.</p>
+        <p class="body">Joline&rsquo;s previous site made that harder than it needed to be. It was slow to open, it did not say plainly what the firm did or where it worked, and the depth of experience behind it &mdash; eight countries of project history &mdash; was invisible until the third click, which nobody makes.</p>
+      </div>
+
+      <div style="border-left:3px solid var(--mid);padding:4px 0 4px 26px">
+        <p style="font-size:19px;line-height:1.55;font-weight:600;color:var(--navy)">The engineering was never in doubt. The thirty seconds before anyone reads the engineering &mdash; that was the problem.</p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <h2>What we built</h2>
+        <p class="body">A site that answers the procurement question in its first line and proves it immediately afterwards. Services stated in the language a tender document uses. Project experience surfaced on the homepage rather than buried in a portfolio. Country coverage shown as a fact rather than described as a claim.</p>
+        <p class="body">Underneath, it was built for the connection it would actually be opened on: no heavy imagery, no framework overhead, and a content structure their own team can update without calling us.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px">
+        <div style="border:1px solid var(--line);border-radius:5px;padding:24px 22px;display:flex;flex-direction:column;gap:9px">
+          <h3>Credibility in the first screen</h3>
+          <p style="font-size:14.5px;line-height:1.5">What the firm does, where it works, and the scale of its project history &mdash; before any scrolling.</p>
+        </div>
+        <div style="border:1px solid var(--line);border-radius:5px;padding:24px 22px;display:flex;flex-direction:column;gap:9px">
+          <h3>Built for mobile data</h3>
+          <p style="font-size:14.5px;line-height:1.5">Optimised assets and a light page weight, so it opens on a phone in the field, not just on office wifi.</p>
+        </div>
+        <div style="border:1px solid var(--line);border-radius:5px;padding:24px 22px;display:flex;flex-direction:column;gap:9px">
+          <h3>Editable by their own team</h3>
+          <p style="font-size:14.5px;line-height:1.5">New projects and capabilities added without a developer, so the site stays current between engagements.</p>
+        </div>
+        <div style="border:1px solid var(--line);border-radius:5px;padding:24px 22px;display:flex;flex-direction:column;gap:9px">
+          <h3>Analytics that answer a question</h3>
+          <p style="font-size:14.5px;line-height:1.5">Which pages bring enquiries, and which do not &mdash; so future work is decided on evidence.</p>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <h2>The result</h2>
+        <p class="body">[MEASURED OUTCOME &mdash; load time before and after, and any change in enquiries Joline can confirm. Do not publish this section until those numbers are real; a case study without numbers is a brochure.]</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- testimonial -->
+  <div class="wrap" style="padding-top:40px;padding-bottom:76px">
+    <div style="background:linear-gradient(160deg,#02123C,#0A2358);border-radius:6px;padding:56px 60px;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-80px;right:-60px;width:300px;height:300px;border-radius:50%;background:rgba(37,135,252,.2)"></div>
+      <div style="position:relative;max-width:800px">
+        <svg width="40" height="33" viewBox="0 0 34 28" fill="none"><path d="M0 28V16C0 7 5 1.5 14 0l1.5 5C10 6.5 7.5 9.5 7.5 14H14v14H0zm20 0V16c0-9 5-14.5 14-16l1.5 5C30 6.5 27.5 9.5 27.5 14H34v14H20z" fill="#2587FC" opacity=".9"></path></svg>
+        <p style="color:#EAF2FF;font-size:25px;line-height:1.48;font-weight:600;margin-top:28px">[JOLINE&rsquo;S TESTIMONIAL, VERBATIM. The client has already sent this in their own words &mdash; paste it in exactly as written, with no editing for flow.]</p>
+        <div style="margin-top:38px;padding-top:24px;border-top:1px solid rgba(255,255,255,.16);display:flex;align-items:center;gap:16px">
+          <div style="width:48px;height:48px;border-radius:50%;background:rgba(37,135,252,.25);display:flex;align-items:center;justify-content:center;font-weight:800;color:#7FB8FF;font-size:16px">JG</div>
+          <div>
+            <div style="color:#fff;font-weight:700;font-size:16px">[NAME]</div>
+            <div style="color:#8FB4E8;font-weight:600;font-size:14.5px;margin-top:2px">[ROLE], Joline Geo Consultants</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- other work -->
+  <div style="background:var(--tint);border-top:1px solid var(--line2)">
+    <div class="wrap" style="padding-top:70px;padding-bottom:76px">
+      <div style="display:flex;align-items:end;justify-content:space-between;margin-bottom:34px">
+        <h2>More work</h2>
+        <a href="#" style="font-weight:700;font-size:15px">All projects</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px">
+        <a href="#" style="background:#fff;border:1px solid var(--line);border-radius:5px;padding:28px 26px;display:flex;flex-direction:column;gap:11px;min-height:200px">
+          <div class="eyebrow" style="font-size:11px">Hemi Tech project</div>
+          <h3>Start Walking Foundation</h3>
+          <p style="font-size:14.5px;line-height:1.5;color:var(--soft)">Donor-facing, built to make the work legible in under a minute.</p>
+          <div style="margin-top:auto;font-size:13.5px;font-weight:700;color:var(--deep)">startwalkingfoundation.org</div>
+        </a>
+        <a href="#" style="background:#fff;border:1px solid var(--line);border-radius:5px;padding:28px 26px;display:flex;flex-direction:column;gap:11px;min-height:200px">
+          <div class="eyebrow" style="font-size:11px">Private platform</div>
+          <h3>Nyombo Ceremony</h3>
+          <p style="font-size:14.5px;line-height:1.5;color:var(--soft)">An event platform used almost entirely on phones, by guests on patchy data.</p>
+          <div style="margin-top:auto;font-size:13.5px;font-weight:700;color:var(--soft)">Private &mdash; details on request</div>
+        </a>
+        <div style="background:#fff;border:1px dashed var(--line);border-radius:5px;padding:28px 26px;display:flex;flex-direction:column;gap:11px;min-height:200px">
+          <div class="eyebrow" style="font-size:11px;color:var(--soft)">In production</div>
+          <h3 style="color:var(--soft)">Whitecrest</h3>
+          <p style="font-size:14.5px;line-height:1.5;color:var(--soft)">Published here once the client has signed off on us showing it. Not before.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

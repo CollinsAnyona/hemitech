@@ -6,3 +6,6 @@ node_modules/
 # api/media/, which silently excluded every route file in this API from
 # version control - _lib would deploy with no routes behind it.
 /media/
+
+# Form submissions written by the fs backend in local development.
+/.submissions/

@@ -1,0 +1,221 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap');
+    :root{
+      --navy:#02123C; --soft:#2E4070; --deep:#044ECD; --mid:#0F5FDB; --lgt:#2587FC;
+      --tint:#F2F6FD; --line:#D7E3F5; --line2:#E8EFFA;
+    }
+    *{box-sizing:border-box;}
+    body{margin:0;font-family:Montserrat,system-ui,sans-serif;color:var(--soft);
+      font-weight:500;font-size:15px;line-height:1.58;-webkit-font-smoothing:antialiased;background:#fff;}
+    a{color:var(--deep);text-decoration:none;}
+    a:hover{color:var(--mid);}
+    h1,h2,h3,h4{margin:0;color:var(--navy);letter-spacing:-.02em;text-wrap:balance;}
+    h1{font-weight:800;font-size:34px;line-height:1.1;}
+    h2{font-weight:800;font-size:25px;line-height:1.16;}
+    h4{font-weight:700;font-size:16px;line-height:1.3;letter-spacing:-.008em;}
+    p{margin:0;}
+    .eyebrow{font-weight:600;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--deep);}
+    .rule{height:5px;width:132px;border-radius:3px;background:linear-gradient(90deg,var(--mid),var(--deep));}
+    .pad{padding:0 22px;}
+    .btn{display:flex;align-items:center;justify-content:center;gap:9px;height:52px;border-radius:4px;
+      background:var(--deep);color:#fff;font-weight:700;font-size:15px;}
+    .btn.ghost{background:#fff;color:var(--navy);border:1.5px solid var(--line);}
+  </style>
+</helmet>
+
+<div style="width:390px;background:#fff;overflow:hidden">
+
+  <!-- header -->
+  <div style="display:flex;align-items:center;justify-content:space-between;height:60px;padding:0 22px;border-bottom:1px solid var(--line2)">
+    <div style="display:flex;align-items:center;gap:9px">
+      <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M7 6h7v11h12V6h7v28h-7V23H14v11H7z" fill="#02123C"></path><path d="M27 6h7v11h-7z" fill="#2587FC"></path></svg>
+      <div style="font-weight:800;font-size:15px;color:var(--navy);letter-spacing:-.01em">HEMI TECH</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px">
+      <a href="#" style="width:46px;height:46px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--line);border-radius:4px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#044ECD" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 4h3.2l1.6 4-2 1.4a12 12 0 005.3 5.3l1.4-2 4 1.6v3.2a1.5 1.5 0 01-1.7 1.5A16.5 16.5 0 013 5.7 1.5 1.5 0 014.5 4z"></path></svg>
+      </a>
+      <div style="width:46px;height:46px;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--line);border-radius:4px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#02123C" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- hero -->
+  <div style="padding:36px 22px 30px;
+    background:
+      radial-gradient(420px 320px at 108% -6%, rgba(37,135,252,.19), transparent 64%),
+      radial-gradient(360px 300px at -14% 106%, rgba(15,95,219,.13), transparent 62%),
+      linear-gradient(180deg,#fff 0%,#F3F8FE 100%);">
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div class="eyebrow">Nairobi &middot; Software &amp; data</div>
+      <h1>We build the systems East African organisations run on.</h1>
+      <div class="rule"></div>
+      <p style="font-size:16px;line-height:1.58">Websites, custom platforms and data dashboards for government, development, finance and education &mdash; engineered to load fast on mobile data, and documented well enough to pass procurement.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:6px">
+        <a class="btn" href="#">Score your website free
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M12 5l7 7-7 7"></path></svg>
+        </a>
+        <a class="btn ghost" href="#">See our work</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- proof -->
+  <div style="border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff">
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr))">
+      <div style="padding:18px 22px;border-right:1px solid var(--line2);border-bottom:1px solid var(--line2)"><div style="font-weight:800;font-size:24px;color:var(--navy);font-variant-numeric:tabular-nums">5</div><div style="font-size:12.5px;font-weight:600">Sites live</div></div>
+      <div style="padding:18px 22px;border-bottom:1px solid var(--line2)"><div style="font-weight:800;font-size:24px;color:var(--navy);font-variant-numeric:tabular-nums">1</div><div style="font-size:12.5px;font-weight:600">In production</div></div>
+      <div style="padding:18px 22px;border-right:1px solid var(--line2)"><div style="font-weight:800;font-size:24px;color:var(--navy);font-variant-numeric:tabular-nums">8</div><div style="font-size:12.5px;font-weight:600">Client countries</div></div>
+      <div style="padding:18px 22px"><div style="font-weight:800;font-size:24px;color:var(--navy)">AGPO</div><div style="font-size:12.5px;font-weight:600">Youth-owned [PENDING]</div></div>
+    </div>
+  </div>
+
+  <!-- capabilities -->
+  <div class="pad" style="padding-top:48px;padding-bottom:48px;display:flex;flex-direction:column;gap:22px">
+    <div class="eyebrow">Capabilities</div>
+    <h2>Eight services, grouped the way we deliver them.</h2>
+
+    <div style="display:flex;flex-direction:column;gap:14px;margin-top:6px">
+      <div style="border:1px solid var(--line);border-radius:5px;padding:22px 20px;display:flex;flex-direction:column;gap:13px">
+        <div style="display:flex;align-items:center;gap:11px">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#044ECD" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6l-5 6 5 6"></path><path d="M16 6l5 6-5 6"></path></svg>
+          <h4>Build</h4>
+        </div>
+        <p style="font-size:14px;line-height:1.52">Web platforms, custom software and information systems, mobile applications, e-commerce and M-Pesa payments.</p>
+      </div>
+      <div style="border:1px solid var(--line);border-radius:5px;padding:22px 20px;display:flex;flex-direction:column;gap:13px">
+        <div style="display:flex;align-items:center;gap:11px">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#044ECD" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"></path><path d="M10 20V4"></path><path d="M16 20v-7"></path><path d="M22 20H2"></path></svg>
+          <h4>Analyze</h4>
+        </div>
+        <p style="font-size:14px;line-height:1.52">Data, analytics and M&amp;E dashboards. Data protection and digital compliance under the Data Protection Act.</p>
+      </div>
+      <div style="border:1px solid var(--line);border-radius:5px;padding:22px 20px;display:flex;flex-direction:column;gap:13px">
+        <div style="display:flex;align-items:center;gap:11px">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#044ECD" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v6"></path><path d="M12 15v6"></path><circle cx="12" cy="12" r="3"></circle><path d="M3 12h6"></path><path d="M15 12h6"></path></svg>
+          <h4>Transform</h4>
+        </div>
+        <p style="font-size:14px;line-height:1.52">Cloud, hosting and managed support with published response times. Systems integration.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- sectors -->
+  <div style="background:var(--tint);border-top:1px solid var(--line2);border-bottom:1px solid var(--line2)">
+    <div class="pad" style="padding-top:44px;padding-bottom:44px;display:flex;flex-direction:column;gap:20px">
+      <div class="eyebrow">Sectors</div>
+      <h2>We write for your sector, not for &ldquo;businesses&rdquo;.</h2>
+      <div style="display:flex;flex-direction:column;gap:0;background:#fff;border:1px solid var(--line);border-radius:5px;margin-top:4px">
+        <a href="#" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 18px;min-height:56px"><span style="font-size:15px;font-weight:700;color:var(--navy)">Government &amp; county</span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2587FC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg></a>
+        <a href="#" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 18px;min-height:56px;border-top:1px solid var(--line2)"><span style="font-size:15px;font-weight:700;color:var(--navy)">NGOs &amp; development</span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2587FC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg></a>
+        <a href="#" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 18px;min-height:56px;border-top:1px solid var(--line2)"><span style="font-size:15px;font-weight:700;color:var(--navy)">SACCOs &amp; finance</span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2587FC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg></a>
+        <a href="#" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 18px;min-height:56px;border-top:1px solid var(--line2)"><span style="font-size:15px;font-weight:700;color:var(--navy)">Education</span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2587FC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg></a>
+        <a href="#" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 18px;min-height:56px;border-top:1px solid var(--line2)"><span style="font-size:15px;font-weight:700;color:var(--navy)">Professional services</span><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#2587FC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"></path></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- work -->
+  <div class="pad" style="padding-top:48px;padding-bottom:48px;display:flex;flex-direction:column;gap:20px">
+    <div class="eyebrow">Selected work</div>
+    <h2>Joline Geo Consultants</h2>
+    <div class="rule"></div>
+    <p style="font-size:15px">A geotechnical consultancy working across eight countries needed a site that read as credible to procurement teams reviewing three bidders at once.</p>
+    <div style="background:linear-gradient(160deg,#02123C,#0A2358);border-radius:6px;padding:28px 24px;position:relative;overflow:hidden;margin-top:4px">
+      <div style="position:absolute;top:-50px;right:-50px;width:170px;height:170px;border-radius:50%;background:rgba(37,135,252,.22)"></div>
+      <div style="position:relative">
+        <svg width="26" height="21" viewBox="0 0 34 28" fill="none"><path d="M0 28V16C0 7 5 1.5 14 0l1.5 5C10 6.5 7.5 9.5 7.5 14H14v14H0zm20 0V16c0-9 5-14.5 14-16l1.5 5C30 6.5 27.5 9.5 27.5 14H34v14H20z" fill="#2587FC" opacity=".9"></path></svg>
+        <p style="color:#EAF2FF;font-size:16px;line-height:1.5;font-weight:600;margin-top:16px">[JOLINE&rsquo;S TESTIMONIAL, VERBATIM &mdash; already sent by the client.]</p>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.16)">
+          <div style="color:#fff;font-weight:700;font-size:14px">[NAME, ROLE]</div>
+          <div style="color:#8FB4E8;font-weight:600;font-size:13px;margin-top:2px">Joline Geo Consultants</div>
+        </div>
+      </div>
+    </div>
+    <a class="btn ghost" href="#" style="margin-top:4px">Read the case study</a>
+  </div>
+
+  <!-- audit -->
+  <div style="background:#02123C;position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--lgt),var(--deep))"></div>
+    <div class="pad" style="padding-top:46px;padding-bottom:46px;display:flex;flex-direction:column;gap:18px;position:relative">
+      <div class="eyebrow" style="color:#7FB8FF">The free audit</div>
+      <h2 style="color:#fff">Score your own website in two minutes.</h2>
+      <p style="color:#BFD4F5;font-size:16px;line-height:1.56">Seven checks, on your phone, on mobile data &mdash; the way your clients actually open it.</p>
+      <div style="background:#fff;border-radius:5px;padding:20px 18px;margin-top:4px">
+        <div style="display:flex;gap:12px;align-items:center;padding:11px 0"><div style="width:19px;height:19px;border:2px solid var(--mid);border-radius:5px;flex:none"></div><span style="font-size:13.5px;font-weight:600;color:var(--navy)">Loads in under 3 seconds on mobile data</span></div>
+        <div style="display:flex;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line2)"><div style="width:19px;height:19px;border:2px solid var(--mid);border-radius:5px;flex:none"></div><span style="font-size:13.5px;font-weight:600;color:var(--navy)">Your phone number dials when you tap it</span></div>
+        <div style="display:flex;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line2)"><div style="width:19px;height:19px;border:2px solid var(--mid);border-radius:5px;flex:none"></div><span style="font-size:13.5px;font-weight:600;color:var(--navy)">No pinching. No sideways scrolling.</span></div>
+        <div style="display:flex;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line2)"><div style="width:19px;height:19px;border:2px solid var(--mid);border-radius:5px;flex:none"></div><span style="font-size:13.5px;font-weight:600;color:var(--navy)">Line one says what you do, before scrolling</span></div>
+        <div style="display:flex;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line2)"><div style="width:19px;height:19px;border:2px solid var(--mid);border-radius:5px;flex:none"></div><span style="font-size:13.5px;font-weight:600;color:var(--navy)">One obvious next step, not five</span></div>
+        <div style="display:flex;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line2)"><div style="width:19px;height:19px;border:2px solid var(--mid);border-radius:5px;flex:none"></div><span style="font-size:13.5px;font-weight:600;color:var(--navy)">The padlock is there. No &ldquo;Not secure&rdquo;.</span></div>
+        <div style="display:flex;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line2)"><div style="width:19px;height:19px;border:2px solid var(--mid);border-radius:5px;flex:none"></div><span style="font-size:13.5px;font-weight:600;color:var(--navy)">Something on it was updated this year</span></div>
+      </div>
+      <a class="btn" href="#" style="background:#fff;color:#02123C;margin-top:6px">Run the seven checks</a>
+    </div>
+  </div>
+
+  <!-- credentials -->
+  <div style="background:var(--tint)">
+    <div class="pad" style="padding-top:46px;padding-bottom:46px;display:flex;flex-direction:column;gap:18px">
+      <div class="eyebrow">Credentials</div>
+      <h2>Built to clear procurement.</h2>
+      <p style="font-size:15px">Registration, tax compliance, data protection and preferential-procurement status, listed with their numbers.</p>
+      <div style="background:#fff;border:1px solid var(--line);border-radius:5px;margin-top:4px">
+        <div style="display:flex;justify-content:space-between;gap:12px;padding:14px 18px"><span style="font-size:13.5px;font-weight:600;color:var(--navy)">Certificate of Incorporation</span><span style="font-size:13px;font-weight:700;color:var(--deep)">[CPR/...]</span></div>
+        <div style="display:flex;justify-content:space-between;gap:12px;padding:14px 18px;border-top:1px solid var(--line2)"><span style="font-size:13.5px;font-weight:600;color:var(--navy)">KRA PIN</span><span style="font-size:13px;font-weight:700;color:var(--deep)">[P...]</span></div>
+        <div style="display:flex;justify-content:space-between;gap:12px;padding:14px 18px;border-top:1px solid var(--line2)"><span style="font-size:13.5px;font-weight:600;color:var(--navy)">AGPO &mdash; youth</span><span style="font-size:13px;font-weight:700;color:var(--deep)">[PENDING]</span></div>
+        <div style="display:flex;justify-content:space-between;gap:12px;padding:14px 18px;border-top:1px solid var(--line2)"><span style="font-size:13.5px;font-weight:600;color:var(--navy)">e-GP Kenya supplier</span><span style="font-size:13px;font-weight:700;color:var(--deep)">[PENDING]</span></div>
+        <div style="display:flex;justify-content:space-between;gap:12px;padding:14px 18px;border-top:1px solid var(--line2)"><span style="font-size:13.5px;font-weight:600;color:var(--navy)">ODPC data processor</span><span style="font-size:13px;font-weight:700;color:var(--deep)">[PENDING]</span></div>
+      </div>
+      <a class="btn ghost" href="#" style="margin-top:6px">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#044ECD" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="M7 10l5 5 5-5"></path><path d="M4 20h16"></path></svg>
+        Capability statement (PDF)
+      </a>
+    </div>
+  </div>
+
+  <!-- contact CTA -->
+  <div class="pad" style="padding-top:46px;padding-bottom:46px;display:flex;flex-direction:column;gap:16px">
+    <h2>Tell us what&rsquo;s broken.</h2>
+    <p style="font-size:15px">Four fields. We reply within one working day, and we will tell you plainly if you don&rsquo;t need us.</p>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:6px">
+      <a class="btn" href="#">Start a conversation</a>
+      <a class="btn ghost" href="#">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#044ECD" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 4h3.2l1.6 4-2 1.4a12 12 0 005.3 5.3l1.4-2 4 1.6v3.2a1.5 1.5 0 01-1.7 1.5A16.5 16.5 0 013 5.7 1.5 1.5 0 014.5 4z"></path></svg>
+        [+254 7XX XXX XXX]
+      </a>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <div style="background:#02123C;color:#9DB9E4">
+    <div class="pad" style="padding-top:36px;padding-bottom:28px;display:flex;flex-direction:column;gap:18px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <svg width="26" height="26" viewBox="0 0 40 40" fill="none"><path d="M7 6h7v11h12V6h7v28h-7V23H14v11H7z" fill="#fff"></path><path d="M27 6h7v11h-7z" fill="#2587FC"></path></svg>
+        <div style="font-weight:800;font-size:15px;color:#fff">HEMI TECH CO.</div>
+      </div>
+      <div style="font-size:13.5px;line-height:1.7;color:#C7DBF7">
+        [PHYSICAL ADDRESS]<br>Nairobi, Kenya<br>[+254 7XX XXX XXX]<br>hello@hemitech.co.ke
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13px;color:#C7DBF7;padding-top:6px;border-top:1px solid rgba(255,255,255,.12)">
+        <span>Capabilities</span><span>Sectors</span><span>Work</span><span>Credentials</span><span>Pricing</span><span>Privacy</span><span>Terms</span>
+      </div>
+      <div style="font-size:12px;color:#8FB4E8;padding-top:8px">&copy; 2026 Hemi Tech Co. Registered in Kenya [REG NO.]</div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

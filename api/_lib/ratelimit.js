@@ -14,19 +14,25 @@ const MAX_REQUESTS = 30;
 const buckets = new Map();
 
 /**
- * @param {string} key  caller identity (a hash of the bearer token)
+ * @param {string} key  caller identity (a hash of the bearer token, or an IP
+ *                      hash for the public forms)
+ * @param {{max?: number, windowMs?: number}} [options]
+ *                      the public forms want a tighter window than uploads do;
+ *                      omitting this keeps the original 30-per-hour behaviour
  * @returns {{ allowed: boolean, retryAfterSeconds: number }}
  */
-export function consume(key) {
+export function consume(key, options = {}) {
+  const max = options.max ?? MAX_REQUESTS;
+  const windowMs = options.windowMs ?? WINDOW_MS;
   const now = Date.now();
   const bucket = buckets.get(key);
 
   if (!bucket || now >= bucket.resetAt) {
-    buckets.set(key, { count: 1, resetAt: now + WINDOW_MS });
+    buckets.set(key, { count: 1, resetAt: now + windowMs });
     return { allowed: true, retryAfterSeconds: 0 };
   }
 
-  if (bucket.count >= MAX_REQUESTS) {
+  if (bucket.count >= max) {
     return {
       allowed: false,
       retryAfterSeconds: Math.max(1, Math.ceil((bucket.resetAt - now) / 1000)),

@@ -1,5 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/(.*)",
@@ -33,8 +35,17 @@
           "value": "on"
         },
         {
-          "key": "Content-Security-Policy-Report-Only",
-          "value": "default-src 'self'; script-src 'self' 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw='; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; form-action 'self' https://formspree.io; frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
+        }
+      ]
+    },
+    {
+      "source": "/fonts/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
         }
       ]
     },
@@ -48,7 +59,7 @@
       ]
     },
     {
-      "source": "/(.*)\\.(png|jpg|jpeg|svg|ico|webmanifest)",
+      "source": "/(.*)\\.(png|jpg|jpeg|avif|webp|svg|ico|webmanifest)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -86,6 +97,22 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "www.hemitech.co.ke" }],
+      "destination": "https://hemitech.co.ke/$1",
+      "permanent": true
+    },
+    { "source": "/services", "destination": "/capabilities", "permanent": true },
+    { "source": "/services.html", "destination": "/capabilities", "permanent": true },
+    { "source": "/privacy-policy", "destination": "/privacy", "permanent": true },
+    { "source": "/privacy-policy.html", "destination": "/privacy", "permanent": true },
+    { "source": "/cookie-policy", "destination": "/privacy", "permanent": true },
+    { "source": "/cookie-policy.html", "destination": "/privacy", "permanent": true },
+    { "source": "/careers", "destination": "/about", "permanent": true },
+    { "source": "/careers.html", "destination": "/about", "permanent": true }
   ],
   "rewrites": [
     {
