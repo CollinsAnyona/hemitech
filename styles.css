@@ -1513,8 +1513,127 @@ textarea.field { height: 150px; padding: 14px 16px; resize: vertical; line-heigh
 .status-panel p { font-size: 13px; line-height: 1.5; color: var(--on-navy-3); margin-top: 16px; }
 
 /* -------------------------------------------------------------- motion --- */
-/* Hover and focus only, 120–180ms. No scroll-triggered anything: every page
-   is fully readable the instant it paints. */
+/* Approved 2026-09-13, superseding the "hover and focus only" rule this
+   section used to state: the site is now animated throughout. Sections,
+   cards and stat blocks fade up as they enter the viewport, the header
+   condenses, stats count up, a thin bar tracks scroll progress, and every
+   interactive element gets a considered hover/focus state on top of the
+   plain colour swaps below. Everything here is transform/opacity (or a
+   scaleX bar, or a text-content count-up) — nothing that can trigger
+   layout. All of it is driven by classes site.js adds; with JS absent
+   nothing is ever hidden, so every page is still fully readable on first
+   paint. The prefers-reduced-motion rule at the end of this section is
+   still the final word: it flattens every transition and animation here
+   back to instant. */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue-deep), var(--blue-lgt));
+  transform: scaleX(0);
+  transform-origin: left;
+  z-index: 40;
+  pointer-events: none;
+}
+
+/* reveal-on-scroll: site.js adds .reveal to sections, cards, panels, stats
+   and grid children, then .is-in once each has entered the viewport (or
+   immediately, synchronously, if it was already on screen at load — so
+   above-the-fold content never paints hidden and then fades). */
+html[data-js="on"] .reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .7s cubic-bezier(.16, .8, .24, 1), transform .7s cubic-bezier(.16, .8, .24, 1);
+  transition-delay: calc(min(var(--reveal-i, 0), 8) * 70ms);
+  will-change: opacity, transform;
+}
+html[data-js="on"] .reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* header: sticks, and condenses once the page has scrolled */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  transition: box-shadow .3s ease;
+}
+.site-header .wrap { transition: min-height .3s ease; }
+html[data-scrolled="true"] .site-header {
+  box-shadow: 0 10px 26px -18px rgba(2, 18, 60, .35);
+}
+html[data-scrolled="true"] .site-header .wrap { min-height: 66px; }
+@media (max-width: 980px) {
+  html[data-scrolled="true"] .site-header .wrap { min-height: 56px; }
+}
+
+/* cards: a lift on top of the border-colour swap they already had */
+.card, a.card {
+  transition: transform .25s cubic-bezier(.2, .7, .3, 1), box-shadow .25s ease, border-color .15s ease;
+}
+.card:hover, a.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-float);
+}
+
+/* buttons: lift on hover, settle back on press */
+.btn {
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease,
+    transform 150ms cubic-bezier(.2, .7, .3, 1), box-shadow 150ms ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); box-shadow: none; }
+.btn:not(.ghost):not(.outline-navy):not([disabled]):hover {
+  box-shadow: 0 12px 22px -14px rgba(4, 78, 205, .5);
+}
+
+/* nav links: the underline draws in rather than snapping on */
+.nav-list a {
+  position: relative;
+  transition: color 150ms ease;
+}
+.nav-list a:not([aria-current="page"])::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -3px;
+  height: 2px;
+  background: var(--blue-deep);
+  transition: right .25s cubic-bezier(.2, .7, .3, 1);
+}
+.nav-list a:not([aria-current="page"]):hover::after,
+.nav-list a:not([aria-current="page"]):focus-visible::after { right: 0; }
+
+/* link-arrow: the arrow nudges forward */
+.link-arrow svg { transition: transform .2s cubic-bezier(.2, .7, .3, 1); }
+.link-arrow:hover svg, .link-arrow:focus-visible svg { transform: translateX(4px); }
+
+/* the mark in the header: a small confidence-building wink */
+.brand svg { transition: transform .3s cubic-bezier(.3, 1.5, .5, 1); }
+.brand:hover svg, .brand:focus-within svg { transform: rotate(-6deg) scale(1.05); }
+
+/* mobile nav: slides and fades open where a browser supports transitioning
+   a discrete display change; elsewhere it falls back to the instant
+   show/hide already in place below, which is no regression. */
+@media (max-width: 980px) {
+  html[data-js="on"] .nav {
+    transition: opacity .22s ease, transform .22s cubic-bezier(.3, .7, .4, 1), display .22s allow-discrete;
+    transform-origin: top center;
+  }
+  html[data-js="on"] .nav[hidden] {
+    display: none;
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  @starting-style {
+    html[data-js="on"] .nav:not([hidden]) { opacity: 0; transform: translateY(-10px); }
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

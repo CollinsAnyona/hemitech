@@ -54,6 +54,123 @@
     sync();
   }
 
+  /* ---------------------------------------------------------- motion ---- */
+  /* Scroll reveal, a count-up on every stat, a header that condenses, and a
+     thin scroll-progress bar. Transform/opacity (or a scaleX bar, or plain
+     text content for the counters) only, so none of this can trigger
+     layout. If a browser lacks IntersectionObserver, or the visitor asked
+     for reduced motion, content is simply shown at once. */
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var progress = document.createElement('div');
+  progress.className = 'scroll-progress';
+  progress.setAttribute('aria-hidden', 'true');
+  document.body.insertBefore(progress, document.body.firstChild);
+
+  var scrollTicking = false;
+  var onScrollFrame = function () {
+    scrollTicking = false;
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - doc.clientHeight;
+    var pct = max > 0 ? Math.min(Math.max(doc.scrollTop / max, 0), 1) : 0;
+    progress.style.transform = 'scaleX(' + pct + ')';
+    doc.setAttribute('data-scrolled', doc.scrollTop > 8 ? 'true' : 'false');
+  };
+  window.addEventListener('scroll', function () {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(onScrollFrame);
+  }, { passive: true });
+  onScrollFrame();
+
+  var revealTargets = document.querySelectorAll(
+    '#main section, .ground-top, .card, .panel, .cta-panel, .status-panel, .standards-panel, .stat, .grid > *, blockquote'
+  );
+
+  if (revealTargets.length) {
+    /* Stagger within each parent separately, so a long page doesn't queue
+       a card near the bottom behind every card above it. */
+    var groups = [];
+    Array.prototype.forEach.call(revealTargets, function (el) {
+      el.classList.add('reveal');
+      var parent = el.parentElement;
+      var group = null;
+      for (var i = 0; i < groups.length; i++) {
+        if (groups[i].parent === parent) { group = groups[i]; break; }
+      }
+      if (!group) { group = { parent: parent, n: 0 }; groups.push(group); }
+      el.style.setProperty('--reveal-i', group.n);
+      group.n++;
+    });
+
+    /* Reveal anything already on screen in this same synchronous pass, so
+       above-the-fold content never paints hidden and then fades in. */
+    var vh = window.innerHeight;
+    var offscreen = [];
+    Array.prototype.forEach.call(revealTargets, function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < vh * 0.94 && r.bottom > 0) {
+        el.classList.add('is-in');
+      } else {
+        offscreen.push(el);
+      }
+    });
+
+    if ('IntersectionObserver' in window && offscreen.length) {
+      var revealIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-in');
+          revealIO.unobserve(entry.target);
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      offscreen.forEach(function (el) { revealIO.observe(el); });
+    } else {
+      offscreen.forEach(function (el) { el.classList.add('is-in'); });
+    }
+  }
+
+  var counters = document.querySelectorAll('[data-count]');
+  var runCounter = function (el) {
+    var raw = el.getAttribute('data-count');
+    var to = parseFloat(raw);
+    if (isNaN(to)) return;
+    var suffix = el.getAttribute('data-count-suffix') || '';
+    var decimals = (raw.split('.')[1] || '').length;
+
+    if (reduceMotion) {
+      el.textContent = to.toFixed(decimals) + suffix;
+      return;
+    }
+
+    var start = null;
+    var duration = 1000;
+    var step = function (ts) {
+      if (start === null) start = ts;
+      var p = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = (to * eased).toFixed(decimals) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+
+  if (counters.length) {
+    if ('IntersectionObserver' in window) {
+      var countIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          runCounter(entry.target);
+          countIO.unobserve(entry.target);
+        });
+      }, { threshold: 0.6 });
+      Array.prototype.forEach.call(counters, function (el) { countIO.observe(el); });
+    } else {
+      Array.prototype.forEach.call(counters, runCounter);
+    }
+  }
+
   /* --------------------------------------------------- the contact form -- */
 
   var form = document.getElementById('contact-form');
