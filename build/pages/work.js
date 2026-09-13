@@ -6,7 +6,7 @@
 // and stays that way until the client signs off (BUILD-BRIEF §8, §12).
 
 import { WORK } from '../site.js';
-import { esc, ICONS, quoteMark } from '../layout.js';
+import { esc, ICONS, quoteMark, breadcrumbs } from '../layout.js';
 import { browserFrame, phoneFrame } from '../shot.js';
 
 // `stage` puts a portrait shot on a landscape panel, so a phone frame does not
@@ -22,6 +22,7 @@ const index = {
   title: 'Work · sites we have built and shipped · Hemi Tech Co.',
   description:
     'Five sites live and one in production: a consultancy working across eight countries, a donor-facing foundation site, and an event platform used on phones.',
+  jsonLd: breadcrumbs([['Work', '/work']]),
   body: `    <div class="ground-top">
       <div class="wrap" style="padding-top:64px;padding-bottom:52px">
         <div class="stack stack-5">
@@ -221,6 +222,7 @@ function caseStudy(w) {
     nav: '/work',
     title: `${w.client} case study · Hemi Tech Co.`.slice(0, 60),
     description: n.standfirst.length > 158 ? n.standfirst.slice(0, 155).trim() + '…' : n.standfirst,
+    jsonLd: breadcrumbs([['Work', '/work'], [w.client, `/work/${w.slug}`]]),
     body: `    <div class="ground-top">
       <div class="wrap">
         <nav class="crumbs" aria-label="Breadcrumb">

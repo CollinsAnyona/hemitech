@@ -1,8 +1,8 @@
 // Capabilities index and the eight service pages.
 // From design-source/Capabilities.dc.html and ServiceDetail.dc.html.
 
-import { SERVICES, GROUPS, PRICES, COMMITMENTS } from '../site.js';
-import { esc, ICONS } from '../layout.js';
+import { SERVICES, GROUPS, PRICES, COMMITMENTS, ORIGIN } from '../site.js';
+import { esc, ICONS, breadcrumbs, serviceSchema } from '../layout.js';
 
 /* ---------------------------------------------------------------- index --- */
 
@@ -25,8 +25,14 @@ function serviceRow(s, last) {
 
 function groupBlock(g) {
   const services = SERVICES.filter((s) => s.group === g.name);
+  // The id below is not decorative: every capability detail page links back
+  // here as "/capabilities#build" (etc.) in its breadcrumb, and until this
+  // id existed that link went to the top of the page rather than to this
+  // group — a silent bug (no visible error, browser just drops the
+  // fragment), only surfaced by building matching breadcrumb JSON-LD and
+  // checking that every "item" URL actually resolves to something real.
   return `        <div class="section-rule">
-          <h2>${esc(g.name)}</h2>
+          <h2 id="${g.name.toLowerCase()}">${esc(g.name)}</h2>
           <span class="line" aria-hidden="true"></span>
           <span class="count">${esc(g.count)}</span>
         </div>
@@ -41,6 +47,19 @@ const index = {
   title: 'Capabilities · eight services with prices · Hemi Tech Co.',
   description:
     'Eight services in three groups, each with a named scope, a stated timeline and a published price, because a buyer who has to email for a price usually doesn’t.',
+  jsonLd: [
+    breadcrumbs([['Capabilities', '/capabilities']]),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      itemListElement: SERVICES.map((s, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: `${ORIGIN}/capabilities/${s.slug}`,
+        name: s.title,
+      })),
+    },
+  ],
   body: `    <div class="ground-top">
       <div class="wrap" style="padding-top:64px;padding-bottom:56px">
         <div class="split-even" style="grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:end">
@@ -106,11 +125,24 @@ function detail(s) {
     .map(([h, p, when], i) => `          <li><span class="ord">0${i + 1}</span><div><h3 style="margin-bottom:5px">${esc(h)}</h3><p style="font-size:14.5px;line-height:1.5">${esc(p)}</p></div><span class="when">${esc(when)}</span></li>`)
     .join('\n');
 
+  const description = s.metaDesc || (s.lede.length > 158 ? s.lede.slice(0, 155).trim() + '…' : s.lede);
+
   return {
     url: `/capabilities/${s.slug}`,
     nav: '/capabilities',
     title: `${s.short} · Hemi Tech Co.`.slice(0, 60),
-    description: s.metaDesc || (s.lede.length > 158 ? s.lede.slice(0, 155).trim() + '…' : s.lede),
+    description,
+    // The breadcrumb trail here is the one true source for both the visible
+    // <nav class="crumbs"> below and this JSON-LD — they cannot drift apart
+    // because neither is typed out a second time.
+    jsonLd: [
+      breadcrumbs([
+        ['Capabilities', '/capabilities'],
+        [s.group, `/capabilities#${s.group.toLowerCase()}`],
+        [s.title, `/capabilities/${s.slug}`],
+      ]),
+      serviceSchema({ name: s.title, description, url: `/capabilities/${s.slug}`, from: s.from, group: s.group }),
+    ],
     body: `    <div class="ground-top">
       <div class="wrap">
         <nav class="crumbs" aria-label="Breadcrumb">

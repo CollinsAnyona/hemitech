@@ -5,7 +5,7 @@
 // where the application has reached instead.
 
 import { SITE, REGISTRATIONS, COMMITMENTS } from '../site.js';
-import { esc, ICONS, phoneLink, mailLink } from '../layout.js';
+import { esc, ICONS, phoneLink, mailLink, breadcrumbs } from '../layout.js';
 
 const row = ([doc, issuer, ref, state, label]) => `        <div class="table-row">
           <div><h3>${esc(doc)}</h3><p>${esc(issuer)}</p></div>
@@ -19,6 +19,7 @@ export default {
   title: 'Credentials for procurement teams · Hemi Tech Co.',
   description:
     'Company registration, tax compliance, data protection and AGPO status with reference numbers, so an evaluation team can verify rather than take our word for it.',
+  jsonLd: breadcrumbs([['Credentials', '/credentials']]),
   body: `    <div class="ground-top">
       <div class="wrap" style="padding-top:64px;padding-bottom:54px">
         <div class="split-even" style="grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);align-items:start">

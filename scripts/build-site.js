@@ -51,19 +51,33 @@ function fileFor(url) {
 /** Pages that should not appear in the sitemap or be indexed. */
 const NOINDEX = new Set(['/404', '/thank-you', '/check-your-details']);
 
+// Google has said for years that it mostly ignores sitemap priority, but a
+// distribution that actually reflects which pages matter costs nothing and
+// is at least honest about it, rather than 28 of 30 pages tied at the same
+// number. Hub pages (the eight-service and five-sector listings, the case
+// studies index, pricing, credentials, contact) rank above the deep detail
+// pages under them; legal and the still-empty insights page rank lowest.
+const HUBS = new Set(['/capabilities', '/sectors', '/work', '/pricing', '/credentials', '/contact']);
+const LOW = new Set(['/privacy', '/terms', '/insights']);
+
+function priorityFor(url) {
+  if (url === '/') return '1.0';
+  if (url === '/audit') return '0.9';
+  if (HUBS.has(url)) return '0.8';
+  if (LOW.has(url)) return '0.5';
+  return '0.7'; // capability/sector/work detail pages, how-we-work, standards, about
+}
+
 function sitemap(pages) {
   const today = new Date().toISOString().slice(0, 10);
   const urls = pages
     .filter((p) => !NOINDEX.has(p.url))
-    .map((p) => {
-      const priority = p.url === '/' ? '1.0' : p.url === '/audit' ? '0.9' : '0.7';
-      return `  <url>
+    .map((p) => `  <url>
     <loc>${ORIGIN}${p.url === '/' ? '/' : p.url}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>${priority}</priority>
-  </url>`;
-    })
+    <priority>${priorityFor(p.url)}</priority>
+  </url>`)
     .join('\n');
 
   return `<?xml version="1.0" encoding="UTF-8"?>

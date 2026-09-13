@@ -6,8 +6,8 @@
 // page states the failures and the builds that belong to that sector alone.
 // copyNeeded() stays as the fallback for any sector added without copy.
 
-import { SECTORS, COMMITMENTS } from '../site.js';
-import { esc, ICONS } from '../layout.js';
+import { SECTORS, COMMITMENTS, ORIGIN } from '../site.js';
+import { esc, ICONS, breadcrumbs } from '../layout.js';
 
 const index = {
   url: '/sectors',
@@ -15,6 +15,19 @@ const index = {
   title: 'Sectors we build for in East Africa · Hemi Tech Co.',
   description:
     'A permit portal and a donor dashboard fail in completely different ways. Government, NGOs, SACCOs, education and professional services, each written for alone.',
+  jsonLd: [
+    breadcrumbs([['Sectors', '/sectors']]),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'ItemList',
+      itemListElement: SECTORS.map((s, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: `${ORIGIN}/sectors/${s.slug}`,
+        name: s.name.replace('&', 'and'),
+      })),
+    },
+  ],
   body: `    <div class="ground-top">
       <div class="wrap" style="padding-top:64px;padding-bottom:52px">
         <div class="stack stack-5">
@@ -110,11 +123,13 @@ function copyNeeded(s) {
 }
 
 function detail(s) {
+  const name = s.name.replace('&', 'and');
   return {
     url: `/sectors/${s.slug}`,
     nav: '/sectors',
-    title: `${s.name.replace('&', 'and')} · Hemi Tech Co.`.slice(0, 60),
+    title: `${name} · Hemi Tech Co.`.slice(0, 60),
     description: s.metaDesc,
+    jsonLd: breadcrumbs([['Sectors', '/sectors'], [name, `/sectors/${s.slug}`]]),
     body: `    <div class="band-navy on-navy-field">
       <div class="glow glow-br" aria-hidden="true"></div>
       <div class="wrap">

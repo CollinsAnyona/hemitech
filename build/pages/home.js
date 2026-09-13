@@ -1,7 +1,7 @@
 // Homepage. From design-source/Main.dc.html (1440) and HomeMobile.dc.html (390).
 
 import { SITE, FACTS, GROUPS, SECTORS, SERVICES, WORK, ORIGIN, COMMITMENTS } from '../site.js';
-import { ICONS, esc, phoneLink, checksStatic, quoteMark } from '../layout.js';
+import { ICONS, esc, phoneLink, checksStatic, quoteMark, ORG_ID } from '../layout.js';
 import { browserFrame, phoneFrame } from '../shot.js';
 
 const groupServices = (name) => SERVICES.filter((s) => s.group === name);
@@ -45,15 +45,31 @@ function workCard(w) {
           </a>`;
 }
 
-const jsonLd = {
+// address is locality-only, matching SITE.addressNote: no street address is
+// published, so none is invented here — a PostalAddress with just a locality
+// and country is a true, complete statement, not a placeholder for one.
+// telephone is real (supplied 13 September 2026); logo points at the actual
+// brand artwork, not a stand-in.
+const orgSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
+  '@type': 'ProfessionalService',
+  '@id': ORG_ID,
   name: SITE.name,
   url: ORIGIN + '/',
   email: SITE.email,
+  telephone: SITE.phone.dial,
+  logo: `${ORIGIN}/Images/brand/lockup.png`,
+  image: `${ORIGIN}/Images/brand/lockup.png`,
+  slogan: 'Build · Analyze · Transform',
   description:
     'Kenyan software and data engineering firm building web platforms, custom systems and data dashboards for organisations across East Africa.',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Nairobi',
+    addressCountry: 'KE',
+  },
   areaServed: 'East Africa',
+  founder: { '@type': 'Person', name: SITE.director },
   knowsAbout: [
     'Web platforms',
     'Custom software',
@@ -64,9 +80,19 @@ const jsonLd = {
     'Cloud hosting',
     'Systems integration',
   ],
-  // telephone and address are deliberately omitted: the real values do not
-  // exist yet, and a placeholder must never be emitted into structured data.
 };
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${ORIGIN}/#website`,
+  url: ORIGIN + '/',
+  name: SITE.name,
+  publisher: { '@id': ORG_ID },
+  inLanguage: 'en-KE',
+};
+
+const jsonLd = [orgSchema, websiteSchema];
 
 export default {
   url: '/',

@@ -2,7 +2,7 @@
 // Content extracted from the design files' own sections (BUILD-BRIEF §9.9–9.11).
 
 import { SITE, PRICES, COMMITMENTS } from '../site.js';
-import { esc, ICONS, phoneLink, mailLink, checksStatic } from '../layout.js';
+import { esc, ICONS, phoneLink, mailLink, checksStatic, breadcrumbs } from '../layout.js';
 
 /* --------------------------------------------------------- how we work --- */
 
@@ -20,6 +20,7 @@ const howWeWork = {
   title: 'How we work · five stages, published · Hemi Tech Co.',
   description:
     'Five stages, each with a deliverable and a sign-off: audit, scope, build, handover, care. You know what is coming, what we need, and when you will see it.',
+  jsonLd: breadcrumbs([['How we work', '/how-we-work']]),
   body: `    <div class="ground-top">
       <div class="wrap" style="padding-top:64px;padding-bottom:52px">
         <div class="stack stack-5">
@@ -77,6 +78,7 @@ const standards = {
   title: 'Standards we build to and publish · Hemi Tech Co.',
   description:
     'Load under 2.5 seconds on mobile data, WCAG 2.2 AA, source code and hosting in your name, and a published response time. In our standard terms, not per project.',
+  jsonLd: breadcrumbs([['Standards', '/standards']]),
   body: `    <div class="ground-top">
       <div class="wrap" style="padding-top:64px;padding-bottom:52px">
         <div class="stack stack-5">
@@ -140,6 +142,7 @@ const pricing = {
   title: 'Pricing · published ranges, not “on request” · Hemi Tech Co.',
   description:
     'Audit free, Rescue KES 65,000, Starter KES 145,000, Business KES 295,000, Platform from KES 650,000, Care Plan KES 14,000 a month. Published, not on request.',
+  jsonLd: breadcrumbs([['Pricing', '/pricing']]),
   body: `    <div class="ground-top">
       <div class="wrap" style="padding-top:64px;padding-bottom:52px">
         <div class="stack stack-5">
@@ -197,6 +200,7 @@ const about = {
   title: 'About Hemi Tech Co. · who actually does the work',
   description:
     'A small Nairobi software and data engineering firm. You deal with the person who writes the code, and the work is done in Kenya by people you can name.',
+  jsonLd: breadcrumbs([['About', '/about']]),
   body: `    <div class="ground-top">
       <div class="wrap" style="padding-top:64px;padding-bottom:52px">
         <div class="stack stack-5">
@@ -265,6 +269,7 @@ const insights = {
   title: 'Insights · Hemi Tech Co.',
   description:
     'Notes on building things that load quickly in East Africa: procurement, mobile data, accessibility and the Data Protection Act. Nothing yet, and never padded.',
+  jsonLd: breadcrumbs([['Insights', '/insights']]),
   body: `    <div class="ground-top">
       <div class="wrap" style="padding-top:64px;padding-bottom:52px">
         <div class="stack stack-5">

@@ -6,7 +6,7 @@
 // no analytics, no cookies and no third-party requests at runtime.
 
 import { SITE } from '../site.js';
-import { esc, mailLink, phoneLink } from '../layout.js';
+import { esc, mailLink, phoneLink, breadcrumbs } from '../layout.js';
 
 const privacy = {
   url: '/privacy',
@@ -14,6 +14,7 @@ const privacy = {
   title: 'Privacy notice · Hemi Tech Co.',
   description:
     'What this site collects, why, how long we keep it and who can see it, under the Data Protection Act 2019. Two forms, no cookies, no analytics, no mailing list.',
+  jsonLd: breadcrumbs([['Privacy notice', '/privacy']]),
   body: `    <div class="ground-top">
       <div class="wrap" style="padding-top:64px;padding-bottom:44px">
         <div class="stack stack-5">
@@ -77,6 +78,7 @@ const terms = {
   title: 'Terms · Hemi Tech Co.',
   description:
     'Terms for using this website and the standing commitments in our contracts: ownership of code and hosting, published service levels, and how quotations work.',
+  jsonLd: breadcrumbs([['Terms', '/terms']]),
   body: `    <div class="ground-top">
       <div class="wrap" style="padding-top:64px;padding-bottom:44px">
         <div class="stack stack-5">

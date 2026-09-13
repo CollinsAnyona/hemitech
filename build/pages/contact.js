@@ -5,7 +5,7 @@
 // page, so nothing is ever lost and no raw JSON is shown to a person.
 
 import { SITE } from '../site.js';
-import { esc, ICONS, phoneLink, mailLink } from '../layout.js';
+import { esc, ICONS, phoneLink, mailLink, breadcrumbs } from '../layout.js';
 
 const contact = {
   url: '/contact',
@@ -13,6 +13,7 @@ const contact = {
   title: 'Contact · tell us what’s broken · Hemi Tech Co.',
   description:
     'Four fields, because every extra one costs a reply. We answer within one working day from a person, and we will tell you plainly if you do not need us.',
+  jsonLd: breadcrumbs([['Contact', '/contact']]),
   body: `    <div class="ground-top">
       <div class="wrap" style="padding-top:60px;padding-bottom:48px">
         <div class="stack stack-5">

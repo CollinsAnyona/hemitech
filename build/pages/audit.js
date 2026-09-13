@@ -3,7 +3,7 @@
 // renderVals() is the specification; audit.js ports it exactly.
 
 import { CHECKS, BANDS } from '../site.js';
-import { esc, ICONS } from '../layout.js';
+import { esc, ICONS, breadcrumbs } from '../layout.js';
 
 // Each row is a <label> wrapping a real checkbox: the whole row is the target,
 // it is reachable and operable by keyboard, it is announced correctly by a
@@ -44,6 +44,7 @@ export default {
   title: 'Free website audit · seven checks · Hemi Tech Co.',
   description:
     'Score your own site in two minutes against seven checks: load time on mobile data, a tappable phone number, no pinching, a clear first line and one next step.',
+  jsonLd: breadcrumbs([['Free website audit', '/audit']]),
   scripts: ['/audit.js'],
   body: `    <div class="ground-top">
       <div class="wrap" style="padding-top:64px;padding-bottom:52px">

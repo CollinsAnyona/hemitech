@@ -326,6 +326,7 @@ export const SERVICES = [
     title: 'Cloud, hosting & managed support',
     short: 'Hosting & support',
     blurb: 'Hosting, SSL, backups, uptime monitoring, patching, and a response time we publish rather than one you find out about during an outage.',
+    metaDesc: 'Managed hosting, SSL, daily backups, uptime monitoring and security patching, with a response time published in writing, not discovered during an outage.',
     includes: 'Managed hosting · daily backups · certificate renewal · uptime monitoring · security patching · monthly report',
     timelineLabel: 'Commitment',
     timeline: 'Monthly, cancel anytime',
