@@ -25,7 +25,11 @@ export const SITE = {
   address: '[PHYSICAL ADDRESS]',
   city: 'Nairobi, Kenya',
   regNo: '[REG NO.]',
-  lastUpdated: '[MONTH 2026]',
+
+  // Not a placeholder: the build knows this. Check 7 of the seven is
+  // "something on it was updated this year", and a site that cannot answer
+  // its own check has no business asking anyone else.
+  lastUpdated: new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }),
 
   // Retention period for form submissions — BUILD-BRIEF §11 says to ask Collo.
   retention: '[RETENTION PERIOD]',

@@ -276,7 +276,7 @@ ${WORK.map(workCard).join('\n')}
             <div class="table-row" style="grid-template-columns:minmax(0,1fr) 150px"><div class="ref" style="font-size:14.5px;font-weight:600">AGPO certificate — youth</div><div class="status ref" style="font-size:13.5px;color:var(--blue-deep)">[PENDING]</div></div>
             <div class="table-row" style="grid-template-columns:minmax(0,1fr) 150px"><div class="ref" style="font-size:14.5px;font-weight:600">e-GP Kenya supplier</div><div class="status ref" style="font-size:13.5px;color:var(--blue-deep)">[PENDING]</div></div>
             <div class="table-row" style="grid-template-columns:minmax(0,1fr) 150px"><div class="ref" style="font-size:14.5px;font-weight:600">ODPC data processor</div><div class="status ref" style="font-size:13.5px;color:var(--blue-deep)">[PENDING]</div></div>
-            <div class="table-row" style="grid-template-columns:minmax(0,1fr) 150px"><div class="ref" style="font-size:14.5px;font-weight:600">CR12</div><div class="status ref" style="font-size:13.5px;color:var(--blue-deep)">[On request]</div></div>
+            <div class="table-row" style="grid-template-columns:minmax(0,1fr) 150px"><div class="ref" style="font-size:14.5px;font-weight:600">CR12</div><div class="status ref" style="font-size:13.5px;color:var(--blue-deep)">On request</div></div>
           </div>
         </div>
       </div>
