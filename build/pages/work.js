@@ -9,9 +9,11 @@ import { WORK } from '../site.js';
 import { esc, ICONS, quoteMark } from '../layout.js';
 import { browserFrame, phoneFrame } from '../shot.js';
 
-const frameFor = (w, priority = false) =>
+// `stage` puts a portrait shot on a landscape panel, so a phone frame does not
+// make its card twice the height of the two beside it in a row.
+const frameFor = (w, { priority = false, stage = false } = {}) =>
   w.shotMobile
-    ? phoneFrame(`${w.shot}-mobile`, `The ${esc(w.client)} platform on a phone, which is how almost every guest opens it`, { priority })
+    ? phoneFrame(`${w.shot}-mobile`, `The ${esc(w.client)} platform on a phone, which is how almost every guest opens it`, { priority, stage })
     : browserFrame(`${w.shot}-desktop`, `The ${esc(w.client)} home page as it loads on a laptop`, w.live ? esc(w.live) : 'Private platform', { priority });
 
 const index = {
@@ -34,7 +36,7 @@ const index = {
     <section class="wrap sec-tight" aria-label="Projects">
       <div class="grid grid-3">
 ${WORK.map((w, i) => `        <a class="card work-card" href="/work/${w.slug}">
-          ${frameFor(w, i === 0)}
+          ${frameFor(w, { priority: i === 0, stage: true })}
           <p class="eyebrow" style="font-size:11px;margin-top:8px">${esc(w.kicker.replace('Case study · ', ''))}</p>
           <h2 style="font-size:19px;font-weight:700;letter-spacing:-.012em">${esc(w.client)}</h2>
           <p class="small">${esc(w.cardBlurb)}</p>

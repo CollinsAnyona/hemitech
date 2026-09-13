@@ -55,11 +55,18 @@ export function browserFrame(name, alt, addr, opts = {}) {
         </div>`;
 }
 
-/** A mobile screenshot inside a CSS phone frame. */
+/**
+ * A mobile screenshot inside a CSS phone frame.
+ *
+ * `stage: true` sits the phone on a tinted panel the same shape as a browser
+ * frame, so a portrait shot does not make one card in a row twice the height
+ * of its neighbours.
+ */
 export function phoneFrame(name, alt, opts = {}) {
   const inside = hasShot(name)
     ? picture(name, alt, { w: 390, h: 844, sizes: '232px', ...opts })
     : `<div class="shot slot-empty">Screenshot pending</div>`;
 
-  return `<div class="frame-phone">${inside}</div>`;
+  const phone = `<div class="frame-phone">${inside}</div>`;
+  return opts.stage ? `<div class="phone-stage">${phone}</div>` : phone;
 }

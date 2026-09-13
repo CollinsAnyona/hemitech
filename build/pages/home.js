@@ -2,7 +2,7 @@
 
 import { SITE, FACTS, GROUPS, SECTORS, SERVICES, WORK, ORIGIN } from '../site.js';
 import { ICONS, esc, phoneLink, checksStatic, quoteMark } from '../layout.js';
-import { browserFrame } from '../shot.js';
+import { browserFrame, phoneFrame } from '../shot.js';
 
 const groupServices = (name) => SERVICES.filter((s) => s.group === name);
 
@@ -33,8 +33,12 @@ function sectorTile(s) {
 }
 
 function workCard(w) {
+  const frame = w.shotMobile
+    ? phoneFrame(`${w.shot}-mobile`, `The ${esc(w.client)} platform on a phone, which is how almost every guest opens it`, { stage: true })
+    : browserFrame(`${w.shot}-desktop`, `The ${esc(w.client)} home page as it loads on a laptop`, w.live ? esc(w.live) : 'Private platform');
+
   return `          <a class="card work-card" href="/work/${w.slug}">
-            ${browserFrame(`${w.shot}-desktop`, `The ${esc(w.client)} home page as it loads on a laptop`, w.live ? esc(w.live) : 'Private platform')}
+            ${frame}
             <h3 style="margin-top:8px">${esc(w.client)}</h3>
             <p class="smaller">${esc(w.cardBlurb)}</p>
             <span class="flow-end">${w.live ? esc(w.live) : 'Private — details on request'}</span>

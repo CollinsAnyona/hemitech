@@ -1602,3 +1602,29 @@ a.direct-row,
 .commit-strip a {
   text-decoration: none;
 }
+
+/* A portrait phone shot on a landscape panel, so one card in a row of three
+   does not end up twice the height of its neighbours. */
+.phone-stage {
+  aspect-ratio: 1440 / 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 0;
+  background: var(--tint);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+}
+.phone-stage .frame-phone {
+  height: 100%;
+  width: auto;
+  max-width: none;
+  border-width: 6px;
+  border-radius: 16px;
+}
+.phone-stage .frame-phone .shot {
+  height: 100%;
+  width: auto;
+  aspect-ratio: 390 / 844;
+}
