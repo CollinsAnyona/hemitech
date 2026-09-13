@@ -280,8 +280,16 @@ strong { color: var(--navy); font-weight: 700; }
   gap: var(--s8);
   align-items: start;
 }
+/* The !important below is deliberate and load-bearing. Pages tune a split's
+   column ratio per instance with an inline style (grid-template-columns:
+   300px minmax(0,1fr), and similar). An inline style outranks every selector
+   in this file, so without !important those desktop ratios survive into the
+   phone layout and the columns collapse — /credentials rendered as 300px
+   beside 24px, and the home page's credentials table as a 0px-wide column
+   that set every registration name one character per line. Stacking below
+   these widths is an invariant, not a default, so it has to win. */
 @media (max-width: 980px) {
-  .split { grid-template-columns: minmax(0, 1fr); gap: var(--s5); }
+  .split { grid-template-columns: minmax(0, 1fr) !important; gap: var(--s5); }
 }
 
 .split-even {
@@ -291,7 +299,7 @@ strong { color: var(--navy); font-weight: 700; }
   align-items: center;
 }
 @media (max-width: 980px) {
-  .split-even { grid-template-columns: minmax(0, 1fr); gap: var(--s7); }
+  .split-even { grid-template-columns: minmax(0, 1fr) !important; gap: var(--s7); }
 }
 
 /* -------------------------------------------------------------- type ---- */
@@ -647,9 +655,9 @@ a.card h3, a.card h4 { color: var(--navy); }
 .table-row .status { text-align: right; }
 .table-row p { font-size: 13.5px; margin-top: 3px; }
 @media (max-width: 860px) {
-  .table-head { display: none; }
+  .table-head { display: none !important; }
   .table-row {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) !important;
     gap: 8px;
     padding: 18px 20px;
   }
