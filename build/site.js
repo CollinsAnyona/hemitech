@@ -31,8 +31,9 @@ export const SITE = {
   // its own check has no business asking anyone else.
   lastUpdated: new Date().toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }),
 
-  // Retention period for form submissions — BUILD-BRIEF §11 says to ask Collo.
-  retention: '[RETENTION PERIOD]',
+  // Retention period for form submissions. Set by Collo, 13 September 2026.
+  // The privacy notice states it and api/_lib/retention.js enforces it.
+  retention: '24 months',
 };
 
 // True, unbracketed facts (BUILD-BRIEF §12).

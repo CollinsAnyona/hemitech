@@ -101,18 +101,55 @@
   "redirects": [
     {
       "source": "/(.*)",
-      "has": [{ "type": "host", "value": "www.hemitech.co.ke" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "www.hemitech.co.ke"
+        }
+      ],
       "destination": "https://hemitech.co.ke/$1",
       "permanent": true
     },
-    { "source": "/services", "destination": "/capabilities", "permanent": true },
-    { "source": "/services.html", "destination": "/capabilities", "permanent": true },
-    { "source": "/privacy-policy", "destination": "/privacy", "permanent": true },
-    { "source": "/privacy-policy.html", "destination": "/privacy", "permanent": true },
-    { "source": "/cookie-policy", "destination": "/privacy", "permanent": true },
-    { "source": "/cookie-policy.html", "destination": "/privacy", "permanent": true },
-    { "source": "/careers", "destination": "/about", "permanent": true },
-    { "source": "/careers.html", "destination": "/about", "permanent": true }
+    {
+      "source": "/services",
+      "destination": "/capabilities",
+      "permanent": true
+    },
+    {
+      "source": "/services.html",
+      "destination": "/capabilities",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy.html",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/cookie-policy",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/cookie-policy.html",
+      "destination": "/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/careers",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/careers.html",
+      "destination": "/about",
+      "permanent": true
+    }
   ],
   "rewrites": [
     {
@@ -124,6 +161,10 @@
     {
       "path": "/api/media/sweep",
       "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/submissions/sweep",
+      "schedule": "30 3 * * *"
     }
   ]
 }

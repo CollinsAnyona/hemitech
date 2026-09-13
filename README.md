@@ -122,6 +122,22 @@ Collected: contact — name, organisation, email, optional website, message.
 Audit — email and website. Nothing else; which checks a visitor ticked is never
 sent.
 
+### Retention is enforced, not just stated
+
+Submissions are kept for **24 months** and then deleted. The privacy notice
+says so and `api/_lib/retention.js` does it: `/api/submissions/sweep` runs
+nightly on a Vercel cron and removes everything past the cut-off. A retention
+policy that exists only in a policy document is not a retention policy,
+particularly on a site that sells data-protection work.
+
+```bash
+# report what is due without deleting anything (needs MEDIA_UPLOAD_TOKEN)
+curl -X POST -H "Authorization: Bearer $MEDIA_UPLOAD_TOKEN"   "https://hemitech.co.ke/api/submissions/sweep?dry=1"
+```
+
+Change the period in `build/site.js` (`SITE.retention`, the published wording)
+and `RETENTION_MONTHS` (what the sweep enforces). They have to agree.
+
 ## Analytics
 
 **None.** No cookies, no third-party scripts, no pixels. If analytics are ever
