@@ -70,6 +70,10 @@ const orgSchema = {
   },
   areaServed: 'East Africa',
   founder: { '@type': 'Person', name: SITE.director },
+  employee: [
+    { '@type': 'Person', name: SITE.director, jobTitle: 'Founder & Lead Engineer' },
+    { '@type': 'Person', name: 'Evans Anyona', jobTitle: 'Brand & Visual Design Lead' },
+  ],
   knowsAbout: [
     'Web platforms',
     'Custom software',
