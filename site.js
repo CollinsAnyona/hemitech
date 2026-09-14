@@ -1,8 +1,11 @@
-/* Everything the site needs in the browser, other than the audit tool.
+/* Everything the site needs in the browser, other than the audit tool and
+ * the homepage's hero video (see hero-video.js — kept out of here
+ * deliberately, so pages that aren't the homepage never parse or run it).
  *
- * Two jobs: collapse the navigation on a small screen, and upgrade the contact
- * form from a page reload to an in-place reply. Both are enhancements. With
- * this file absent the nav is simply open and the form posts normally.
+ * Collapse the navigation on a small screen, animate content into view as it
+ * scrolls, and upgrade the contact form from a page reload to an in-place
+ * reply. All of it is an enhancement. With this file absent the nav is
+ * simply open and the form posts normally.
  */
 (function () {
   'use strict';

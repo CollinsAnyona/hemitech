@@ -101,12 +101,16 @@ export default {
   description:
     'Web platforms, custom systems and data dashboards for government, NGOs, SACCOs and consultancies across East Africa. Fast on mobile data, built for procurement.',
   jsonLd,
+  scripts: ['/hero-video.js'],
   body: `    <div class="ground">
       <div class="hero-video band-navy on-navy-field">
-        <video class="hero-bg" autoplay muted loop playsinline poster="/Images/video/hero-network-poster.jpg" width="1920" height="1080">
-          <source src="/Images/video/hero-network-loop.webm" type="video/webm" media="(prefers-reduced-motion: no-preference)">
-          <source src="/Images/video/hero-network-loop.mp4" type="video/mp4" media="(prefers-reduced-motion: no-preference)">
-        </video>
+        <img class="hero-bg" id="hero-poster" src="/Images/video/hero-network-poster.jpg" width="1920" height="1080" alt="" fetchpriority="high">
+        <noscript>
+          <video class="hero-bg" autoplay muted loop playsinline poster="/Images/video/hero-network-poster.jpg" width="1920" height="1080">
+            <source src="/Images/video/hero-network-loop.webm" type="video/webm" media="(prefers-reduced-motion: no-preference)">
+            <source src="/Images/video/hero-network-loop.mp4" type="video/mp4" media="(prefers-reduced-motion: no-preference)">
+          </video>
+        </noscript>
         <div class="hero-scrim" aria-hidden="true"></div>
         <div class="wrap hero-grid">
         <div class="stack stack-6">
