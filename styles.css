@@ -870,6 +870,38 @@ a.card h3, a.card h4 { color: var(--navy); }
 
 /* ---------------------------------------------------------------- hero --- */
 
+/* The looping background video behind the hero. Reuses .band-navy for the
+   instant navy paint (shows before the video does) and its h1/eyebrow/p
+   colour flips — the hero used to sit on the light .ground gradient, so
+   without this the existing dark-navy heading text would land on a new
+   dark-navy background and disappear. The one thing .band-navy's cascade
+   gets wrong here: the white .index-card floating in the hero is its own
+   opaque surface, not part of the dark field, so its own eyebrow needs to
+   stay dark-on-white rather than inherit the light-on-navy flip (its other
+   text already has more specific rules of its own and is unaffected).
+   video/webm are muted/looping/silent, so nothing here needs captions. */
+.hero-video {
+  position: relative;
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(2, 18, 60, .74) 0%, rgba(2, 18, 60, .58) 45%, rgba(2, 18, 60, .82) 100%);
+  z-index: 1;
+}
+.hero-video .wrap { z-index: 2; }
+
+.index-card p.eyebrow { color: var(--blue-deep); }
+
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.08fr) minmax(0, .92fr);

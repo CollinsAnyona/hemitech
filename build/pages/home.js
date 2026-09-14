@@ -102,7 +102,13 @@ export default {
     'Web platforms, custom systems and data dashboards for government, NGOs, SACCOs and consultancies across East Africa. Fast on mobile data, built for procurement.',
   jsonLd,
   body: `    <div class="ground">
-      <div class="wrap hero-grid">
+      <div class="hero-video band-navy on-navy-field">
+        <video class="hero-bg" autoplay muted loop playsinline poster="/Images/video/hero-network-poster.jpg" width="1920" height="1080">
+          <source src="/Images/video/hero-network-loop.webm" type="video/webm" media="(prefers-reduced-motion: no-preference)">
+          <source src="/Images/video/hero-network-loop.mp4" type="video/mp4" media="(prefers-reduced-motion: no-preference)">
+        </video>
+        <div class="hero-scrim" aria-hidden="true"></div>
+        <div class="wrap hero-grid">
         <div class="stack stack-6">
           <p class="eyebrow">Nairobi · Software &amp; data engineering</p>
           <h1 class="h1-hero">We build the systems East African organisations run on.</h1>
@@ -110,7 +116,7 @@ export default {
           <p class="lede">Websites, custom platforms and data dashboards for government, development, finance and education: engineered to load fast on mobile data, and documented well enough to pass procurement.</p>
           <div class="btn-row" style="padding-top:6px">
             <a class="btn" href="/audit">Score your website free ${ICONS.arrow(17)}</a>
-            <a class="btn ghost" href="/work">See our work</a>
+            <a class="btn outline-navy" href="/work">See our work</a>
           </div>
         </div>
 
@@ -134,6 +140,7 @@ export default {
             <span class="row-key" style="font-weight:600;color:var(--navy-soft)">e-GP Kenya supplier registration</span>
             <span class="row-val ref">Application in progress</span>
           </div>
+        </div>
         </div>
       </div>
 
