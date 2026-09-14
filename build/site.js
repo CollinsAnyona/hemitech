@@ -28,7 +28,7 @@ export const SITE = {
   address: 'Nairobi, Kenya',
   addressNote: 'Registered office supplied with any bid',
   city: 'Nairobi, Kenya',
-  director: 'Collins Anyona',
+  director: 'Collins Junior',
 
   // Not a placeholder: the build knows this. Check 7 of the seven is
   // "something on it was updated this year", and a site that cannot answer
